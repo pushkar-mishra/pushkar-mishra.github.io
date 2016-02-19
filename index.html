@@ -2,38 +2,68 @@
 <head>
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+  <style type="text/css">
+  html { height:100%; }
+  body { position:absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
 </head>
 <body ng-app="ProfileApp" ng-cloak>
   
   <md-toolbar class="md-whiteframe-z2">
-    <div style="text-align: center;">
-       <md-button class="md-icon-button" style="height: auto; width: auto">
-         <img src="img/profile.png" height=100 width=100> 
-       </md-button>
-      <h2>Pushkar Mishra</h2>
-      <p>Principal Engineer</p>
-    </div>
+    <div style="text-align: left;" layout="row">
+      <div>
+         <md-button class="md-icon-button" style="height: auto; width: auto">
+           <img src="img/profile.png" height=150 width=150> 
+         </md-button>
+      </div>
+      <div>
+        <h2>Pushkar Mishra</h2>
+        <p>Principal Engineer @ CueFin Solutions</p>
+        <p>Developer | Architect | Entrepreneur</p>
+      </div>
+  </div>
   </md-toolbar>
   
+  
     <div layout layout-fill layout-align="center start">
-      <md-card layout-align="start center" layout="column">
+      <md-card layout-align="start start" layout="column" flex=33>
+              
         <md-card-content layout="column">
-        	<h1>Summary</h1>
+        	<h3>Summary</h3>
+        	<p>* Ambitious and hard-working individual.</p>
+        	<p>* Began career as a Software Engineer.</p>
+        	<p>* Wrote softwares.</p>
+        	<p>* Changed/ Maintained existing softwares.</p>
+        	<p>* impressive track record.</p>
+        	<p>* Currently Principal Engineer @ CueFin Solutions.</p>
         </md-card-content>
       </md-card>
       
-	  <md-card layout-align="start center" layout="column">
-			<md-card-content layout="column">
-				<h1>Synopsis of Achievements</h1>
-			</md-card-content>
-	   </md-card>
+  	  <md-card layout-align="start start" layout="column" flex=33>
+  			<md-card-content layout="column">
+  				<h3>Skills</h3>
+  			  <p>* C/C++/Java </p>
+        	<p>* Ruby On Rails</p>
+        	<p>* Cloud & SaaS</p>
+        	<p>* MEAN Stack</p>
+        	<p>* Angular.js</p>
+        	<p>* AWS </p>
+  			</md-card-content>
+  	  </md-card>
 	   
-       <md-card layout-align="start center" layout="column">
+       <md-card layout-align="start start" layout="column" flex=33>
         <md-card-content layout="column">
-        	<h1>Sanpshot</h1>
+        	<h3>Journey</h3>
+        	<p>* CueFin Solutions.</p>
+        	<p>* Cerner Healthcare</p>
+        	<p>* Thomson Reuters</p>
+        	<p>* Sasken Comunications</p>
+        	<p>* Wipro technologies</p>
+        	<p>* B.V.B. College of Engineering and Technology</p>
         </md-card-content>
       </md-card>
     </div>
+    
   
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="bower_components/angular/angular.min.js"></script>
@@ -51,6 +81,12 @@
      */
     angular.module('ProfileApp', ['ngMaterial']);
   </script>
+  
+  <md-toolbar class="md-medium-tall">
+    <div layout="row" layout-align="center center" flex>
+      <span>&copy; Copyright 2016 Pushkar Mishra</span>
+    </div>
+  </md-toolbar>
   
 </body>
 </html>
