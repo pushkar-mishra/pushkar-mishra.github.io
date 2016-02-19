@@ -6,7 +6,7 @@
 <body ng-app="ProfileApp" ng-cloak>
   
   <md-toolbar class="md-whiteframe-z2">
-    <div style="text-align: left;">
+    <div style="text-align: center;">
        <md-button class="md-icon-button" style="height: auto; width: auto">
          <img src="img/profile.png" height=100 width=100> 
        </md-button>
@@ -14,6 +14,26 @@
       <p>Principal Engineer</p>
     </div>
   </md-toolbar>
+  
+    <div layout layout-fill layout-align="center start">
+      <md-card layout-align="start center" layout="column">
+        <md-card-content layout="column">
+        	<h1>Summary</h1>
+        </md-card-content>
+      </md-card>
+      
+	  <md-card layout-align="start center" layout="column">
+			<md-card-content layout="column">
+				<h1>Synopsis of Achievements</h1>
+			</md-card-content>
+	   </md-card>
+	   
+       <md-card layout-align="start center" layout="column">
+        <md-card-content layout="column">
+        	<h1>Sanpshot</h1>
+        </md-card-content>
+      </md-card>
+    </div>
   
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="bower_components/angular/angular.min.js"></script>
