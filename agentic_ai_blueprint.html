@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Agentic AI Blueprint</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fb;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0, 51, 102, 0.08);
+        }
+
+        .title {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 32px;
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        .blueprint {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, auto);
+            gap: 20px;
+            position: relative;
+        }
+
+        .layer {
+            background: #fff;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 4px 18px rgba(0, 51, 102, 0.07);
+            border: 2px solid #e6eef7;
+            transition: box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #003366;
+            opacity: 0.12;
+        }
+
+        .layer:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .layer-title {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #003366;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .layer-content {
+            font-size: 0.97em;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+
+        .layer-content ul {
+            margin: 8px 0;
+            padding-left: 18px;
+        }
+
+        .layer-content li {
+            margin: 4px 0;
+        }
+
+        .icon {
+            width: 22px;
+            height: 22px;
+            fill: #003366;
+        }
+
+        .data-flow {
+            background: #f2f6fa;
+            border-radius: 13px;
+            border: 1px solid #e6eef7;
+        }
+
+        .flow-step {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 51, 102, 0.04);
+        }
+
+        .flow-arrow {
+            color: #003366;
+        }
+
+        /* Specific layer styling */
+        .data-sources {
+            grid-column: 1 / 3;
+            --accent-color: #3182ce;
+        }
+
+        .security {
+            grid-column: 3 / 5;
+            --accent-color: #e53e3e;
+        }
+
+        .storage {
+            grid-column: 1 / 2;
+            --accent-color: #38a169;
+        }
+
+        .feature-mgmt {
+            grid-column: 2 / 3;
+            --accent-color: #805ad5;
+        }
+
+        .models {
+            grid-column: 3 / 4;
+            --accent-color: #d69e2e;
+        }
+
+        .agents {
+            grid-column: 4 / 5;
+            --accent-color: #dd6b20;
+        }
+
+        .orchestration {
+            grid-column: 1 / 3;
+            --accent-color: #319795;
+        }
+
+        .governance {
+            grid-column: 3 / 5;
+            --accent-color: #9f7aea;
+        }
+
+        .monitoring {
+            grid-column: 1 / 2;
+            --accent-color: #ed8936;
+        }
+
+        .ops {
+            grid-column: 2 / 3;
+            --accent-color: #48bb78;
+        }
+
+        .mlops {
+            grid-column: 3 / 4;
+            --accent-color: #4299e1;
+        }
+
+        .ux-edge {
+            grid-column: 4 / 5;
+            --accent-color: #ec407a;
+        }
+
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            height: 2px;
+            border-radius: 1px;
+        }
+
+        @media (max-width: 1200px) {
+            .blueprint {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .data-sources, .security, .orchestration, .governance {
+                grid-column: 1 / 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blueprint {
+                grid-template-columns: 1fr;
+            }
+            
+            .layer {
+                grid-column: 1 / 2;
+            }
+            
+            .data-flow {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-top: 40px; text-align: center;"></div>
+            <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #e6eef7;">
+            <p style="color: #003366; font-size: 1.05em;">
+                <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
+                <strong>Author:</strong> Pushkar Mishra<br>
+                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #3182ce; text-decoration: underline;">
+                    LinkedIn Profile
+                </a>
+            </p>
+        </div>
+        
+    <div class="container">
+        <h1 class="title">Enterprise AI Platform with Agentic Capabilities</h1>
+        <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); border-radius: 10px; border-left: 4px solid #667eea;">
+            <p style="color: #4a5568; font-size: 1.1em; margin: 0;">
+                <strong>Core Agentic Components:</strong> Autonomous Agents (Layer 5) • Multi-Agent Orchestration (Layer 6) • Intelligent Model Selection (Layer 4) • Human-in-Loop Escalation (Layer 12)
+            </p>
+        </div>
+        
+        <div class="blueprint">
+            <div class="connections">
+                <!-- Connection lines would be dynamically generated -->
+            </div>
+
+            <div class="layer data-sources">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    1. Data Layer - Sources & Ingestion
+                </div>
+                <div class="layer-content">
+                    <strong>Sources:</strong>
+                    <ul>
+                        <li>SAP/ERP (ODATA, IDocs, SAP PI/PO)</li>
+                        <li>Salesforce (APIs + webhooks)</li>
+                        <li>Digital Farming (sensors, satellite, IoT)</li>
+                        <li>3rd-party APIs & internal files</li>
+                    </ul>
+                    <strong>Ingestion:</strong> CDC, Batch ETL, Kafka streaming, MQTT edge ingestion
+                </div>
+            </div>
+
+            <div class="layer security">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,11.5 16,12.4 16,13V16C16,17.4 15.4,18 14.8,18H9.2C8.6,18 8,17.4 8,16V13C8,12.4 8.6,11.5 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.7 10.5,10V11.5H13.5V10C13.5,8.7 12.8,8.2 12,8.2Z"/></svg>
+                    8. Security & Privacy
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>RBAC/ABAC with least privilege</li>
+                        <li>Prompt injection filters</li>
+                        <li>Data leakage prevention</li>
+                        <li>KMS & secrets vault</li>
+                        <li>Network segmentation</li>
+                        <li>Supply chain controls</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer storage">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,3C7.58,3 4,4.79 4,7C4,9.21 7.58,11 12,11C16.42,11 20,9.21 20,7C20,4.79 16.42,3 12,3M4,9V12C4,14.21 7.58,16 12,16C16.42,16 20,14.21 20,12V9C20,11.21 16.42,13 12,13C7.58,13 4,11.21 4,9M4,14V17C4,19.21 7.58,21 12,21C16.42,21 20,19.21 20,17V14C20,16.21 16.42,18 12,18C7.58,18 4,16.21 4,14Z"/></svg>
+                    2. Data Storage & Knowledge Bases
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>Data Lake (raw) + Warehouse (curated)</li>
+                        <li>Vector DB for semantic retrieval</li>
+                        <li>Knowledge Graph for entities</li>
+                        <li>Document stores</li>
+                        <li>Version control & lineage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer feature-mgmt">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+                    3. Feature & Memory Management
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>Feature store for ML features</li>
+                        <li>Short-term session memory</li>
+                        <li>Long-term enterprise memory</li>
+                        <li>Temporal context versioning</li>
+                        <li>TTL & retention policies</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer models" style="border: 2px solid #d69e2e; background: linear-gradient(135deg, rgba(214, 158, 46, 0.05), rgba(214, 158, 46, 0.1));">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M9,4V8H21V4M9,10V14H21V10M9,16V20H21V16M4,8H6V6H4M4,14H6V12H4M4,20H6V18H4Z"/></svg>
+                    4. Model & LLM Layer ⚡ AGENTIC-ENABLED
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Intelligent routing:</strong> Auto model selection</li>
+                        <li><strong>Context-aware:</strong> RAG pipelines</li>
+                        <li>Model catalog (small to large LLMs)</li>
+                        <li>Multimodal capabilities</li>
+                        <li>Cost/latency optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer agents" style="border: 3px solid #dd6b20; box-shadow: 0 0 20px rgba(221, 107, 32, 0.3);">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"/></svg>
+                    5. Agent Layer ⚡ CORE AGENTIC
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Autonomous agents:</strong> Assistant & task agents</li>
+                        <li><strong>Tool execution:</strong> API bus & adapters</li>
+                        <li><strong>Safety controls:</strong> Sandboxing & permissions</li>
+                        <li><strong>Escalation:</strong> Human-in-the-loop</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer orchestration" style="border: 3px solid #319795; box-shadow: 0 0 20px rgba(49, 151, 149, 0.3);">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7.27C13.6,7.61 14,8.26 14,9A2,2 0 0,1 12,11A2,2 0 0,1 10,9C10,8.26 10.4,7.61 11,7.27V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M12,6A1,1 0 0,0 11,7A1,1 0 0,0 12,8A1,1 0 0,0 13,7A1,1 0 0,0 12,6M21,9C21,7.89 20.1,7 19,7A2,2 0 0,0 17,9C17,9.74 17.4,10.39 18,10.73V13.27C17.4,13.61 17,14.26 17,15A2,2 0 0,0 19,17A2,2 0 0,0 21,15C21,14.26 20.6,13.61 20,13.27V10.73C20.6,10.39 21,9.74 21,9M19,10A1,1 0 0,1 18,11A1,1 0 0,1 17,10A1,1 0 0,1 18,9A1,1 0 0,1 19,10M5,9C5,7.89 4.1,7 3,7A2,2 0 0,0 1,9C1,9.74 1.4,10.39 2,10.73V13.27C1.4,13.61 1,14.26 1,15A2,2 0 0,0 3,17A2,2 0 0,0 5,15C5,14.26 4.6,13.61 4,13.27V10.73C4.6,10.39 5,9.74 5,9M3,10A1,1 0 0,1 2,11A1,1 0 0,1 1,10A1,1 0 0,1 2,9A1,1 0 0,1 3,10M12,17A2,2 0 0,1 14,19C14,19.74 13.6,20.39 13,20.73V22.27C13.6,22.61 14,23.26 14,24A2,2 0 0,1 12,26A2,2 0 0,1 10,24C10,23.26 10.4,22.61 11,22.27V20.73C10.4,20.39 10,19.74 10,19A2,2 0 0,1 12,17M12,21A1,1 0 0,0 11,22A1,1 0 0,0 12,23A1,1 0 0,0 13,22A1,1 0 0,0 12,21Z"/></svg>
+                    6. Multi-Agent Orchestration ⚡ CORE AGENTIC
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Autonomous coordination:</strong> Multi-agent workflows</li>
+                        <li><strong>Goal-oriented:</strong> Complex business processes</li>
+                        <li><strong>Decision-making:</strong> State machine management</li>
+                        <li><strong>Safe execution:</strong> Transaction guardrails</li>
+                        <li><strong>Communication:</strong> Inter-agent messaging</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer governance">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M17,11H16.5L15,9.5L16.5,8L17,7.5V4A1,1 0 0,0 16,3H4A1,1 0 0,0 3,4V16A1,1 0 0,0 4,17H7.5L8,16.5L9.5,15L11,16.5L16.5,11H17M5,5H15V6.5L14,7.5L12.5,9L14,10.5L15,11.5V15H11.5L10,13.5L8.5,15H5M20.5,18L18,15.5L19.5,14L22,16.5L20.5,18M18,18L15.5,20.5L14,19L16.5,16.5L18,18Z"/></svg>
+                    7. Governance, Compliance & Ethics
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>Policy engine (GDPR/HIPAA)</li>
+                        <li>Explainability (XAI) modules</li>
+                        <li>Immutable audit logs</li>
+                        <li>Regulatory mapping</li>
+                        <li>Decision trail tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer monitoring">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3.5,18.49L9,12.99L13.5,17.49L21.5,9.49L20.09,8.08L13.5,14.67L9,10.17L2.09,17.08L3.5,18.49Z"/></svg>
+                    9. Evaluation, Testing & Monitoring
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>Pre-deploy testing & red-teaming</li>
+                        <li>Production observability</li>
+                        <li>Business metrics tracking</li>
+                        <li>Drift detection</li>
+                        <li>Canary deployments</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer ops">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"/></svg>
+                    10. Ops, Cost & Performance
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>Autoscaling & tiered inference</li>
+                        <li>Cost control & quotas</li>
+                        <li>SLA/SLO management</li>
+                        <li>Cache optimization</li>
+                        <li>Resource efficiency</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer mlops">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,7L13,7V11.5L16.75,9.25L17.75,11.06L13,14L17.75,16.94L16.75,18.75L13,16.5V21H11V16.5L7.25,18.75L6.25,16.94L11,14L6.25,11.06L7.25,9.25L11,11.5V7Z"/></svg>
+                    11. MLOps & DataOps
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li>CI/CD for models & agents</li>
+                        <li>Continuous feedback loops</li>
+                        <li>Training trigger automation</li>
+                        <li>Human labeling integration</li>
+                        <li>Reproducible pipelines</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="layer ux-edge" style="border: 2px solid #ec407a; background: linear-gradient(135deg, rgba(236, 64, 122, 0.05), rgba(236, 64, 122, 0.1));">
+                <div class="layer-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1H5C3.89,1 3,1.89 3,3V21A2,2 0 0,0 5,23H19A2,2 0 0,0 21,21V9M19,9H14V4L19,9Z"/></svg>
+                    12. UX & Edge ⚡ AGENTIC-ENABLED
+                </div>
+                <div class="layer-content">
+                    <ul>
+                        <li><strong>Human-agent collaboration:</strong> Escalation UIs</li>
+                        <li><strong>Autonomous edge:</strong> Local decision-making</li>
+                        <li>Audit & explanation screens</li>
+                        <li>Hybrid cloud deployment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br>
+        <div class="data-flow">
+            <div class="flow-step">
+                <h3 style="color: #3182ce; margin-bottom: 10px;">Data Sources</h3>
+                <p><strong>SAP/ERP:</strong> Financial & operational data</p>
+                <p><strong>Salesforce:</strong> Customer & sales data</p>
+                <p><strong>Digital Farming:</strong> IoT sensors, satellite imagery</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <div class="flow-arrow">→</div>
+            </div>
+            <div class="flow-step">
+                <h3 style="color: #38a169; margin-bottom: 10px;">Processing</h3>
+                <p>Ingestion → Storage → Feature Engineering → Knowledge Graphs</p>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <div class="flow-arrow">→</div>
+            </div>
+            <div class="flow-step">
+                <h3 style="color: #dd6b20; margin-bottom: 10px;">AI Agents</h3>
+                <p>Context-aware agents performing actions across enterprise systems</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: rgba(102, 126, 234, 0.1); border-radius: 15px; border-left: 4px solid #667eea;">
+            <h3 style="color: #2d3748; margin-bottom: 15px;">Architecture Classification:</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                <div style="background: linear-gradient(135deg, rgba(221, 107, 32, 0.1), rgba(221, 107, 32, 0.05)); padding: 15px; border-radius: 10px; border-left: 3px solid #dd6b20;">
+                    <p style="margin: 0;"><strong style="color: #dd6b20;">⚡ CORE AGENTIC:</strong></p>
+                    <p style="margin: 5px 0 0 0; color: #4a5568; font-size: 0.9em;">Autonomous agents that make decisions and take actions without human intervention</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(214, 158, 46, 0.1), rgba(214, 158, 46, 0.05)); padding: 15px; border-radius: 10px; border-left: 3px solid #d69e2e;">
+                    <p style="margin: 0;"><strong style="color: #d69e2e;">⚡ AGENTIC-ENABLED:</strong></p>
+                    <p style="margin: 5px 0 0 0; color: #4a5568; font-size: 0.9em;">Traditional components enhanced with intelligent, autonomous capabilities</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(74, 85, 104, 0.1), rgba(74, 85, 104, 0.05)); padding: 15px; border-radius: 10px; border-left: 3px solid #4a5568;">
+                    <p style="margin: 0;"><strong style="color: #4a5568;">📋 ENTERPRISE FOUNDATION:</strong></p>
+                    <p style="margin: 5px 0 0 0; color: #4a5568; font-size: 0.9em;">Essential enterprise data and infrastructure layers that enable agentic capabilities</p>
+                </div>
+            </div>
+            
+            <h4 style="color: #2d3748; margin-bottom: 10px;">Implementation Priority Checklist:</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <div>
+                    <p><strong>Phase 1 (Foundation):</strong></p>
+                    <ul style="color: #4a5568;">
+                        <li>Build ingestion & canonical data model</li>
+                        <li>Deploy vector DB + knowledge graph</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Phase 2 (Intelligence):</strong></p>
+                    <ul style="color: #4a5568;">
+                        <li>Implement RAG pipeline</li>
+                        <li>Build model catalog with selection policy</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Phase 3 (Action):</strong></p>
+                    <ul style="color: #4a5568;">
+                        <li>Build agent sandbox + tool adapters</li>
+                        <li>Add governance & security controls</li>
+                    </ul>
+                </div>
+                <div>
+                    <p><strong>Phase 4 (Operations):</strong></p>
+                    <ul style="color: #4a5568;">
+                        <li>Add CI/CD & monitoring</li>
+                        <li>Implement feedback loops</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, rgba(56, 161, 105, 0.1), rgba(72, 187, 120, 0.1)); border-radius: 15px; border-left: 4px solid #38a169;">
+            <h3 style="color: #2d3748; margin-bottom: 15px;">Key Integration Points for Your Data Sources:</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 15px;">
+                <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid rgba(56, 161, 105, 0.2);">
+                    <h4 style="color: #3182ce; margin-bottom: 10px;">🏢 SAP/ERP Integration</h4>
+                    <ul style="color: #4a5568; font-size: 0.9em;">
+                        <li>ODATA/IDocs connectors with CDC</li>
+                        <li>Two-phase commit for transactions</li>
+                        <li>Strict RBAC and audit trails</li>
+                        <li>Financial data validation pipelines</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid rgba(56, 161, 105, 0.2);">
+                    <h4 style="color: #dd6b20; margin-bottom: 10px;">🎯 Salesforce Integration</h4>
+                    <ul style="color: #4a5568; font-size: 0.9em;">
+                        <li>REST APIs + real-time webhooks</li>
+                        <li>Customer/opportunity entity mapping</li>
+                        <li>Sales process automation agents</li>
+                        <li>Lead scoring and pipeline insights</li>
+                    </ul>
+                </div>
+                
+                <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid rgba(56, 161, 105, 0.2);">
+                    <h4 style="color: #38a169; margin-bottom: 10px;">🌱 Digital Farming Integration</h4>
+                    <ul style="color: #4a5568; font-size: 0.9em;">
+                        <li>IoT sensor data via MQTT/edge gateways</li>
+                        <li>Satellite imagery and drone data processing</li>
+                        <li>Time-series analytics for crop monitoring</li>
+                        <li>Agronomy knowledge base integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; color: #4a5568; font-size: 0.9em;">
+            <p>This blueprint provides a comprehensive, enterprise-ready foundation for agentic AI systems<br>
+            tailored specifically for your SAP/ERP, Salesforce, and digital farming data integration needs.</p>
+        </div>
+        <div style="margin-top: 40px; text-align: center;"></div>
+            <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #e6eef7;">
+            <p style="color: #003366; font-size: 1.05em;">
+                <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
+                <strong>Author:</strong> Pushkar Mishra<br>
+                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #3182ce; text-decoration: underline;">
+                    LinkedIn Profile
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
