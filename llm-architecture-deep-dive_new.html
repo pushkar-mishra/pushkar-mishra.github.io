@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the Machine: A Technical Deep Dive into Large Language Models</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0d;
+    --paper: #f5f2ec;
+    --accent: #c0392b;
+    --accent2: #2c3e50;
+    --muted: #6b6560;
+    --code-bg: #1a1a2e;
+    --code-text: #a8dadc;
+    --rule: #d4cec5;
+    --highlight: #fef3cd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* Header */
+  .masthead {
+    background: var(--accent2);
+    color: white;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.03) 20px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+  .masthead-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 820px;
+    margin: 0 auto 1.2rem;
+    position: relative;
+  }
+  .masthead h1 em {
+    color: #e74c3c;
+    font-style: italic;
+  }
+  .masthead-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* TOC */
+  .toc {
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1.75rem 2rem;
+    margin-bottom: 3.5rem;
+  }
+  .toc-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .toc ol {
+    padding-left: 1.25rem;
+  }
+  .toc li {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .toc a {
+    color: var(--accent2);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  .section {
+    margin-bottom: 3.5rem;
+    padding-top: 1rem;
+  }
+  .section-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent2);
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 2rem 0 0.75rem;
+  }
+  h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 1.5rem 0 0.5rem;
+  }
+  p {
+    margin-bottom: 1.1rem;
+    color: #2a2724;
+    font-weight: 400;
+  }
+
+  /* Pull quotes / callouts */
+  .callout {
+    background: var(--accent2);
+    color: white;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+  .callout::before {
+    content: '//';
+    font-family: 'IBM Plex Mono', monospace;
+    color: rgba(255,255,255,0.25);
+    font-size: 2rem;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+  }
+  .callout p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.05rem;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .analogy {
+    background: var(--highlight);
+    border-left: 3px solid #e6a817;
+    padding: 1rem 1.4rem;
+    margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+  .analogy strong { color: #7a5c00; }
+
+  /* Code / formula blocks */
+  .formula {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1.1rem 1.4rem;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    overflow-x: auto;
+    border-radius: 2px;
+  }
+
+  /* Diagram blocks */
+  .diagram {
+    border: 1px solid var(--rule);
+    background: white;
+    padding: 1.5rem;
+    margin: 1.75rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink);
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  .diagram-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Term definitions */
+  .term-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .term-card {
+    border: 1px solid var(--rule);
+    padding: 1rem 1.1rem;
+    background: white;
+  }
+  .term-card strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.05em;
+  }
+  .term-card span { font-size: 0.88rem; color: var(--muted); }
+
+  /* Divider */
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+
+  /* Final walkthrough */
+  .walkthrough {
+    background: var(--ink);
+    color: white;
+    padding: 2.5rem;
+    margin-top: 3rem;
+  }
+  .walkthrough h2 {
+    color: white;
+    border-bottom-color: rgba(255,255,255,0.15);
+    font-size: 1.7rem;
+  }
+  .walkthrough p { color: rgba(255,255,255,0.82); }
+  .walkthrough h3 { color: #e74c3c; }
+  .step {
+    display: flex;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+    align-items: flex-start;
+  }
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--accent);
+    color: white;
+    min-width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { color: white; font-size: 0.95rem; }
+  .step-content p { color: rgba(255,255,255,0.72); font-size: 0.9rem; margin: 0.2rem 0 0; }
+
+  /* Footer */
+  footer {
+    background: var(--accent2);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 600px) {
+    .term-grid { grid-template-columns: 1fr; }
+    .diagram { font-size: 0.68rem; }
+    .masthead { padding: 2rem 1rem; }
+  }
+
+  /* Print styles */
+  @media print {
+    .masthead { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-label">Technical Reference · Architecture Deep Dive</div>
+  <h1>Inside the <em>Machine</em>: A Technical Deep Dive into Large Language Models</h1>
+  <p class="masthead-sub">For software engineers, ML architects, and data scientists who need to understand how LLMs actually work — not just what they do.</p>
+</div>
+
+<div class="container">
+
+  <!-- Table of Contents -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#foundations">Foundations: AI, ML, Deep Learning, Generative AI</a></li>
+      <li><a href="#transformer">Transformer Architecture</a></li>
+      <li><a href="#variants">Model Variants</a></li>
+      <li><a href="#tokenization">Tokenization & Vector Representation</a></li>
+      <li><a href="#dataflow">Data Flow Inside an LLM</a></li>
+      <li><a href="#training">Training Mechanics</a></li>
+      <li><a href="#concepts">Modern LLM Concepts & Jargon</a></li>
+      <li><a href="#inference">Inference Optimization</a></li>
+      <li><a href="#system">End-to-End System Architecture</a></li>
+      <li><a href="#walkthrough">End-to-End Walkthrough</a></li>
+    </ol>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section" id="foundations">
+    <span class="section-number">§ 01</span>
+    <h2>Foundations of AI and LLMs</h2>
+
+    <h3>The Hierarchy: AI → ML → Deep Learning → Generative AI</h3>
+    <p>These terms are often used interchangeably but represent a nested hierarchy of concepts. <strong>Artificial Intelligence (AI)</strong> is the broadest category — any technique that enables machines to exhibit intelligent behavior, including rule-based systems, search algorithms, and expert systems. <strong>Machine Learning (ML)</strong> is a subset of AI where systems learn patterns from data rather than following explicit rules. <strong>Deep Learning (DL)</strong> is a subset of ML that uses neural networks with many layers to learn hierarchical representations. <strong>Generative AI</strong> is a class of deep learning models capable of generating new content — text, images, code, audio — by learning the underlying distribution of training data.</p>
+
+    <h3>Neural Networks: The Foundation</h3>
+    <p>A neural network is a computation graph composed of layers of parameterized linear transformations followed by nonlinear activation functions. Each "neuron" computes a weighted sum of its inputs, adds a bias term, and passes the result through an activation function like ReLU or GELU. Stacking these layers allows networks to learn increasingly abstract features: pixels → edges → shapes → objects, or characters → words → phrases → semantics.</p>
+
+    <div class="formula">output = activation(W · input + b)
+W ∈ ℝ^(out×in), b ∈ ℝ^out</div>
+
+    <h3>Training vs. Inference</h3>
+    <p><strong>Training</strong> is the optimization phase: given labeled or unlabeled data and a loss function, the model's parameters (weights) are iteratively adjusted via gradient descent to minimize prediction error. This is compute-intensive and typically done offline. <strong>Inference</strong> is the deployment phase: given fixed weights, the model makes predictions on new inputs. Inference can happen in real time and requires lower (but still significant) compute for large models.</p>
+
+    <h3>Learning Paradigms</h3>
+    <p><strong>Supervised learning</strong> trains on input-output pairs (e.g., image classification with labels). <strong>Unsupervised learning</strong> finds structure in unlabeled data (e.g., clustering, dimensionality reduction). <strong>Self-supervised learning</strong> — the paradigm powering LLMs — generates its own supervision signal from raw data. For language models, this means predicting the next token given all previous tokens, using the data itself as the label. This allows training on internet-scale text without manual annotation.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 2 -->
+  <div class="section" id="transformer">
+    <span class="section-number">§ 02</span>
+    <h2>Transformer Architecture</h2>
+
+    <h3>Motivation: The Failure of Sequence Models</h3>
+    <p>Before Transformers, sequence modeling relied on Recurrent Neural Networks (RNNs) and their gated variants — LSTMs and GRUs. These models process tokens sequentially, maintaining a hidden state that is updated at each time step. The fundamental problems: (1) <strong>vanishing/exploding gradients</strong> make it difficult to propagate learning signals over long sequences; (2) <strong>sequential computation</strong> prevents parallelization, making training slow; (3) <strong>long-range dependencies</strong> degrade because information must flow through every intermediate hidden state.</p>
+
+    <p>The 2017 paper "Attention Is All You Need" (Vaswani et al.) proposed discarding recurrence entirely and building sequence models purely from attention mechanisms — allowing every token to directly attend to every other token in a single layer, enabling full parallelization and constant-path-length dependency modeling.</p>
+
+    <h3>Encoder-Decoder Architecture</h3>
+    <p>The original Transformer was designed for sequence-to-sequence tasks (e.g., translation). The <strong>Encoder</strong> reads the full input sequence and produces a rich contextual representation of each token. The <strong>Decoder</strong> takes the encoder's output and autoregressively generates the output sequence one token at a time, attending to both previously generated tokens (via self-attention) and the encoder output (via cross-attention). Modern LLMs largely drop the encoder and use decoder-only architectures.</p>
+
+    <div class="diagram">┌─────────────────────────────────────────┐
+│           TRANSFORMER BLOCK              │
+│                                          │
+│  Input Tokens → Embedding + Pos Encoding │
+│          ↓                               │
+│  ┌───────────────────────────────┐       │
+│  │   Multi-Head Self-Attention   │       │
+│  │   (Q, K, V projections)       │       │
+│  └───────────────────────────────┘       │
+│          ↓                               │
+│       + Residual Connection              │
+│       → Layer Normalization              │
+│          ↓                               │
+│  ┌───────────────────────────────┐       │
+│  │  Position-wise Feed-Forward   │       │
+│  │  FFN(x) = max(0, xW₁+b₁)W₂+b₂│       │
+│  └───────────────────────────────┘       │
+│          ↓                               │
+│       + Residual Connection              │
+│       → Layer Normalization              │
+│          ↓                               │
+│      (Repeated N times)                  │
+│          ↓                               │
+│     Linear → Softmax → Logits            │
+└─────────────────────────────────────────┘</div>
+    <div class="diagram-label">▲ One Transformer block (decoder variant shown)</div>
+
+    <h3>Self-Attention Mechanism</h3>
+    <p>Self-attention answers the question: "For each token in the sequence, how much should it attend to every other token?" This allows the model to resolve coreferences, capture syntactic structure, and propagate semantic information regardless of distance.</p>
+
+    <p>For each token, three vectors are computed from the token's embedding via learned linear projections: a <strong>Query (Q)</strong>, a <strong>Key (K)</strong>, and a <strong>Value (V)</strong>. Think of it like a soft database lookup: the Query is what you're looking for, the Keys are the index entries, and Values are the actual content retrieved.</p>
+
+    <div class="formula">Attention(Q, K, V) = softmax(QKᵀ / √d_k) · V</div>
+
+    <p>The dot product QKᵀ produces attention scores — a matrix of how compatible each query is with each key. Dividing by √d_k (the square root of the key dimension) prevents the dot products from growing too large in high-dimensional space, which would push the softmax into saturation. The softmax converts scores to a probability distribution, and the weighted sum over Values produces the output: a context-aware representation of each token.</p>
+
+    <h3>Multi-Head Attention</h3>
+    <p>Running a single attention operation captures one type of relationship. Multi-head attention runs H parallel attention operations (heads), each with its own Q/K/V projections, then concatenates and linearly projects the results. Different heads learn to attend to different relationship types: one head might track subject-verb agreement, another might resolve pronoun references, another might capture positional proximity.</p>
+
+    <div class="formula">MultiHead(Q,K,V) = Concat(head₁,...,headₕ)Wᴼ
+headᵢ = Attention(QWᵢQ, KWᵢK, VWᵢV)</div>
+
+    <h3>Positional Encoding</h3>
+    <p>Self-attention is inherently permutation-invariant — it treats the input as a set, not a sequence. To inject position information, a positional encoding is added to each token's embedding before the first Transformer layer. The original paper used sinusoidal functions of different frequencies. Modern models use learned positional embeddings or more sophisticated schemes like Rotary Position Embedding (RoPE), which encodes relative positions directly into the attention computation.</p>
+
+    <h3>Feed-Forward Networks</h3>
+    <p>Each Transformer block contains a two-layer feed-forward network applied identically to each token position. This is where much of the model's "knowledge" is stored — research suggests FFN layers act as key-value memories. The hidden dimension is typically 4× the model dimension, making FFNs the dominant contributor to parameter count in most architectures.</p>
+
+    <h3>Residual Connections and Layer Normalization</h3>
+    <p>Both the attention sublayer and the FFN sublayer are wrapped in a residual (skip) connection: the layer's output is added to its input. This preserves gradient flow during backpropagation and allows layers to learn residual corrections rather than full transformations. Layer normalization (applied before or after each sublayer, depending on the variant) stabilizes training by normalizing activations across the feature dimension.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 3 -->
+  <div class="section" id="variants">
+    <span class="section-number">§ 03</span>
+    <h2>Variants of Transformer Models</h2>
+
+    <div class="term-grid">
+      <div class="term-card">
+        <strong>Encoder-only (e.g., BERT)</strong>
+        <span>Bidirectional attention — each token attends to all others. Optimal for classification, NER, embeddings. Uses Masked Language Modeling: predict randomly masked tokens using full context.</span>
+      </div>
+      <div class="term-card">
+        <strong>Decoder-only (e.g., GPT, LLaMA)</strong>
+        <span>Causal (unidirectional) attention — each token attends only to preceding tokens. The dominant architecture for generative LLMs. Uses Next Token Prediction as the training objective.</span>
+      </div>
+      <div class="term-card">
+        <strong>Encoder-Decoder (e.g., T5, BART)</strong>
+        <span>Full encoder reads input; decoder generates output with cross-attention to encoder states. Best for translation, summarization, seq2seq tasks.</span>
+      </div>
+      <div class="term-card">
+        <strong>Autoregressive vs Masked</strong>
+        <span>Autoregressive: generate left-to-right, conditioning on all previous tokens. Masked: bidirectional prediction during training. Autoregressive models are standard for text generation.</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section 4 -->
+  <div class="section" id="tokenization">
+    <span class="section-number">§ 04</span>
+    <h2>Tokenization and Vector Representation</h2>
+
+    <h3>Tokens vs. Words</h3>
+    <p>LLMs do not operate on raw text or individual characters. They operate on <strong>tokens</strong> — subword units that balance vocabulary size against coverage. A word like "unbelievable" might be tokenized as ["un", "believ", "able"]; "GPT-4" might be ["G", "PT", "-", "4"]. A typical vocabulary contains 32,000–128,000 tokens. The choice of tokenization scheme significantly impacts model behavior, especially for code, non-Latin scripts, and numbers.</p>
+
+    <h3>Subword Tokenization Algorithms</h3>
+    <p><strong>Byte Pair Encoding (BPE)</strong> starts with individual characters and iteratively merges the most frequent adjacent pairs to build a vocabulary. Used by GPT models. <strong>WordPiece</strong> (used in BERT) is similar but maximizes the likelihood of the training data under a language model. <strong>SentencePiece</strong> (used in LLaMA, T5) works directly on raw text without pre-tokenization, making it language-agnostic and robust to whitespace variations.</p>
+
+    <h3>Embeddings</h3>
+    <p>Each token ID is mapped to a dense vector via an embedding lookup table — a matrix of shape (vocab_size × d_model). This converts discrete token IDs into continuous vectors that the model can process mathematically. For GPT-3, d_model = 12,288; for smaller models like GPT-2 small, d_model = 768.</p>
+
+    <div class="analogy">
+      <strong>Analogy:</strong> Think of the embedding matrix as a giant dictionary where each word has a GPS coordinate in a high-dimensional space. Words with similar meanings cluster together; relationships like "king − man + woman ≈ queen" emerge as vector arithmetic.
+    </div>
+
+    <h3>Word Embeddings vs. Contextual Embeddings</h3>
+    <p>Classical word embeddings like Word2Vec assign a single fixed vector to each word regardless of context. "Bank" gets one vector whether you mean a riverbank or a financial institution. In Transformers, embeddings are <strong>contextual</strong> — the representation of a token is dynamically shaped by all other tokens in the sequence via the attention mechanism. The same token at different positions in different sentences produces different internal representations.</p>
+
+    <h3>High-Dimensional Embedding Space</h3>
+    <p>Models operate in spaces of hundreds to thousands of dimensions. This high dimensionality is not coincidental — it allows the model to encode many independent features simultaneously without interference (the "Johnson-Lindenstrauss" effect). Semantic clusters form naturally: languages cluster, code syntax clusters, factual domains cluster.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 5 -->
+  <div class="section" id="dataflow">
+    <span class="section-number">§ 05</span>
+    <h2>Data Flow Inside an LLM</h2>
+
+    <h3>Step-by-Step Forward Pass</h3>
+
+    <p><strong>1. Input Prompt.</strong> The user's raw text string enters the system.</p>
+    <p><strong>2. Tokenization.</strong> The text is split into tokens by the tokenizer, producing a sequence of integer IDs. "Hello world" → [9906, 995].</p>
+    <p><strong>3. Embedding Layer.</strong> Each token ID is looked up in the embedding matrix, yielding a matrix of shape (seq_len × d_model).</p>
+    <p><strong>4. Positional Encoding.</strong> A positional encoding vector is added element-wise to each token embedding, injecting sequence order information.</p>
+    <p><strong>5. Transformer Layers.</strong> The sequence passes through N stacked Transformer blocks (e.g., 96 for GPT-3). In each block: multi-head self-attention computes contextual representations, residual + LayerNorm stabilizes, then the FFN applies position-wise transformations.</p>
+    <p><strong>6. Attention Calculations.</strong> Within each attention head, Q/K/V projections are computed for all positions simultaneously. The attention matrix (seq_len × seq_len) is computed via scaled dot-product. In decoder-only models, a causal mask zeros out attention to future positions.</p>
+    <p><strong>7. Logits.</strong> After the final Transformer layer, a linear projection maps the last token's representation from d_model to vocab_size, producing raw unnormalized scores called logits — one score per vocabulary token.</p>
+
+    <div class="formula">logits = W_lm · h_last,   W_lm ∈ ℝ^(vocab_size × d_model)</div>
+
+    <p><strong>8. Softmax.</strong> Logits are converted to a probability distribution over the vocabulary via softmax.</p>
+    <p><strong>9. Sampling.</strong> A token is selected from this distribution. The method matters enormously for output quality:</p>
+
+    <div class="term-grid">
+      <div class="term-card">
+        <strong>Temperature</strong>
+        <span>Scales logits before softmax. Low temp (→0) makes distribution sharper (greedy); high temp (→∞) flattens it (more random). Typical values: 0.7–1.0.</span>
+      </div>
+      <div class="term-card">
+        <strong>Top-k</strong>
+        <span>Restrict sampling to the k most probable tokens. Prevents low-probability noise tokens from being selected.</span>
+      </div>
+      <div class="term-card">
+        <strong>Top-p (Nucleus)</strong>
+        <span>Sample from the smallest set of tokens whose cumulative probability ≥ p. Adaptive: uses fewer tokens when distribution is sharp, more when flat.</span>
+      </div>
+      <div class="term-card">
+        <strong>Greedy Decoding</strong>
+        <span>Always pick the argmax token. Fast but prone to degenerate repetition. Not recommended for open-ended generation.</span>
+      </div>
+    </div>
+
+    <p><strong>10. Autoregressive Generation.</strong> The sampled token is appended to the input sequence, and the entire process repeats until an end-of-sequence token is generated or a maximum length is reached. This is O(n²) in sequence length due to the attention matrix, which is a fundamental constraint of Transformer inference.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 6 -->
+  <div class="section" id="training">
+    <span class="section-number">§ 06</span>
+    <h2>Training Mechanics</h2>
+
+    <h3>Pretraining</h3>
+    <p>Pretraining is the first and most expensive phase. The model is trained on a massive corpus (trillions of tokens from web crawls, books, code repositories, scientific papers) to minimize the next-token prediction loss. This is where the model acquires linguistic competence, world knowledge, and reasoning patterns.</p>
+
+    <h3>Loss Function: Cross-Entropy</h3>
+    <p>The training objective is to maximize the log-probability of the correct next token at every position. Equivalently, minimize cross-entropy loss between the predicted distribution and the one-hot target. For a sequence of T tokens: loss = −(1/T) × Σ log P(token_t | token_{1..t-1}).</p>
+
+    <h3>Backpropagation and Gradient Descent</h3>
+    <p>After computing the loss, backpropagation computes the gradient of the loss with respect to every parameter via the chain rule. An optimizer then updates all weights in the direction that decreases the loss. For LLMs with billions of parameters, the optimizer state itself (first and second moment estimates for Adam) can consume more memory than the weights.</p>
+
+    <p><strong>Adam</strong> maintains per-parameter adaptive learning rates using exponential moving averages of gradients and their squares. <strong>AdamW</strong> decouples weight decay from the gradient update, which improves regularization and is the standard choice for LLM training.</p>
+
+    <h3>Fine-Tuning and Alignment</h3>
+    <p><strong>Supervised Fine-Tuning (SFT)</strong> continues training on curated task-specific data. <strong>Instruction Tuning</strong> fine-tunes on instruction-response pairs to make the model follow natural-language directions. <strong>RLHF (Reinforcement Learning from Human Feedback)</strong> trains a reward model on human preference judgments, then optimizes the LLM's policy via PPO to maximize expected reward while minimizing KL divergence from the SFT baseline — preventing the model from "reward hacking" into incoherent outputs.</p>
+
+    <h3>Scaling Laws</h3>
+    <p>Chinchilla scaling laws (Hoffmann et al., 2022) show that model performance follows a power law with respect to compute, parameters, and training tokens, with an optimal trade-off: for a given compute budget, N parameters ≈ D/20 training tokens. Many early models were undertrained relative to their parameter count; Chinchilla demonstrated that smaller models trained on more data outperform larger models trained for fewer steps.</p>
+
+    <h3>Distributed Training</h3>
+    <p>Training GPT-scale models requires distributing computation across thousands of GPUs or TPUs. <strong>Data parallelism</strong> replicates the model across devices, each processing different mini-batches, then aggregates gradients. <strong>Tensor parallelism</strong> splits individual weight matrices across devices. <strong>Pipeline parallelism</strong> assigns different Transformer layers to different devices, passing activations between them. Modern frameworks like Megatron-LM combine all three.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 7 -->
+  <div class="section" id="concepts">
+    <span class="section-number">§ 07</span>
+    <h2>Modern LLM Concepts and Jargon</h2>
+
+    <h3>Prompting Strategies</h3>
+    <p><strong>Zero-shot prompting</strong> asks the model to perform a task with no examples — it relies entirely on knowledge from pretraining. <strong>Few-shot prompting</strong> provides examples within the context window, which serves as implicit in-context learning. <strong>Chain-of-thought prompting</strong> encourages the model to produce intermediate reasoning steps before the final answer, substantially improving performance on multi-step problems.</p>
+
+    <h3>Context Window</h3>
+    <p>The maximum number of tokens the model can process in a single forward pass. This is a hard architectural constraint. GPT-3's context was 4K tokens; modern models extend to 128K–1M tokens through techniques like RoPE scaling and FlashAttention. Long contexts increase the O(n²) attention cost significantly.</p>
+
+    <h3>Hallucination and Grounding</h3>
+    <p>LLMs generate fluent, confident-sounding text even when fabricating facts. This is a fundamental property of probabilistic next-token prediction — the model doesn't have a truth oracle. <strong>Grounding</strong> techniques constrain generation to verified sources. <strong>Retrieval-Augmented Generation (RAG)</strong> addresses this by retrieving relevant documents at inference time and injecting them into the prompt context, anchoring the model's output to external knowledge.</p>
+
+    <h3>RAG and Vector Databases</h3>
+    <p>A RAG pipeline: (1) encode the user query into an embedding vector; (2) perform approximate nearest-neighbor search in a vector database (e.g., Pinecone, Weaviate, pgvector) to retrieve semantically similar documents; (3) inject retrieved text into the prompt; (4) generate a response grounded in retrieved context. The quality of the embedding model and the retrieval architecture are as important as the generation model.</p>
+
+    <h3>Agents and Tool Calling</h3>
+    <p>LLMs can be augmented with tools: functions the model can invoke to take actions (API calls, code execution, web search, database queries). The model generates structured tool-call arguments, receives the tool's output, and continues reasoning. Multi-step agent systems chain multiple tool calls, planning and re-evaluating based on intermediate results — turning the LLM into a reasoning controller over external systems.</p>
+
+    <h3>Architectural Advances</h3>
+    <p><strong>Mixture of Experts (MoE)</strong> replaces dense FFN layers with a collection of "expert" FFNs, routing each token to a small subset (e.g., 2 of 64 experts) via a learned gating network. This dramatically increases effective model capacity with sublinear compute cost. Mixtral-8x7B has 46B parameters but uses ~12B per forward pass. <strong>Multimodal models</strong> (GPT-4V, Gemini) encode non-text modalities (images, audio) into embedding spaces compatible with the text transformer.</p>
+
+    <h3>Efficiency Techniques</h3>
+    <p><strong>Quantization</strong> reduces weight precision from FP32/BF16 to INT8 or INT4, shrinking model size and accelerating inference with minimal quality loss. <strong>Distillation</strong> trains a smaller student model to mimic a larger teacher model's output distribution. <strong>LoRA (Low-Rank Adaptation)</strong> freezes pretrained weights and injects trainable low-rank decomposition matrices into attention layers — dramatically reducing the number of trainable parameters for fine-tuning, making it feasible on commodity hardware. LoRA is the dominant PEFT (Parameter-Efficient Fine-Tuning) method.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 8 -->
+  <div class="section" id="inference">
+    <span class="section-number">§ 08</span>
+    <h2>Inference Optimization</h2>
+
+    <h3>KV Cache</h3>
+    <p>During autoregressive generation, the Key and Value projections for all previous tokens are identical across steps — recomputing them is wasteful. The KV cache stores K and V tensors for all past positions, requiring only a single new row to be computed per step. This reduces per-step compute from O(n²) to O(n) at the cost of memory: KV cache for long sequences can consume gigabytes.</p>
+
+    <h3>Batching and Parallelism</h3>
+    <p><strong>Static batching</strong> groups fixed-size requests together. <strong>Continuous batching</strong> (dynamic batching) treats inference as a pipeline, inserting new requests into the batch as slots free up from completed sequences. This dramatically improves GPU utilization. <strong>Tensor parallelism</strong> at inference splits large weight matrices across multiple GPUs. For serving very large models, <strong>pipeline parallelism</strong> assigns layer groups to different devices.</p>
+
+    <h3>Latency vs. Throughput</h3>
+    <p>These are in fundamental tension. Increasing batch size improves throughput (tokens/second/GPU) but increases time-to-first-token for individual requests. Speculative decoding (a small draft model generates token candidates; the large model verifies in parallel) can reduce latency without sacrificing quality. Token streaming — yielding tokens to the client as they're generated — reduces perceived latency by avoiding waiting for full completion.</p>
+  </div>
+
+  <hr>
+
+  <!-- Section 9 -->
+  <div class="section" id="system">
+    <span class="section-number">§ 09</span>
+    <h2>End-to-End System Architecture</h2>
+
+    <div class="callout">
+      <p>A production LLM deployment is not just a model — it's a layered system spanning API infrastructure, retrieval, safety, routing, and caching components working in concert.</p>
+    </div>
+
+    <div class="diagram">USER INPUT
+    │
+    ▼
+┌─────────────────────────┐
+│     API Gateway Layer    │  ← Auth, rate limiting, routing
+│  (REST/WebSocket/gRPC)  │
+└─────────────┬───────────┘
+              │
+    ┌─────────┴──────────┐
+    │  Safety Pre-filter  │  ← PII detection, prompt injection defense
+    └─────────┬──────────┘
+              │
+    ┌─────────┴──────────┐    ┌────────────────────┐
+    │   RAG Retrieval     │◄───│  Vector Database    │
+    │  (optional layer)   │    │  (ANN search)       │
+    └─────────┬──────────┘    └────────────────────┘
+              │
+    ┌─────────┴──────────┐
+    │    Context Builder  │  ← Prompt assembly: system + retrieved + user
+    └─────────┬──────────┘
+              │
+    ┌─────────┴──────────┐
+    │    LLM Inference    │  ← GPU cluster, KV cache, batching
+    │  (Tokenize → Fwd   │
+    │   Pass → Sample)   │
+    └─────────┬──────────┘
+              │
+    ┌─────────┴──────────┐
+    │  Safety Post-filter │  ← Content moderation, policy enforcement
+    └─────────┬──────────┘
+              │
+    ┌─────────┴──────────┐
+    │  Streaming Output   │  ← Token-by-token delivery to client
+    └────────────────────┘</div>
+    <div class="diagram-label">▲ Production LLM system components (simplified)</div>
+
+    <p>Each component is independently scalable and replaceable. The retrieval layer can be swapped without touching the model. The safety filters can be updated with policy changes. The model can be swapped via canary deployment. This layered design is what separates "running a model" from "deploying an LLM system."</p>
+  </div>
+
+</div>
+
+<!-- Final Walkthrough -->
+<div class="walkthrough" id="walkthrough">
+  <div class="container">
+    <span class="section-number" style="color: rgba(255,255,255,0.4);">§ 10</span>
+    <h2>How an LLM Generates a Response — End-to-End Walkthrough</h2>
+    <p style="margin-bottom:2rem;">Let's trace exactly what happens from the moment you press Enter to the moment you see the first word of a response. The prompt is: <code style="font-family:monospace; color:#a8dadc;">"Explain the Pythagorean theorem in simple terms."</code></p>
+
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <strong>API receives the request</strong>
+        <p>The raw string is sent via HTTP/WebSocket to the inference endpoint. Authentication, rate limiting, and input validation are applied. A request ID is assigned.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <strong>Safety pre-filter</strong>
+        <p>A fast classifier checks the input for disallowed content — jailbreak patterns, sensitive PII, policy violations. If flagged, the request is rejected before ever reaching the model.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <strong>Context assembly</strong>
+        <p>The system prompt (if any), retrieved documents (if RAG is active), conversation history, and the user's message are concatenated into the full context window. Token budget is calculated.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <strong>Tokenization</strong>
+        <p>The assembled string is fed to the tokenizer. "Pythagorean" becomes multiple tokens. The output is a tensor of integer IDs of shape (1 × seq_len).</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <strong>Embedding lookup + positional encoding</strong>
+        <p>Token IDs are passed through the embedding matrix → (seq_len × d_model). Positional encodings are added. The sequence now lives in continuous high-dimensional space.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <strong>N Transformer layers execute</strong>
+        <p>Each layer runs multi-head self-attention over the full sequence, computes attention scores, weighs Values, adds residuals, normalizes, passes through FFN. Contextual representations deepen with each layer.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">07</div>
+      <div class="step-content">
+        <strong>Logit projection + sampling</strong>
+        <p>The final hidden state at the last position is projected to vocab_size logits. Temperature is applied. Top-p nucleus sampling selects the next token — e.g., token ID 464 = "The".</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">08</div>
+      <div class="step-content">
+        <strong>Token streamed to client</strong>
+        <p>"The" is immediately sent to the client via server-sent events. The user sees the first word appear. Perceived latency drops to time-to-first-token.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">09</div>
+      <div class="step-content">
+        <strong>Autoregressive loop</strong>
+        <p>Token 464 is appended to the input. KV cache serves previous K/V tensors. A new forward pass computes the next token. This repeats — "The", "Pythagorean", "theorem", ... — until &lt;EOS&gt; or max_tokens.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">10</div>
+      <div class="step-content">
+        <strong>Safety post-filter + delivery</strong>
+        <p>The complete response passes through content moderation. If it clears, the connection is closed. Telemetry is logged: latency, token count, prompt fingerprint, output hash.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem; padding:1.5rem; background:rgba(255,255,255,0.06); border-left:3px solid #e74c3c;">
+      <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Key Takeaway</p>
+      <p style="margin:0; font-size:1.05rem;">Every word you see is the product of a probability distribution sampled over 50,000+ candidates, shaped by billions of parameters trained on trillions of tokens, executed in milliseconds on specialized silicon. The model doesn't "know" the Pythagorean theorem — it has learned that given this context, these tokens have high probability of following one another in a coherent and accurate way.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Inside the Machine: A Technical Deep Dive into LLMs &nbsp;·&nbsp; Publication-ready Technical Reference &nbsp;·&nbsp; For engineers, architects &amp; data scientists
+</footer>
+
+</body>
+</html>
