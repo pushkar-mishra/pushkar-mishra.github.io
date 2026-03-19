@@ -381,11 +381,91 @@
             <p><strong>Key principle:</strong> You don't design for a million users on day one. You evolve deliberately, investing in complexity only when scale demands it.</p>
         </div>
 
+        <!-- TABLE OF CONTENTS -->
+        <div class="section" id="toc-section">
+            <h2>📋 Table of Contents</h2>
+            <div style="background:#f8f9fa; border:1px solid #e0e0e0; border-radius:10px; padding:1.8rem 2rem; line-height:1;">
+                <ol style="list-style:none; padding:0; margin:0;">
 
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-analogy" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">1.</span>
+                            <span>🌱 Why the Farm and Fertilizer Analogy Works</span>
+                        </a>
+                    </li>
 
-        
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-stages" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">2.</span>
+                            <span>📈 The Seven Stages of Platform Scale</span>
+                        </a>
+                        <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 1 — Pre-launch: Static Web Framework</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 2 — ~10 Users: Single Virtual Machine</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 3 — ~100 Users: Separate VMs for Backend &amp; Database</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 4 — ~1,000 Users: Availability Zones &amp; Read Replicas</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage5" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 5 — ~10,000 Users: Load Balancers, Autoscaling &amp; CDN</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage6" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 6 — ~100,000 Users: Microservices &amp; Kubernetes</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage7" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 7 — ~1 Million Users: Federation, Partitioning &amp; Multi-Region</a></li>
+                        </ol>
+                    </li>
+
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-corrections" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">3.</span>
+                            <span>🔧 Corrections &amp; Clarifications to the Common Narrative</span>
+                        </a>
+                    </li>
+
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-summary" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">4.</span>
+                            <span>📊 Stage-by-Stage Summary Table</span>
+                        </a>
+                    </li>
+
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-roadmap" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">5.</span>
+                            <span>🗺️ Evolutionary Roadmap: How to Plan the Journey</span>
+                        </a>
+                        <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 1 — Validate (0 to 1K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 2 — Stabilise (1K to 10K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 3 — Accelerate (10K to 100K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 4 — Globalise (100K to 1M+ Users)</a></li>
+                        </ol>
+                    </li>
+
+                    <li style="margin-bottom:0.55rem;">
+                        <a href="#toc-team" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">6.</span>
+                            <span>👥 Team Sizing at Each Stage: The Human Side of Scaling</span>
+                        </a>
+                        <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team-framework" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ The Demand-Signal Framework: When to Hire</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 1–2: The Founding Crew (1–3 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 3–4: First Specialists (3–6 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 5: Operational Maturity (8–15 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 6: Squad Model (20–45 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team5" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 7: Federated Engineering (60–150+ Engineers)</a></li>
+                        </ol>
+                    </li>
+
+                    <li>
+                        <a href="#toc-conclusion" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">7.</span>
+                            <span>🌾 The Harvest: Key Takeaways</span>
+                        </a>
+                    </li>
+
+                </ol>
+            </div>
+        </div>
+        <!-- END TABLE OF CONTENTS -->
+
         <!-- THE FARMING ANALOGY -->
-        <div class="section">
+        <div class="section" id="toc-analogy">
             <h2>🌱 Why the Farm and Fertilizer Analogy Works</h2>
             <p>In digital farming platforms, systems that manage IoT sensors, crop data, field logistics, and supply chains, scale is not optional. These platforms start small (a pilot farm, a single region) and must eventually serve thousands of farms, millions of data points per day, and real-time decision engines.</p>
             <p>Fertilizer production platforms face a parallel challenge. A platform tracking nitrogen, phosphorus, and potassium (NPK) blending ratios at a single plant is a simple operational tool. But when that platform must coordinate raw material procurement from global suppliers, monitor reactor temperatures across dozens of facilities, track regulatory submissions in multiple jurisdictions, and deliver nutrient recommendations to millions of farmers in real time, it must scale in every dimension at once.</p>
@@ -400,13 +480,13 @@
         </div>
 
         <!-- STAGES -->
-        <div class="section">
+        <div class="section" id="toc-stages">
             <h2>📈 The Seven Stages of Platform Scale</h2>
 
             <div class="stage-grid">
 
                 <!-- Stage 1 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage1">
                     <span class="stage-number">Stage 1</span>
                     <span class="stage-badge">Pre-launch</span>
                     <h3>🌱 Seed the Soil: Static Web Framework</h3>
@@ -421,7 +501,7 @@
                 </div>
 
                 <!-- Stage 2 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage2">
                     <span class="stage-number">Stage 2</span>
                     <span class="stage-badge">~10 Users</span>
                     <h3>🚜 The First Tractor: Single Virtual Machine</h3>
@@ -443,7 +523,7 @@
                 </div>
 
                 <!-- Stage 3 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage3">
                     <span class="stage-number">Stage 3</span>
                     <span class="stage-badge">~100 Users</span>
                     <h3>🌾 Divide the Fields: Separate VMs for Backend &amp; Database</h3>
@@ -458,7 +538,7 @@
                 </div>
 
                 <!-- Stage 4 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage4">
                     <span class="stage-number">Stage 4</span>
                     <span class="stage-badge">~1,000 Users</span>
                     <h3>🌻 Multi-Crop Resilience: Availability Zones &amp; Read Replicas</h3>
@@ -481,7 +561,7 @@
                 </div>
 
                 <!-- Stage 5 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage5">
                     <span class="stage-number">Stage 5</span>
                     <span class="stage-badge">~10,000 Users</span>
                     <h3>🚁 Drone Fleet: Load Balancers, Autoscaling &amp; CDN</h3>
@@ -503,7 +583,7 @@
                 </div>
 
                 <!-- Stage 6 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage6">
                     <span class="stage-number">Stage 6</span>
                     <span class="stage-badge">~100,000 Users</span>
                     <h3>🏭 Agri-Corp Operations: Microservices &amp; Kubernetes</h3>
@@ -530,7 +610,7 @@
                 </div>
 
                 <!-- Stage 7 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-stage7">
                     <span class="stage-number">Stage 7</span>
                     <span class="stage-badge">~1 Million Users</span>
                     <h3>🌍 Global Harvest: Federation, Partitioning &amp; Multi-Region</h3>
@@ -553,7 +633,7 @@
         </div>
 
         <!-- CORRECTIONS & ADDITIONS -->
-        <div class="section">
+        <div class="section" id="toc-corrections">
             <h2>🔧 Corrections &amp; Clarifications to the Common Narrative</h2>
 
             <div class="correction-box">
@@ -578,7 +658,7 @@
         </div>
 
         <!-- SUMMARY TABLE -->
-        <div class="section">
+        <div class="section" id="toc-summary">
             <h2>📊 Stage-by-Stage Summary</h2>
             <div class="comparison-table">
                 <table>
@@ -647,10 +727,10 @@
         </div>
 
         <!-- ROADMAP -->
-        <div class="roadmap">
+        <div class="roadmap" id="toc-roadmap">
             <h2>🗺️ Evolutionary Roadmap: How to Plan the Journey</h2>
 
-            <div class="phase">
+            <div class="phase" id="toc-phase1">
                 <h4>Phase 1: Validate (0 to 1K Users)</h4>
                 <ul>
                     <li>Build on static frameworks or managed PaaS to eliminate infra distraction</li>
@@ -660,7 +740,7 @@
                 </ul>
             </div>
 
-            <div class="phase">
+            <div class="phase" id="toc-phase2">
                 <h4>Phase 2: Stabilise (1K to 10K Users)</h4>
                 <ul>
                     <li>Introduce multi-AZ deployment for high availability</li>
@@ -671,7 +751,7 @@
                 </ul>
             </div>
 
-            <div class="phase">
+            <div class="phase" id="toc-phase3">
                 <h4>Phase 3: Accelerate (10K to 100K Users)</h4>
                 <ul>
                     <li>Decompose the monolith along domain boundaries where scaling needs diverge</li>
@@ -681,7 +761,7 @@
                 </ul>
             </div>
 
-            <div class="phase" style="margin-bottom: 0;">
+            <div class="phase" id="toc-phase4" style="margin-bottom: 0;">
                 <h4>Phase 4: Globalise (100K to 1M+ Users)</h4>
                 <ul>
                     <li>Design and execute a database partitioning strategy before you hit the wall</li>
@@ -694,16 +774,15 @@
         </div>
 
         <!-- TEAM SIZING SECTION -->
-        <div class="section">
+        <div class="section" id="toc-team">
             <h2>👥 Team Sizing at Each Stage: The Human Side of Scaling</h2>
 
             <div class="intro" style="background:#f0f4ff; border-left-color:#667eea;">
                 <h2 style="color:#3d3d8f;">Why Team Size Is as Important as Architecture</h2>
                 <p>Every architecture decision is also a team decision. The right infrastructure for 3 engineers will collapse under the weight of 50 if the team organisation does not evolve with it. Conversely, hiring aggressively before demand justifies it burns runway and creates coordination overhead that slows you down.</p>
-                  <div class="analogy-block">
-                    <p><strong>The honest reality in 2026:</strong> AI-assisted coding (GitHub Copilot,OpenAI CodeEx Cursor, Claude Code) is compressing the <em>code-writing</em> effort by 30–60% for well-understood problems. But AI does not know your domain model, your legacy integrations, your database quirks, or the unwritten rules your team has built over years. The headcount savings from AI tools are real  but they accrue at the <em>execution</em> layer, not at the <em>architecture, judgment, and integration</em> layer. Plan accordingly: AI amplifies good engineers; it does not replace the judgment to know what to build.</p>
-
-                  </div>
+                 <div class="analogy-block">
+                <p><strong>The honest reality in 2026:</strong> AI-assisted coding (GitHub Copilot, OpenAI CodeEx, Cursor, Claude Code) is compressing the <em>code-writing</em> effort by 30–60% for well-understood problems. But AI does not know your domain model, your legacy integrations, your database quirks, or the unwritten rules your team has built over years. The headcount savings from AI tools are real — but they accrue at the <em>execution</em> layer, not at the <em>architecture, judgment, and integration</em> layer. Plan accordingly: AI amplifies good engineers; it does not replace the judgment to know what to build.</p>
+                 </div>
             </div>
 
             <div class="analogy-block">
@@ -712,7 +791,7 @@
             </div>
 
             <!-- Team Sizing Framework -->
-            <div class="correction-box" style="background:#e8f4fd; border-left-color:#3498db;">
+            <div class="correction-box" id="toc-team-framework" style="background:#e8f4fd; border-left-color:#3498db;">
                 <h4 style="color:#1a5276;">🧭 The Demand-Signal Framework: How to Know When to Hire</h4>
                 <p>Rather than hiring to a fixed headcount plan, hire when one of these <strong>four demand signals</strong> fires:</p>
                 <ol style="padding-left:1.5rem; margin-top:0.8rem; line-height:2;">
@@ -728,7 +807,7 @@
             <div class="stage-grid">
 
                 <!-- Stage 1–2 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-team1">
                     <span class="stage-badge" style="background:#27ae60;">Stage 1–2 · 0–10 Users</span>
                     <h3>🌱 The Founding Crew: 1–3 Engineers</h3>
                     <div class="analogy">One farmer, one plot, one season. Speed of learning matters more than division of labour.</div>
@@ -747,7 +826,7 @@
                 </div>
 
                 <!-- Stage 3–4 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-team2">
                     <span class="stage-badge" style="background:#2980b9;">Stage 3–4 · 100–1K Users</span>
                     <h3>🌿 First Specialists: 3–6 Engineers</h3>
                     <div class="analogy">The farm hires its first specialist: an irrigation engineer. Everyone else still does multiple jobs, but one critical function gets dedicated focus.</div>
@@ -766,7 +845,7 @@
                 </div>
 
                 <!-- Stage 5 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-team3">
                     <span class="stage-badge" style="background:#8e44ad;">Stage 5 · ~10K Users</span>
                     <h3>🚁 Operational Maturity: 8–15 Engineers</h3>
                     <div class="analogy">The farm now has a full-time mechanic, a logistics coordinator, and a crop scientist. Each role exists because the farm's complexity has outgrown generalism.</div>
@@ -787,7 +866,7 @@
                 </div>
 
                 <!-- Stage 6 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-team4">
                     <span class="stage-badge" style="background:#c0392b;">Stage 6 · ~100K Users</span>
                     <h3>🏭 Squad Model: 20–45 Engineers</h3>
                     <div class="analogy">The agri-corp now has specialist divisions: soil science, logistics, R&amp;D, compliance. Each division operates semi-autonomously but reports into a shared mission and platform.</div>
@@ -811,7 +890,7 @@
                 </div>
 
                 <!-- Stage 7 -->
-                <div class="stage-card">
+                <div class="stage-card" id="toc-team5">
                     <span class="stage-badge" style="background:#16a085;">Stage 7 · ~1M+ Users</span>
                     <h3>🌍 Federated Engineering: 60–150+ Engineers</h3>
                     <div class="analogy">The global agri-corporation. Each regional operation has its own engineering team understanding local regulations, local integrations, and local crops — but all build on a shared platform with shared standards.</div>
@@ -900,7 +979,7 @@
         <!-- END TEAM SIZING SECTION -->
 
         <!-- CONCLUSION -->
-        <div class="conclusion">
+        <div class="conclusion" id="toc-conclusion">
             <h2>🌾 The Harvest: Key Takeaways</h2>
 
             <div class="key-insight">
