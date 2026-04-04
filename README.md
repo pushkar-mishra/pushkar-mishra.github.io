@@ -1,57 +1,80 @@
-# Pushkar Mishra's Engineering Blog
+# Pushkar Mishra Profile Site
 
-Welcome to the source code for [Pushkar Mishra's Engineering Blog](https://pushkar-mishra.github.io/).
+Source for [pushkar-mishra.github.io](https://pushkar-mishra.github.io/), a static GitHub Pages site designed as a personal product profile for a senior engineering leader.
 
-## 🚀 Overview
+## Overview
 
-This repository powers Pushkar Mishra's personal engineering blog, where you’ll find insights, stories, and updates on:
+The site has two primary entry pages:
 
-- Engineering & Architecture
-- AI & Data Platforms
-- Quantum Computing
-- Entrepreneurship
-- Best Practices & Governance
+- `index.html`: main profile page
+- `blog.html`: insights and article index
 
-## 🖥️ Tech Stack
+The experience is intentionally lightweight, fast, and static-hosting friendly. There is no build step and no framework dependency.
 
-- **HTML5 & CSS3** (Materialize CSS, Font Awesome)
-- **JavaScript**
-- **Responsive Design**
+## Current Design Direction
 
-## 📂 Project Structure
+The site is designed to feel more like a product profile than a traditional portfolio or résumé:
 
-```
+- clear positioning in the hero
+- high-level project storytelling
+- grouped expertise and operating principles
+- editorial-style blog navigation
+- responsive layout with subtle motion
+
+`profile.png` is a required asset and is used in the homepage hero.
+
+## Tech Stack
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Google Fonts
+- GitHub Pages static hosting
+
+## Key Files
+
+```text
 .
+├── index.html
 ├── blog.html
 ├── css/
-│   ├── materialize.css
-│   ├── style.css
-│   └── font-awesome.min.css
+│   ├── profile-site.css
+│   └── ...
 ├── js/
-│   ├── init.js
-│   └── latest-tweet.js
+│   ├── profile-site.js
+│   └── ...
+├── profile.png
 ├── images/
-│   ├── logo.png
-│   ├── profile.png
-│   └── favicon.png
 └── README.md
 ```
 
-## 📝 Usage
+## Editing Rules
 
-1. **Clone this repository:**
-   ```bash
-   git clone https://github.com/pushkar-mishra/pushkar-mishra.github.io.git
-   ```
-2. **Open `blog.html` in your browser.**
+The current homepage and blog redesign follows these constraints:
 
-No build steps required—just static files!
+- only `index.html` and `blog.html` should be modified for page markup changes
+- CSS and JS files may be added or updated as needed
+- other existing HTML files should remain unchanged
+- existing blog/article links must be preserved
+- `profile.png` must not be removed or renamed
 
-## 📬 Contact
+## Local Preview
+
+Open the files directly in a browser, or serve the directory locally with any static file server.
+
+Example:
+
+```bash
+python3 -m http.server
+```
+
+Then open `http://localhost:8000`.
+
+## Contact
 
 - [LinkedIn](https://www.linkedin.com/in/pushkar-mishra-engineering-leader/)
 - [GitHub](https://github.com/pushkar-mishra)
 
 ---
 
-©2025 Pushkar Mishra. All Rights Reserved.
+©2026 Pushkar Mishra. All Rights Reserved.
