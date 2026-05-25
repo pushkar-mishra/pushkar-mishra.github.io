@@ -1,0 +1,1664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Web and Dark Web Explained: Risks, Compromised Data, and Online Safety</title>
+  <meta name="description" content="A detailed educational guide explaining the deep web, dark web, compromised personal data, email account takeover, phone media leaks, onion routing, and practical cybersecurity safety steps.">
+  <meta name="author" content="Cybersecurity Awareness Guide">
+  <meta property="og:title" content="Deep Web and Dark Web Explained">
+  <meta property="og:description" content="Beginner-to-advanced guide to hidden web concepts, compromised data risks, fictional leak examples, and practical safety steps.">
+  <meta property="og:type" content="article">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08111f;
+      --panel: #101b2b;
+      --panel-2: #142439;
+      --text: #eef5ff;
+      --muted: #a9bad0;
+      --soft: #6f8199;
+      --line: rgba(178, 203, 232, 0.18);
+      --accent: #48d6b5;
+      --accent-2: #8bb7ff;
+      --warn: #ffd166;
+      --danger: #ff6b7f;
+      --ok: #7ee787;
+      --code: #06101d;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+      --radius: 8px;
+      --content: 1060px;
+      --article: 780px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(72, 214, 181, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(139, 183, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at top left, rgba(72, 214, 181, 0.18), transparent 34rem),
+        radial-gradient(circle at 80% 10%, rgba(139, 183, 255, 0.12), transparent 28rem),
+        var(--bg);
+      background-size: 44px 44px, 44px 44px, auto, auto, auto;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.72;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+    }
+
+    a:focus,
+    button:focus {
+      outline: 3px solid rgba(72, 214, 181, 0.5);
+      outline-offset: 3px;
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .site-header {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      padding: 64px 24px 48px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero {
+      width: min(var(--content), 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.14;
+      letter-spacing: 0;
+      color: #f7fbff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 6vw, 5.8rem);
+      max-width: 11ch;
+    }
+
+    .subtitle {
+      max-width: 680px;
+      color: #d5e4f6;
+      font-size: clamp(1.08rem, 2vw, 1.35rem);
+      margin: 24px 0;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(16, 27, 43, 0.82);
+      color: #dbe9fb;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .hero-note {
+      max-width: 680px;
+      border-left: 4px solid var(--accent);
+      padding: 14px 18px;
+      background: rgba(72, 214, 181, 0.08);
+      color: #d9f8f1;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .visual-panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(20, 36, 57, 0.9), rgba(8, 17, 31, 0.9));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--soft);
+    }
+
+    .layer-stack {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .layer {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+
+    .layer strong {
+      color: #ffffff;
+    }
+
+    .layer p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .layer .tag {
+      min-width: 82px;
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--radius);
+      color: #06101d;
+      font-weight: 900;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .surface .tag { background: #8bb7ff; }
+    .deep .tag { background: #48d6b5; }
+    .dark .tag { background: #ffd166; }
+
+    .wrap {
+      width: min(var(--content), calc(100% - 36px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 36px;
+      padding: 40px 0 76px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 28px;
+      align-self: start;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.78);
+      padding: 18px;
+      max-height: calc(100vh - 56px);
+      overflow: auto;
+    }
+
+    .toc h2 {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .toc a {
+      display: block;
+      padding: 7px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
+      border-top: 1px solid rgba(178, 203, 232, 0.08);
+    }
+
+    main {
+      max-width: var(--article);
+      min-width: 0;
+    }
+
+    section {
+      padding: 34px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:first-child {
+      padding-top: 0;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.8rem, 3vw, 2.65rem);
+    }
+
+    h3 {
+      margin: 28px 0 12px;
+      font-size: 1.28rem;
+    }
+
+    h4 {
+      margin: 20px 0 8px;
+      font-size: 1rem;
+      color: #d9e9ff;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: #d5e2f2;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 18px;
+      padding-left: 22px;
+      color: #d5e2f2;
+    }
+
+    li {
+      margin: 7px 0;
+    }
+
+    .lead {
+      color: #e6f0fb;
+      font-size: 1.1rem;
+    }
+
+    .callout {
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent-2);
+      border-radius: var(--radius);
+      background: rgba(139, 183, 255, 0.08);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .warning {
+      border-left-color: var(--warn);
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    .danger {
+      border-left-color: var(--danger);
+      background: rgba(255, 107, 127, 0.08);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.82);
+      padding: 18px;
+    }
+
+    .card h3,
+    .card h4 {
+      margin-top: 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    table {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      background: rgba(16, 27, 43, 0.72);
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      color: #ffffff;
+      background: rgba(72, 214, 181, 0.1);
+      font-size: 0.88rem;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #d5e2f2;
+    }
+
+    .snippet {
+      margin: 18px 0 22px;
+      border: 1px solid rgba(255, 209, 102, 0.28);
+      border-radius: var(--radius);
+      background: var(--code);
+      overflow: hidden;
+    }
+
+    .snippet-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 209, 102, 0.12);
+      color: var(--warn);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      color: #dff7ef;
+      font: 0.88rem/1.62 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      white-space: pre;
+    }
+
+    .risk {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: #06101d;
+      background: var(--warn);
+    }
+
+    .risk.high {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .risk.ok {
+      background: var(--ok);
+    }
+
+    .mock-search {
+      margin: 22px 0;
+      border: 1px solid rgba(255, 209, 102, 0.28);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(16, 27, 43, 0.95), rgba(6, 16, 29, 0.95));
+      overflow: hidden;
+    }
+
+    .search-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .fake-input {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--soft);
+      background: rgba(0, 0, 0, 0.2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .disabled-button {
+      min-height: 42px;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 209, 102, 0.36);
+      border-radius: var(--radius);
+      color: var(--warn);
+      background: rgba(255, 209, 102, 0.09);
+      font-weight: 900;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(139, 183, 255, 0.12);
+      border: 1px solid rgba(139, 183, 255, 0.25);
+      color: #dce9ff;
+      font-size: 0.76rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .badge.sale {
+      background: rgba(255, 209, 102, 0.13);
+      border-color: rgba(255, 209, 102, 0.36);
+      color: var(--warn);
+    }
+
+    .badge.danger-badge {
+      background: rgba(255, 107, 127, 0.13);
+      border-color: rgba(255, 107, 127, 0.36);
+      color: #ff9aaa;
+    }
+
+    .mock-result {
+      padding: 16px;
+    }
+
+    .mock-result h4 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px;
+    }
+
+    .result-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .result-meta span {
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .stack-visual {
+      margin: 24px 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.72);
+      overflow: hidden;
+    }
+
+    .stack-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 88px;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .stack-row:last-child {
+      border-bottom: 0;
+    }
+
+    .stack-label {
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .stack-bar {
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .stack-fill {
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    .stack-fill.surface {
+      width: 8%;
+      background: var(--accent-2);
+    }
+
+    .stack-fill.deep {
+      width: 90%;
+      background: var(--accent);
+    }
+
+    .stack-fill.dark {
+      width: 1.2%;
+      min-width: 8px;
+      background: var(--warn);
+    }
+
+    .stack-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .matrix-item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.72);
+    }
+
+    .matrix-item strong {
+      color: #fff;
+    }
+
+    .source-list {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .source-list li {
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.72);
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.75);
+    }
+
+    .num {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #06101d;
+      font-weight: 900;
+    }
+
+    .onion-diagram {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(90px, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      margin: 20px 0;
+    }
+
+    .onion-diagram div {
+      min-height: 110px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(72, 214, 181, 0.12), rgba(16, 27, 43, 0.86));
+    }
+
+    .onion-diagram strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      margin: 0;
+      padding: 12px 14px 12px 42px;
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.72);
+    }
+
+    .checklist li::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 17px;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: var(--accent);
+      box-shadow: inset 0 0 0 3px #06101d;
+    }
+
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .term {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.72);
+      padding: 14px;
+    }
+
+    .term strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .term span {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    footer {
+      padding: 36px 24px;
+      text-align: center;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: rgba(6, 16, 29, 0.8);
+    }
+
+    @media (max-width: 940px) {
+      .hero,
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .site-header {
+        min-height: auto;
+      }
+
+      .toc {
+        position: static;
+        max-height: none;
+      }
+
+      main {
+        max-width: none;
+      }
+
+      .onion-diagram {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        font-size: 16px;
+      }
+
+      .site-header {
+        padding: 48px 18px 32px;
+      }
+
+      .wrap {
+        width: min(100% - 28px, var(--content));
+        padding-top: 24px;
+      }
+
+      .grid-2,
+      .glossary {
+        grid-template-columns: 1fr;
+      }
+
+      .layer {
+        grid-template-columns: 1fr;
+      }
+
+      pre {
+        font-size: 0.78rem;
+      }
+
+      .search-top,
+      .result-meta,
+      .stack-row,
+      .matrix-item {
+        grid-template-columns: 1fr;
+      }
+
+      .stack-note {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #111;
+      }
+
+      .progress,
+      .toc {
+        display: none;
+      }
+
+      .wrap,
+      .hero {
+        display: block;
+      }
+
+      .site-header {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="site-header">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Cybersecurity Awareness</p>
+        <h1>Deep Web and Dark Web</h1>
+        <p class="subtitle">A complete beginner-to-advanced guide to hidden internet concepts, compromised accounts, stolen personal data, onion routing, and practical online safety.</p>
+        <div class="meta-row" aria-label="Article metadata">
+          <span class="pill">Beginner to Advanced</span>
+          <span class="pill">20-30 min read</span>
+          <span class="pill">Fictional examples only</span>
+        </div>
+        <p class="hero-note">This guide uses simulated examples for education. It does not show real stolen data, provide dark web links, or explain how to buy, sell, search for, or access illegal material.</p>
+      </div>
+
+      <div class="visual-panel" aria-label="Conceptual web layers diagram">
+        <div class="panel-head">
+          <span>Internet visibility model</span>
+          <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+        </div>
+        <div class="layer-stack">
+          <div class="layer surface">
+            <span class="tag">Surface</span>
+            <div><strong>Public and indexed</strong><p>News, blogs, product pages, documentation, and pages search engines can discover.</p></div>
+          </div>
+          <div class="layer deep">
+            <span class="tag">Deep</span>
+            <div><strong>Private and unindexed</strong><p>Email, banking portals, cloud files, medical records, subscriptions, and dashboards.</p></div>
+          </div>
+          <div class="layer dark">
+            <span class="tag">Dark</span>
+            <div><strong>Hidden and routed</strong><p>Services that require special routing software. Some uses are legitimate; some are criminal.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <a href="#definitions">Quick definitions</a>
+      <a href="#web-size">90% deep web?</a>
+      <a href="#beginner">Beginner explanation</a>
+      <a href="#onion">Onion networks</a>
+      <a href="#hidden-addresses">Onion, Loki, I2P</a>
+      <a href="#misunderstood">Why it is misunderstood</a>
+      <a href="#compromised">Compromised data</a>
+      <a href="#sale">Data for sale examples</a>
+      <a href="#snippets">Dark-web-style snippets</a>
+      <a href="#compromise-paths">How compromise happens</a>
+      <a href="#believe-risk">Why the risk is real</a>
+      <a href="#curiosity">Curiosity vs risk</a>
+      <a href="#email-recovery">Email recovery</a>
+      <a href="#media-recovery">Phone media recovery</a>
+      <a href="#threat-modeling">Threat modeling</a>
+      <a href="#aggregation">How data is combined</a>
+      <a href="#lifecycle">Breach lifecycle</a>
+      <a href="#engineers">Engineer playbook</a>
+      <a href="#security-pros">Security pro notes</a>
+      <a href="#myths">Myths and facts</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#checklist">Final checklist</a>
+      <a href="#sources">Sources</a>
+    </nav>
+
+    <main>
+      <section id="definitions">
+        <h2>Quick Definitions</h2>
+        <p class="lead">The internet is not one single visible place. Some pages are public, some are private, and some are intentionally hidden behind anonymity-focused routing systems.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Term</th>
+                <th>Meaning</th>
+                <th>Examples</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Surface web</td>
+                <td>Public pages that search engines can index.</td>
+                <td>News sites, blogs, public product pages, documentation.</td>
+              </tr>
+              <tr>
+                <td>Deep web</td>
+                <td>Pages that are not indexed by search engines, usually because they require login, payment, permissions, or dynamic queries.</td>
+                <td>Email inboxes, banking portals, cloud files, private work dashboards, medical portals.</td>
+              </tr>
+              <tr>
+                <td>Dark web</td>
+                <td>Hidden services that require special routing software and are not reached like normal public websites.</td>
+                <td>Anonymous forums, privacy services, whistleblower portals, illicit markets, restricted communities.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <strong>Important distinction</strong>
+          The deep web is not automatically dangerous. Most people use it daily whenever they sign in to email, banking, cloud storage, a school portal, or a workplace dashboard.
+        </div>
+      </section>
+
+      <section id="web-size">
+        <h2>The "90% Deep Web, 1% Dark Web" Claim</h2>
+        <p class="lead">You will often hear that more than 90% of the web is deep web and about 1% is dark web. Treat those numbers as a teaching shorthand, not a precise measurement.</p>
+        <p>The defensible idea behind the claim is simple: search engines index public, crawlable pages, while huge amounts of useful information sit behind logins, forms, permissions, private databases, paywalls, application states, and internal systems. Google states that private pages requiring login are not crawled by Googlebot, and Google also documents `noindex` and password protection as ways to keep content out of search results.</p>
+        <p>The weak part is the exact percentage. There is no single counter for "the web." Counting URLs, pages, bytes, database records, API responses, cloud files, and private SaaS objects produces very different results. The dark web is even harder to express as a percentage of the total web because hidden services are intentionally hard to enumerate and change frequently.</p>
+
+        <div class="stack-visual" aria-label="Approximate web visibility model">
+          <div class="stack-row">
+            <span class="stack-label">Surface web</span>
+            <span class="stack-bar"><span class="stack-fill surface"></span></span>
+            <span class="stack-note">small public slice</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-label">Deep web</span>
+            <span class="stack-bar"><span class="stack-fill deep"></span></span>
+            <span class="stack-note">largest private slice</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-label">Dark web</span>
+            <span class="stack-bar"><span class="stack-fill dark"></span></span>
+            <span class="stack-note">tiny hidden subset</span>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>How to explain it accurately</strong>
+          Say "most web-accessible information is not public search-indexed content" instead of claiming an exact universal percentage. Say "the dark web is a very small subset of hidden services" instead of saying it is exactly 1% of the internet.
+        </div>
+
+        <p>For a useful benchmark, Tor Project material has described onion services as roughly 1.2% of Tor traffic, but that is not the same thing as 1% of the entire web. It is a metric inside the Tor ecosystem, not a global internet-size measurement.</p>
+      </section>
+
+      <section id="beginner">
+        <h2>A Beginner Explanation</h2>
+        <p>Think of the web like a city. The surface web is the storefront visible from the street. The deep web is the private room behind a locked door. The dark web is a hidden building reached through special routes, where some activity is lawful and some activity is harmful or illegal.</p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>What search engines see</h3>
+            <p>Search engines crawl public pages. They do not log into your email, open your bank account, index your medical records, or crawl private company dashboards.</p>
+          </div>
+          <div class="card">
+            <h3>What "hidden" means</h3>
+            <p>Hidden does not mean automatically criminal. It means the page, file, database, or service is not openly indexed or reachable through ordinary search.</p>
+          </div>
+        </div>
+        <p>Dark web services are different because they are designed to hide network locations. That privacy design can protect vulnerable people, journalists, researchers, and activists. It can also attract scammers, malware operators, illegal marketplaces, and people selling stolen data.</p>
+      </section>
+
+      <section id="onion">
+        <h2>Onion Networks and Special Browsers</h2>
+        <p>A normal website usually has a public domain name and can be reached through common browsers. Some hidden services are built for anonymity networks instead. They may require privacy-focused browser software because ordinary browsers are not designed to resolve those services or route traffic through anonymity layers by default.</p>
+        <p>Onion routing is a layered routing model. Traffic is wrapped in multiple layers of encryption. Each relay removes one layer and learns only the limited information needed to pass traffic onward. The idea is to reduce direct visibility between the user and the destination.</p>
+
+        <div class="onion-diagram" aria-label="Conceptual onion routing diagram">
+          <div><strong>User</strong><span>Starts a request through privacy-focused routing software.</span></div>
+          <div><strong>Entry relay</strong><span>May know the user connection, but not the final destination.</span></div>
+          <div><strong>Middle relay</strong><span>Passes traffic along without knowing the full path.</span></div>
+          <div><strong>Final step</strong><span>Completes routing depending on whether the destination is public or hidden.</span></div>
+          <div><strong>Service</strong><span>Receives traffic without a simple direct route back to the user.</span></div>
+        </div>
+
+        <div class="callout warning">
+          <strong>Safety boundary</strong>
+          This article explains onion routing conceptually. It does not provide instructions for accessing hidden services, finding marketplaces, browsing directories, or interacting with illegal content.
+        </div>
+
+        <h3>Why special browsers exist</h3>
+        <p>Privacy-focused browsers are configured to route traffic through anonymity networks and reduce fingerprinting. Fingerprinting means identifying a user by browser settings, fonts, screen size, plugins, language, and other details. A common browser can reveal more than many users expect.</p>
+        <p>Privacy technology itself is not illegal. It can be used for censorship resistance, source protection, abuse reporting, research, and personal privacy. The same technical properties can also be misused by people hiding scams, malware, stolen data, or illegal marketplaces.</p>
+      </section>
+
+      <section id="hidden-addresses">
+        <h2>Examples: Onion, Loki, and I2P</h2>
+        <p class="lead">People often say "onion link" for any hidden-service URL, but different privacy networks use different address styles. The examples here are intentionally invalid and cannot be used as real destinations.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Network</th>
+                <th>What it means</th>
+                <th>Safe visual example</th>
+                <th>What to remember</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tor onion service</td>
+                <td>A service only reachable through the Tor network. Tor Project documentation says onion services are services such as websites that are accessible through Tor, and the address is generated for the service.</td>
+                <td><code>http://example-hidden-service.onion.invalid</code></td>
+                <td>Real onion addresses end in `.onion`, but this page uses `.onion.invalid` so it is not a working address.</td>
+              </tr>
+              <tr>
+                <td>Lokinet SNApp / .loki style</td>
+                <td>Lokinet uses service names sometimes called SNApps. Lokinet documentation describes `.loki` names that can map to longer Lokinet addresses through its name system.</td>
+                <td><code>http://example-service.loki.invalid</code></td>
+                <td>This is a different network from Tor. `.loki.invalid` here is only a visual placeholder.</td>
+              </tr>
+              <tr>
+                <td>I2P eepsite</td>
+                <td>I2P, the Invisible Internet Project, has hidden websites commonly called eepsites. I2P documentation describes `.i2p` names and generated `.b32.i2p` addresses.</td>
+                <td><code>http://example-service.i2p.invalid</code></td>
+                <td>The correct name is I2P, not IP2. This example is made invalid by appending `.invalid`.</td>
+              </tr>
+              <tr>
+                <td>I2P Base32 address</td>
+                <td>A longer cryptographic-looking I2P destination format used when a human-readable address book name is not enough.</td>
+                <td><code>http://abcdefghijklmnopqrstuvwxyz234567.b32.i2p.invalid</code></td>
+                <td>Looks technical, but this is still a non-working placeholder.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>What ".onion" means</h3>
+        <p>An onion service hides the server's network location by using Tor circuits and rendezvous-style routing. Users do not connect to a normal public IP address in the usual way. Instead, Tor handles discovery and routing inside the Tor network. The word "onion" refers to layered encryption and routing, not to a normal domain registration process.</p>
+
+        <h3>What ".loki" means</h3>
+        <p>A `.loki`-style name belongs to the Lokinet ecosystem, not Tor. It is associated with Lokinet service addressing and name mapping. A reader should not assume a `.loki` address works in Tor Browser, and should not assume a `.onion` address works in Lokinet.</p>
+
+        <h3>What ".i2p" means</h3>
+        <p>I2P is another privacy network with a different design and community. It uses `.i2p` names for eepsites and can also use longer `.b32.i2p` addresses. It is not spelled "IP2"; the common name is I2P, short for Invisible Internet Project.</p>
+
+        <div class="callout warning">
+          <strong>Safety boundary</strong>
+          These examples teach address shapes only. They do not provide real hidden-service links, directories, search terms, or access instructions.
+        </div>
+      </section>
+
+      <section id="misunderstood">
+        <h2>Why the Deep Web and Dark Web Are Misunderstood</h2>
+        <p>The deep web is not popular as a phrase because people do not usually call their inbox, bank portal, or subscription dashboard "deep web." They simply call it their account. News and movies often focus on dark web crime, so the public conversation mixes together normal private pages with hidden criminal spaces.</p>
+        <p>The dark web is less popular for normal users because it is slower, less convenient, unstable, and full of trust problems. Many sites disappear, many claims are fake, and many communities are built around scams. Most people have no practical reason to enter those spaces.</p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Legitimate uses</h3>
+            <p>Privacy research, journalism, whistleblowing, human rights work, censorship resistance, and sensitive communication can all be legitimate uses of anonymity tools.</p>
+          </div>
+          <div class="card">
+            <h3>Risky uses</h3>
+            <p>Stolen data sales, malware distribution, fraud communities, extortion, illegal content, and financial scams also use hidden services and private forums.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="compromised">
+        <h2>What Compromised Data Means</h2>
+        <p>Compromised data is personal, account, device, or business information that is exposed to someone who should not have it. The exposure may come from a hacked account, a company breach, malware, phishing, unsafe sharing links, or a person who already had access and misused it.</p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Common data types</h3>
+            <ul>
+              <li>Email addresses, usernames, passwords, or password hashes.</li>
+              <li>Phone numbers, addresses, identity documents, and invoices.</li>
+              <li>Private messages, photos, videos, screenshots, and cloud backups.</li>
+              <li>Cloud account data such as Gmail, Drive, Photos, contacts, synced browser settings, and saved-password metadata.</li>
+              <li>Banking clues, payment records, shopping accounts, and work logins.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Common exposure sources</h3>
+            <ul>
+              <li>Phishing pages that capture logins.</li>
+              <li>Reused passwords from old breaches.</li>
+              <li>Malware on a phone or computer.</li>
+              <li>Public cloud links, weak recovery settings, or stolen devices.</li>
+            </ul>
+          </div>
+        </div>
+        <p>Email is especially sensitive because it is often the recovery hub for other accounts. If an attacker controls email, they may reset passwords, search old receipts, find cloud links, impersonate the victim, or map the victim's life from years of messages.</p>
+      </section>
+
+      <section id="sale">
+        <h2>How Stolen Data May Look When Advertised for Sale</h2>
+        <p>Underground sale posts often mimic product listings. A seller may claim a category, region, freshness, record count, sample preview, file format, and price. These claims may be real, exaggerated, outdated, duplicated, or completely fake.</p>
+        <p>The examples below are fictional and sanitized. They show the shape of risk without exposing real victims or giving operational marketplace details.</p>
+
+        <h3>Fake sale icon and disabled search UI</h3>
+        <div class="callout danger">
+          <strong>Do not search for stolen data</strong>
+          Searching for, buying, validating, downloading, or sharing stolen personal data can harm victims and may be illegal. This mock UI is disabled and educational only.
+        </div>
+        <div class="mock-search" aria-label="Disabled fictional search result interface">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Disabled UI</span></div>
+          <div class="search-top">
+            <div class="fake-input">[search disabled in educational demo]</div>
+            <div class="disabled-button" aria-disabled="true">Search Disabled</div>
+          </div>
+          <div class="filter-row" aria-label="Fictional disabled filters">
+            <span class="badge">Data type</span>
+            <span class="badge">Freshness claim</span>
+            <span class="badge">Region placeholder</span>
+            <span class="badge danger-badge">Exposure level</span>
+            <span class="badge sale">Listed</span>
+          </div>
+          <div class="mock-result">
+            <h4><span class="badge sale">Listed</span><span class="badge danger-badge">Unverified</span><span class="badge">Redacted sample</span> Cloud account record placeholder</h4>
+            <p>This result card uses common e-commerce visual language: status badges, filters, seller confidence claims, and a call-to-action area. The purpose is to recognize manipulation patterns, not to interact with them.</p>
+            <div class="result-meta">
+              <span>Seller trust: unknown</span>
+              <span>Price: redacted</span>
+              <span>Sample: blocked</span>
+              <span>Action: disabled</span>
+            </div>
+          </div>
+        </div>
+        <p>Underground interfaces may use badges like <strong>sale</strong>, <strong>new</strong>, <strong>verified</strong>, <strong>exclusive</strong>, or <strong>bundle</strong>. These labels are trust theater: they are designed to make stolen information look like a normal product. Many listings are scams, reposts, or exaggerated claims, and real listings represent harm to real people.</p>
+
+        <h3>Marketplace-style data listing</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Unverified</span></div>
+          <pre>Listing: "Regional customer database sample"
+Listing ID: EDU-SALE-2201
+Seller: example_vendor_redacted
+Category: Customer records
+Claimed fields: name_placeholder, email_placeholder, phone_placeholder, city_placeholder
+Claimed count: 12,500 records
+Freshness claim: "recent"
+Sample: redacted placeholders only
+Price: redacted for safety
+Status: unverified claim</pre>
+        </div>
+        <p>Listings use ordinary product language to make stolen information feel routine. A "sample" is used to build trust, but even viewing or engaging with such posts can expose a person to scams, malware, and legal risk.</p>
+
+        <h3>Account access offer</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High exposure</span></div>
+          <pre>Thread title: "Personal account access bundle"
+Bundle ID: EDU-ACCESS-7310
+Includes claimed: email inbox, shopping account, cloud storage session
+Recovery info: partially available
+Payment status: private message only
+Risk to victim: account takeover, identity exposure, financial fraud
+Verification: not provided</pre>
+        </div>
+        <p>Access can be more dangerous than a single file. A live account may let an attacker reset passwords, read private history, discover contacts, and search for financial or identity documents.</p>
+
+        <h3>Media archive offer</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High exposure</span></div>
+          <pre>Post type: "Private media archive"
+Archive ID: EDU-MEDIA-5098
+Claimed source: cloud backup
+File types: images, videos, screenshots, documents
+Preview: blocked in this educational example
+Personal details visible: possible locations, faces, document fragments
+Distribution risk: high because files can be copied and reposted</pre>
+        </div>
+        <p>Phone photos and videos may include location clues, family members, document fragments, school or workplace details, and screenshots of chats or one-time codes. Victims should not be blamed for someone else's misuse of private material.</p>
+
+        <h3>Breach combo pack</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Credential stuffing risk</span></div>
+          <pre>Pack name: "Mixed login combo"
+Pack ID: EDU-COMBO-8840
+Sources claimed: multiple old breaches
+Fields: email_placeholder, username_placeholder, password_status_redacted
+Quality claim: "deduplicated"
+Common abuse: credential stuffing
+Confidence: unknown; claims may be false</pre>
+        </div>
+        <p>Combo packs combine old and new records. If a person reused one password across sites, an old breach can become a current account takeover problem.</p>
+
+        <h3>Identity verification bundle</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">Restricted</span></div>
+          <pre>Offer: "Verification profile"
+Offer ID: EDU-ID-3144
+Includes claimed: identity scan placeholder, address proof placeholder, phone placeholder
+Use claimed by seller: account verification abuse
+Sample documents: not shown
+Status: illegal and harmful if real</pre>
+        </div>
+        <p>Identity record sets can be used for fraud, impersonation, account recovery abuse, and social engineering. Buying, selling, or using real identity data without permission is harmful and illegal.</p>
+      </section>
+
+      <section id="snippets">
+        <h2>Fictional Dark-Web-Style Snippets</h2>
+        <p>These examples show how compromised information may be framed in hidden communities. They are fictional, use placeholders, and are included only for awareness training.</p>
+
+        <h3>Compromised email account listing</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High</span></div>
+          <pre>Listing ID: EDU-EMAIL-1042
+Type: Personal email mailbox access
+Region: Example region
+Contents claimed: inbox, cloud reset links, shopping receipts
+Exposure level: High
+Seller note: "Account has recovery options attached"
+Price: Redacted</pre>
+        </div>
+        <p>Email access is dangerous because email often controls password resets. An attacker may search for banking messages, cloud storage links, travel records, invoices, identity documents, contacts, and private conversations.</p>
+
+        <h3>Compromised Google account bundle</h3>
+        <div class="callout warning">
+          <strong>Important distinction</strong>
+          This example describes a compromised user account. It does not imply that Google itself was breached.
+        </div>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High exposure</span></div>
+          <pre>Bundle ID: EDU-GOOGLE-6028
+Account type: Google account access claim
+Services claimed: Gmail, Drive, Photos, Contacts, synced browser data
+Media claim: photo library and screenshots present
+Password claim: saved password vault metadata present, values redacted
+Source device claim: Android phone placeholder, last sync timestamp redacted
+Recovery status: recovery phone and backup email listed as placeholders
+Exposure level: High
+Verification: unverified seller claim</pre>
+        </div>
+        <p>A Google account can connect many parts of a person's digital life: Gmail, Drive documents, Google Photos, contacts, browser sync, account recovery settings, security alerts, and sometimes saved-password metadata depending on the user's settings. If a phone is synced to that account, an attacker may claim a source device such as "Android phone" or "last synced mobile", but those claims can be incomplete, outdated, or fabricated.</p>
+        <p>If real, this kind of compromise can expose media files, screenshots, documents, account reset emails, contact lists, device names, recovery information, and clues about other accounts. The right response is to secure the account immediately, revoke unknown devices, rotate important passwords, and review cloud sharing and recovery settings.</p>
+
+        <h3>Fake hidden-service browser view</h3>
+        <div class="callout warning">
+          <strong>About the address shown below</strong>
+          The `.onion.invalid` address is intentionally fake and non-working. It is included only to show the visual style of a hidden-service browser page.
+        </div>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Fake URL</span></div>
+          <pre>Privacy Browser Mock
+Address: http://example-hidden-service.onion.invalid/listing/EDU-GOOGLE-6028
+Page title: Account bundle preview
+Notice: Address is fake and intentionally non-working
+
+Listing card: Google account access claim
+Visible fields:
+  - Services claimed: Gmail, Drive, Photos, Contacts, Browser sync
+  - Exposure level: High
+  - Source device: Android phone placeholder
+  - Recovery status: redacted placeholders
+
+Blocked fields:
+  - Password values
+  - Real media previews
+  - Real device IDs
+  - Real user details</pre>
+        </div>
+
+        <h3>Fake terminal-style awareness view</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Read-only mock</span></div>
+          <pre>listing preview
+source = "example-hidden-service.onion.invalid"
+listing = "EDU-GOOGLE-6028"
+account_type = "Google account access claim"
+services = ["Gmail", "Drive", "Photos", "Contacts", "Browser sync"]
+source_device = "Android phone placeholder"
+password_values = "[blocked in educational example]"
+media_preview = "[blocked in educational example]"
+status = "fictional, sanitized, non-operational"</pre>
+        </div>
+        <p>Dark web pages do not all look the same. Some look like plain forums, some look like crude dashboards, and some are mostly text. Security articles often use terminal-style panels because they are easy to read, but this should not be interpreted as a command prompt or a workflow to follow.</p>
+
+        <h3>Phone photos and videos leak post</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High</span></div>
+          <pre>Post: "Cloud backup media archive"
+Device type: Smartphone backup
+File types: photos, short videos, screenshots
+Claimed contents: personal gallery, documents, chat screenshots
+Identity details: partially visible in screenshots
+Status: Reposted by multiple users</pre>
+        </div>
+        <p>Personal media can expose faces, home details, school or workplace clues, relationships, medical information, and location history. Screenshots are often more sensitive than people realize.</p>
+
+        <h3>Credential dump preview</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Medium to high</span></div>
+          <pre>Source: Unknown breach compilation
+Records: 48,000 claimed
+Fields: email, username, hashed_password, phone, signup_ip
+Sample:
+user001@example.invalid | hash_redacted | +00-0000-000000
+user002@example.invalid | hash_redacted | +00-0000-000000
+user003@example.invalid | hash_redacted | +00-0000-000000</pre>
+        </div>
+        <p>Hashed passwords are safer than plaintext passwords, but weak hashes or weak passwords may still be cracked. Unique passwords and a password manager reduce the damage from one breach.</p>
+
+        <h3>Identity record set listing</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High</span></div>
+          <pre>Bundle type: Identity profile
+Includes: name placeholder, address placeholder, phone placeholder, email placeholder
+Additional docs: redacted scans, utility bill placeholder
+Use claimed by seller: verification bypass
+Availability: limited sample shown</pre>
+        </div>
+        <p>Criminals combine data from many sources to build fuller profiles. A phone number from one breach, an address from another, and public social media can become a convincing impersonation kit.</p>
+
+        <h3>Account takeover discussion</h3>
+        <div class="snippet">
+          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Awareness</span></div>
+          <pre>Thread: "Reused password works on multiple services"
+User A: "Old breach list still gives access to shopping accounts."
+User B: "Check for saved cards and reward points."
+Moderator: "No direct personal data in public replies."</pre>
+        </div>
+        <p>Shopping accounts can contain saved addresses, order history, partial payment clues, gift cards, loyalty points, and social engineering material even when no full card number is visible.</p>
+      </section>
+
+      <section id="compromise-paths">
+        <h2>How Personal Data Usually Gets Compromised</h2>
+        <div class="flow">
+          <div class="flow-step"><span class="num">1</span><div><strong>Phishing.</strong><p>A fake login page captures credentials. Warning signs include urgent language, unexpected links, and domains that do not match the real service.</p></div></div>
+          <div class="flow-step"><span class="num">2</span><div><strong>Password reuse.</strong><p>A password stolen from one site is tried on email, shopping, banking, streaming, and work services.</p></div></div>
+          <div class="flow-step"><span class="num">3</span><div><strong>Malware or spyware.</strong><p>A device infection may steal browser sessions, files, screenshots, clipboard content, or stored passwords.</p></div></div>
+          <div class="flow-step"><span class="num">4</span><div><strong>Cloud account takeover.</strong><p>An attacker signs into a cloud account and pulls backups, photos, files, notes, and synced browser data.</p></div></div>
+          <div class="flow-step"><span class="num">5</span><div><strong>SIM swap or recovery abuse.</strong><p>A phone number is hijacked or recovery settings are changed, allowing password resets and verification interception.</p></div></div>
+          <div class="flow-step"><span class="num">6</span><div><strong>Unsafe sharing.</strong><p>Public links, shared albums, misconfigured storage, over-permissioned apps, and shared devices expose data without a traditional hack.</p></div></div>
+        </div>
+      </section>
+
+      <section id="believe-risk">
+        <h2>Why People Should Believe the Risk</h2>
+        <p>The danger is not that every person is being personally targeted by an expert attacker. The danger is scale. Breached databases are copied, merged, resold, and tested automatically. Ordinary accounts are valuable because attackers can abuse many small opportunities at once.</p>
+        <p>A compromise may look quiet at first. A stolen email can be searched later. A leaked phone number can be used for scams months later. A cloud screenshot can reveal an address or recovery code. A password from an old breach can become serious when reused on a current account.</p>
+        <div class="callout danger">
+          <strong>Why copied data is different</strong>
+          When a physical document is stolen, one person may have it. When a digital file is copied, many people can have identical copies. Deleting the original does not guarantee that every copy is gone.
+        </div>
+      </section>
+
+      <section id="curiosity">
+        <h2>The Difference Between Curiosity and Risk</h2>
+        <p>Casual browsing of dark web spaces is not recommended. A curious user can encounter scams, malware downloads, disturbing or illegal material, false listings, impersonation attempts, and communities designed to manipulate newcomers.</p>
+        <p>Legitimate researchers use legal boundaries, isolated environments, documentation practices, and strict operational security. Even then, they avoid collecting or redistributing real victim data. Curiosity alone is not a good reason to enter risky spaces.</p>
+      </section>
+
+      <section id="email-recovery">
+        <h2>What To Do If Your Email Is Compromised</h2>
+        <ol class="checklist">
+          <li>Change the password from a clean, trusted device.</li>
+          <li>Enable multi-factor authentication or passkeys where available.</li>
+          <li>Log out all active sessions from account security settings.</li>
+          <li>Review recovery email addresses and phone numbers.</li>
+          <li>Check mail forwarding rules, filters, auto-replies, and delegated access.</li>
+          <li>Review connected apps, OAuth permissions, and browser extensions.</li>
+          <li>Search for password reset messages, financial alerts, and unusual login notices.</li>
+          <li>Change passwords on banking, cloud, social media, work, and shopping accounts.</li>
+          <li>Monitor accounts for suspicious orders, payment changes, or recovery attempts.</li>
+          <li>Warn contacts if scams or spam were sent from the account.</li>
+        </ol>
+      </section>
+
+      <section id="media-recovery">
+        <h2>What To Do If Phone Photos or Videos Are Compromised</h2>
+        <p>Handle private media compromise calmly and preserve options. The victim is not responsible for another person's theft, coercion, or abuse.</p>
+        <ol class="checklist">
+          <li>Secure the cloud account connected to the phone.</li>
+          <li>Change passwords and enable MFA or passkeys.</li>
+          <li>Revoke unknown devices, sessions, app passwords, and connected apps.</li>
+          <li>Check shared albums, public links, family sharing, and backup settings.</li>
+          <li>Preserve evidence with dates, URLs, messages, and screenshots if safe and legal.</li>
+          <li>Report abuse to platforms hosting or sharing the content.</li>
+          <li>Contact local law enforcement if extortion, threats, stalking, or intimate image abuse is involved.</li>
+          <li>Consider legal support for privacy violations and takedown requests.</li>
+          <li>Alert trusted people if impersonation or social engineering is likely.</li>
+          <li>Avoid paying extortion demands without professional guidance.</li>
+        </ol>
+      </section>
+
+      <section id="threat-modeling">
+        <h2>Advanced: Threat Modeling</h2>
+        <p>Threat modeling is a structured way to think about risk. It asks what you need to protect, who may want it, how they may get it, what harm would follow, and what controls reduce the chance or impact.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Element</th><th>Question</th><th>Example for an average user</th></tr></thead>
+            <tbody>
+              <tr><td>Assets</td><td>What matters?</td><td>Email, phone, cloud photos, banking, identity documents.</td></tr>
+              <tr><td>Adversaries</td><td>Who might misuse it?</td><td>Scammers, account thieves, data brokers, abusive acquaintances.</td></tr>
+              <tr><td>Attack paths</td><td>How could it happen?</td><td>Phishing, reused passwords, malware, cloud takeover, SIM swap.</td></tr>
+              <tr><td>Controls</td><td>What reduces risk?</td><td>Password manager, MFA, passkeys, updates, encrypted backups, privacy settings.</td></tr>
+              <tr><td>Recovery</td><td>How fast can you respond?</td><td>Security alerts, backup codes, recovery contacts, documented devices.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="aggregation">
+        <h2>Advanced: How Stolen Data Is Combined</h2>
+        <p>One leak may not look catastrophic by itself. The real danger often appears when many fragments are combined into a more complete identity profile.</p>
+        <div class="flow">
+          <div class="flow-step"><span class="num">A</span><div><strong>Email from breach one.</strong><p>Confirms the person has an account and gives a target for phishing.</p></div></div>
+          <div class="flow-step"><span class="num">B</span><div><strong>Phone from breach two.</strong><p>Enables SMS scams, social engineering, and recovery attempts.</p></div></div>
+          <div class="flow-step"><span class="num">C</span><div><strong>Public social media.</strong><p>Reveals workplace, family names, travel, school, and interests.</p></div></div>
+          <div class="flow-step"><span class="num">D</span><div><strong>Cloud screenshot.</strong><p>May reveal addresses, one-time codes, private messages, or document fragments.</p></div></div>
+          <div class="flow-step"><span class="num">E</span><div><strong>Combined profile.</strong><p>Supports impersonation, account recovery abuse, fraud, and targeted scams.</p></div></div>
+        </div>
+      </section>
+
+      <section id="lifecycle">
+        <h2>Advanced: From Breach to Underground Listing</h2>
+        <p>This lifecycle is a defensive awareness model. It explains how stolen data can move without teaching participation in those markets.</p>
+        <div class="flow">
+          <div class="flow-step"><span class="num">1</span><div><strong>Initial compromise.</strong><p>Data is stolen through phishing, malware, exposed storage, weak authentication, insider misuse, or a company breach.</p></div></div>
+          <div class="flow-step"><span class="num">2</span><div><strong>Sorting.</strong><p>Attackers separate emails, phone numbers, documents, media, credentials, and payment-related clues.</p></div></div>
+          <div class="flow-step"><span class="num">3</span><div><strong>Packaging.</strong><p>Records are grouped into lists, bundles, account-access offers, media archives, or identity profiles.</p></div></div>
+          <div class="flow-step"><span class="num">4</span><div><strong>Advertising.</strong><p>Sellers post product-style claims in hidden forums, private groups, or closed communities.</p></div></div>
+          <div class="flow-step"><span class="num">5</span><div><strong>Resale and abuse.</strong><p>Data is copied, merged with old leaks, resold, traded, and used for fraud, extortion, impersonation, spam, or social engineering.</p></div></div>
+          <div class="flow-step"><span class="num">6</span><div><strong>Long tail.</strong><p>The same records can reappear months or years later, especially if passwords and recovery settings remain unchanged.</p></div></div>
+        </div>
+      </section>
+
+      <section id="engineers">
+        <h2>IT Engineer Playbook</h2>
+        <p class="lead">For engineers, the practical question is not "how do hidden markets work?" It is "what controls reduce account takeover, cloud data exposure, and long-tail breach impact?"</p>
+
+        <h3>Control matrix</h3>
+        <div class="matrix">
+          <div class="matrix-item">
+            <strong>Identity</strong>
+            <p>Enforce MFA or passkeys, block legacy authentication, require unique passwords, monitor impossible travel, review recovery methods, and remove stale sessions.</p>
+          </div>
+          <div class="matrix-item">
+            <strong>Email</strong>
+            <p>Alert on forwarding-rule creation, suspicious OAuth grants, mailbox delegation, mass message export, unusual login clients, and password reset bursts.</p>
+          </div>
+          <div class="matrix-item">
+            <strong>Cloud storage</strong>
+            <p>Audit public links, shared drives, external collaborators, anonymous downloads, bulk file access, sensitive file labels, and unmanaged backup locations.</p>
+          </div>
+          <div class="matrix-item">
+            <strong>Endpoint</strong>
+            <p>Track browser credential theft indicators, suspicious archive creation, screen capture tools, unknown mobile device sync, infostealer detections, and unmanaged extensions.</p>
+          </div>
+          <div class="matrix-item">
+            <strong>Network</strong>
+            <p>Monitor unusual egress volume, anonymizer/proxy usage where policy-relevant, DNS anomalies, new tunneling tools, and endpoints contacting known malware infrastructure.</p>
+          </div>
+          <div class="matrix-item">
+            <strong>Data protection</strong>
+            <p>Use DLP labels, retention rules, device encryption, least-privilege sharing, secret scanning, backup access reviews, and sensitive-document discovery.</p>
+          </div>
+        </div>
+
+        <h3>Detection ideas</h3>
+        <ul>
+          <li>New mailbox forwarding rule created, followed by successful logins from unfamiliar geography or ASN.</li>
+          <li>OAuth consent granted to an unknown app requesting mail, drive, contacts, or offline access.</li>
+          <li>Large Google Drive, Microsoft 365, or cloud storage export from a device not previously associated with the user.</li>
+          <li>Multiple password reset messages received across unrelated services after a mailbox login anomaly.</li>
+          <li>Mobile device added or re-synced shortly before a spike in photo, document, or contact access.</li>
+          <li>Infostealer family detection on an endpoint followed by identity-provider session reuse.</li>
+          <li>Unusual creation of ZIP, RAR, or 7z archives inside user profile, downloads, desktop, or cloud-sync folders.</li>
+        </ul>
+
+        <h3>Incident response workflow</h3>
+        <ol>
+          <li>Preserve identity-provider logs, email audit logs, cloud storage audit logs, endpoint telemetry, and mobile device events.</li>
+          <li>Disable suspicious sessions and revoke refresh tokens before rotating passwords.</li>
+          <li>Remove malicious forwarding rules, OAuth grants, app passwords, delegated mailboxes, and unknown recovery methods.</li>
+          <li>Scope data access by time window, file path, sharing link, export event, and device ID.</li>
+          <li>Prioritize accounts that can reset other accounts: email, SSO, password manager, cloud storage, HR, finance, and admin consoles.</li>
+          <li>Document impacted data categories for legal, privacy, HR, customer support, and communications teams.</li>
+          <li>After containment, harden baseline controls and write detections for the observed path.</li>
+        </ol>
+      </section>
+
+      <section id="security-pros">
+        <h2>Security Professional Notes</h2>
+        <p class="lead">For security teams, dark web awareness is useful only when it connects to validated exposure management, identity telemetry, incident response, and victim-safe handling of data.</p>
+
+        <h3>What not to overclaim</h3>
+        <ul>
+          <li>Do not treat every underground listing as real. Many are scams, stale breach compilations, duplicates, or inflated record counts.</li>
+          <li>Do not treat a screenshot as proof of full account control. It may be fabricated, recycled, or from a limited session.</li>
+          <li>Do not use exact "deep web percentage" claims in executive reporting unless the methodology is stated.</li>
+          <li>Do not collect, redistribute, or store victim data unless legal authority, policy, and data-handling controls are in place.</li>
+        </ul>
+
+        <h3>Analyst validation checklist</h3>
+        <ul>
+          <li>Separate source credibility from data credibility. A known seller can still post fake data, and an unknown source can post real data.</li>
+          <li>Validate with internal telemetry first: login events, password resets, OAuth grants, storage downloads, endpoint alerts, and support tickets.</li>
+          <li>Compare exposed fields against known breach corpuses without expanding access to additional stolen data.</li>
+          <li>Use minimization: hash, redact, or tokenize indicators whenever possible.</li>
+          <li>Escalate quickly when data involves minors, intimate images, extortion, healthcare, financial records, identity documents, or regulated customer data.</li>
+        </ul>
+
+        <h3>Executive reporting model</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Question</th><th>Useful answer</th><th>Avoid saying</th></tr></thead>
+            <tbody>
+              <tr><td>Is the listing real?</td><td>Evidence is unverified, partially verified, or verified against internal telemetry.</td><td>"It is on the dark web, so it is real."</td></tr>
+              <tr><td>What is exposed?</td><td>State data categories, impacted systems, time window, and confidence level.</td><td>"Everything is leaked."</td></tr>
+              <tr><td>What is the risk?</td><td>Describe likely abuse paths: account takeover, fraud, extortion, phishing, or credential stuffing.</td><td>"Hackers can do anything."</td></tr>
+              <tr><td>What are we doing?</td><td>Contain sessions, rotate credentials, revoke tokens, scope access, notify stakeholders, and harden controls.</td><td>"We are monitoring the dark web."</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="myths">
+        <h2>Myths and Facts</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Myth</th><th>Fact</th></tr></thead>
+            <tbody>
+              <tr><td>The deep web is illegal.</td><td>Most deep web pages are normal private services such as email, banking, medical portals, and cloud files.</td></tr>
+              <tr><td>Only criminals use the dark web.</td><td>Journalists, activists, researchers, and privacy-focused users may use anonymity tools for legitimate reasons.</td></tr>
+              <tr><td>If I am not famous, nobody cares about my data.</td><td>Ordinary accounts are valuable at scale because automation makes small fraud profitable.</td></tr>
+              <tr><td>Deleted files are always gone.</td><td>Copies, backups, caches, screenshots, and reposts may remain outside your control.</td></tr>
+              <tr><td>MFA makes compromise impossible.</td><td>MFA reduces risk but does not remove phishing, malware, session theft, or recovery abuse.</td></tr>
+              <tr><td>Dark web listings always contain real data.</td><td>Many listings are scams, duplicates, outdated records, or exaggerated claims.</td></tr>
+              <tr><td>Special browsers make users invisible.</td><td>Privacy tools reduce some exposure but do not remove legal, malware, scam, or behavior-based risks.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="glossary">
+        <h2>Glossary</h2>
+        <div class="glossary">
+          <div class="term"><strong>Surface web</strong><span>Public pages that search engines can index.</span></div>
+          <div class="term"><strong>Deep web</strong><span>Unindexed pages, usually private or login-protected.</span></div>
+          <div class="term"><strong>Dark web</strong><span>Hidden services reached through special anonymity routing.</span></div>
+          <div class="term"><strong>Tor</strong><span>A well-known anonymity network concept often associated with onion routing.</span></div>
+          <div class="term"><strong>Onion routing</strong><span>Layered encrypted routing where each relay sees only limited path information.</span></div>
+          <div class="term"><strong>Onion service</strong><span>A hidden service designed to be reached through anonymity routing, not ordinary public DNS.</span></div>
+          <div class="term"><strong>Relay</strong><span>A node that passes routed traffic to the next step in an anonymity network.</span></div>
+          <div class="term"><strong>Exit node</strong><span>A relay where traffic may leave an anonymity network for the public web.</span></div>
+          <div class="term"><strong>Fingerprinting</strong><span>Identifying a device or browser by its settings and behavior.</span></div>
+          <div class="term"><strong>Data breach</strong><span>Unauthorized exposure of information from an account, company, app, or system.</span></div>
+          <div class="term"><strong>Credential stuffing</strong><span>Testing leaked usernames and passwords on other services.</span></div>
+          <div class="term"><strong>Phishing</strong><span>Tricking a person into giving up credentials or sensitive information.</span></div>
+          <div class="term"><strong>Malware</strong><span>Software designed to spy, steal, damage, or gain unauthorized access.</span></div>
+          <div class="term"><strong>MFA</strong><span>Multi-factor authentication, which requires more than a password.</span></div>
+          <div class="term"><strong>Passkey</strong><span>A phishing-resistant sign-in method based on device-held cryptographic keys.</span></div>
+          <div class="term"><strong>Password manager</strong><span>A tool that creates and stores unique strong passwords.</span></div>
+          <div class="term"><strong>Hash</strong><span>A one-way representation of data, often used to store passwords more safely.</span></div>
+          <div class="term"><strong>Encryption</strong><span>Protecting data so only authorized parties can read it.</span></div>
+          <div class="term"><strong>Metadata</strong><span>Data about data, such as time, location, file type, or device information.</span></div>
+          <div class="term"><strong>SIM swap</strong><span>Fraudulently moving a phone number to another SIM or device.</span></div>
+          <div class="term"><strong>Account takeover</strong><span>Unauthorized control of someone else's account.</span></div>
+          <div class="term"><strong>Extortion</strong><span>Threatening harm or exposure to force payment or behavior.</span></div>
+          <div class="term"><strong>Doxxing</strong><span>Publishing personal information to intimidate, harass, or expose someone.</span></div>
+        </div>
+      </section>
+
+      <section id="checklist">
+        <h2>Final Practical Checklist</h2>
+        <ul class="checklist">
+          <li>Use a password manager and create unique passwords for every important account.</li>
+          <li>Enable MFA or passkeys, especially on email, banking, cloud, social media, and work accounts.</li>
+          <li>Keep phones, computers, browsers, and apps updated.</li>
+          <li>Review account recovery settings and remove unknown recovery methods.</li>
+          <li>Audit cloud sharing links, shared albums, and public folders.</li>
+          <li>Remove unused apps, browser extensions, connected apps, and old devices.</li>
+          <li>Check active sessions and log out devices you do not recognize.</li>
+          <li>Back up important data securely and protect backup access.</li>
+          <li>Be cautious with urgent login links, payment requests, and verification messages.</li>
+          <li>Report suspicious account activity quickly and preserve evidence when abuse is involved.</li>
+        </ul>
+      </section>
+
+      <section id="sources">
+        <h2>Sources and Further Reading</h2>
+        <p>These references support the article's factual framing. The article uses them for definitions, indexing behavior, onion-service terminology, and privacy-network distinctions.</p>
+        <ul class="source-list">
+          <li><a href="https://developers.google.com/search/docs/essentials/technical">Google Search Central: Search technical requirements</a> - explains that private pages requiring login are not crawled by Googlebot.</li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/control-what-you-share">Google Search Central: Control what you share with Google</a> - explains password protection and `noindex` for keeping content out of search.</li>
+          <li><a href="https://torproject.github.io/manual/onion-services/">Tor Browser Manual: Onion Services</a> - explains that onion services are reachable through Tor and use generated `.onion` addresses.</li>
+          <li><a href="https://community.torproject.org/en/onion-services/overview/">Tor Project: How Onion Services Work</a> - technical overview of onion service discovery and routing concepts.</li>
+          <li><a href="https://metrics.torproject.org/hidserv-dir-onions-seen.html">Tor Metrics: Onion Services</a> - measurements and caveats for observed onion-service addresses.</li>
+          <li><a href="https://lokinet.org/faq">Lokinet FAQ</a> - describes `.loki` naming and SNApp address mapping in the Lokinet ecosystem.</li>
+          <li><a href="https://i2p.net/en/docs/guides/gettingstarted/">I2P: Getting Started</a> - describes I2P as a self-contained network of hidden services and related applications.</li>
+          <li><a href="https://beta.i2p.net/en/docs/guides/creating-an-i2p-eepsite/">I2P: Creating an Eepsite</a> - explains `.i2p` and `.b32.i2p` address styles.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    This page is for cybersecurity awareness and privacy education. All examples are fictional and sanitized. It does not provide instructions for illegal access, data theft, marketplace use, or evasion.
+  </footer>
+
+  <script>
+    const progressBar = document.getElementById('progressBar');
+
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = height > 0 ? (scrollTop / height) * 100 : 0;
+      progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  </script>
+</body>
+</html>
