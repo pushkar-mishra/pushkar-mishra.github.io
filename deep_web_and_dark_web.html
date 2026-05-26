@@ -744,6 +744,428 @@
       font-weight: 900;
     }
 
+    .mock-browser {
+      margin: 22px 0;
+      border: 1px solid rgba(120, 80, 200, 0.35);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #1a1a2e;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .mock-browser-chrome {
+      display: flex;
+      flex-direction: column;
+      background: #16213e;
+      border-bottom: 1px solid rgba(120, 80, 200, 0.25);
+    }
+
+    .mock-browser-tab-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 6px 10px 0;
+      background: #0f1929;
+    }
+
+    .mock-browser-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #16213e;
+      border-radius: 6px 6px 0 0;
+      border: 1px solid rgba(120, 80, 200, 0.25);
+      border-bottom: none;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.78rem;
+      color: #c8b8f8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+
+    .mock-browser-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+    }
+
+    .mock-browser-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .mock-browser-nav button {
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      color: #7a6fa0;
+      font-size: 0.85rem;
+      cursor: default;
+      display: grid;
+      place-items: center;
+    }
+
+    .mock-browser-onion {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(120, 80, 200, 0.15);
+      border: 1px solid rgba(120, 80, 200, 0.35);
+      color: #b89dff;
+      font-size: 0.78rem;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .mock-browser-url {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(120, 80, 200, 0.22);
+      border-radius: 6px;
+      padding: 5px 10px;
+      color: #9d8fd4;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    .mock-browser-menu {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: #7a6fa0;
+      font-size: 1rem;
+      cursor: default;
+    }
+
+    .mock-browser-circuit {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 5px 10px;
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid rgba(120, 80, 200, 0.12);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.72rem;
+      color: #7a6fa0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .circuit-node {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(120, 80, 200, 0.1);
+      border: 1px solid rgba(120, 80, 200, 0.2);
+      color: #b89dff;
+    }
+
+    .circuit-arrow {
+      padding: 0 4px;
+      color: #4a3a6a;
+    }
+
+    .mock-browser-body {
+      padding: 0;
+      position: relative;
+      background-color: #111118;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='160'%3E%3Ctext transform='rotate(-28 170 80)' x='5' y='85' fill='rgba(255%2C209%2C102%2C0.13)' font-size='12' font-family='monospace' font-weight='bold' letter-spacing='2'%3EEDUCATIONAL SAMPLE — NOT REAL DATA%3C/text%3E%3C/svg%3E");
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.82rem;
+      color: #ccc;
+      overflow: hidden;
+    }
+
+    .mp-edu-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 10;
+      background: rgba(255, 209, 102, 0.12);
+      border: 1px solid rgba(255, 209, 102, 0.5);
+      color: var(--warn);
+      font-size: 0.68rem;
+      font-weight: 900;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .mp-js-warn {
+      background: #3a2a00;
+      border-bottom: 1px solid #665000;
+      color: #ffd166;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+    }
+
+    .mp-page-inner {
+      padding: 12px 14px;
+    }
+
+    .mp-site-header {
+      border-bottom: 1px solid #2a2a3a;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .mp-site-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #e0e0ff;
+      letter-spacing: 1px;
+    }
+
+    .mp-tagline {
+      font-size: 0.72rem;
+      color: #666688;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .mp-nav {
+      margin-top: 7px;
+      color: #8888aa;
+      font-size: 0.76rem;
+    }
+
+    .mp-nav a {
+      color: #9090cc;
+      text-decoration: underline;
+      cursor: default;
+    }
+
+    .mp-nav-err {
+      color: #aa3333;
+      font-size: 0.72rem;
+    }
+
+    .mp-listing {
+      border: 1px solid #2a2a3a;
+      border-radius: 4px;
+      background: #16161f;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+    }
+
+    .mp-listing-head {
+      color: #c8c8ff;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .mp-listing-meta {
+      color: #666688;
+      font-size: 0.74rem;
+      margin-bottom: 5px;
+    }
+
+    .mp-listing-desc {
+      color: #aaaacc;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .mp-listing-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .mp-price {
+      color: #ffd166;
+      font-weight: bold;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    .mp-btn-disabled {
+      color: #555566;
+      border: 1px solid #333344;
+      border-radius: 3px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      cursor: not-allowed;
+    }
+
+    .mp-stars { color: #ffd166; font-size: 0.78rem; }
+    .mp-stars-dim { color: #444455; font-size: 0.78rem; }
+
+    .mp-thread {
+      border: 1px solid #2a2a2a;
+      border-left: 3px solid #444455;
+      background: #0e0e14;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 0.76rem;
+    }
+
+    .mp-thread-title {
+      color: #9090aa;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .mp-thread-body {
+      color: #666677;
+      line-height: 1.5;
+    }
+
+    .mp-err-row {
+      font-size: 0.7rem;
+      color: #553333;
+      padding: 5px 0;
+      border-top: 1px solid #1e1e22;
+    }
+
+    .redacted-bar {
+      height: 14px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.07);
+      margin-bottom: 8px;
+      filter: blur(2px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .redacted-bar.title   { height: 20px; width: 60%; background: rgba(139, 183, 255, 0.18); }
+    .redacted-bar.short   { width: 30%; }
+    .redacted-bar.medium  { width: 55%; }
+    .redacted-bar.long    { width: 80%; }
+    .redacted-bar.full    { width: 100%; }
+    .redacted-bar.accent  { background: rgba(72, 214, 181, 0.2); }
+    .redacted-bar.warn    { background: rgba(255, 209, 102, 0.22); }
+    .redacted-bar.danger  { background: rgba(255, 107, 127, 0.22); height: 10px; }
+
+    .mock-listing-row {
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mock-browser-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 16, 29, 0.62);
+      backdrop-filter: blur(3px);
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .mock-browser-overlay .overlay-label {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--warn);
+      border: 1px solid rgba(255, 209, 102, 0.42);
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    .mock-browser-overlay .overlay-sub {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .law-ops {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .law-op {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid rgba(72, 214, 181, 0.2);
+      border-radius: var(--radius);
+      background: rgba(16, 27, 43, 0.75);
+    }
+
+    .law-op-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(72, 214, 181, 0.14);
+      border: 1px solid rgba(72, 214, 181, 0.35);
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .law-op strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .law-op p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .hibp-callout {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      margin: 18px 0;
+      padding: 16px;
+      border: 1px solid rgba(72, 214, 181, 0.32);
+      border-radius: var(--radius);
+      background: rgba(72, 214, 181, 0.06);
+    }
+
+    .hibp-callout .hibp-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .hibp-callout strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .hibp-callout p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
     .onion-diagram {
       display: grid;
       grid-template-columns: repeat(5, minmax(90px, 1fr));
@@ -923,7 +1345,7 @@
         <p class="subtitle">A complete beginner-to-advanced guide to hidden internet concepts, compromised accounts, stolen personal data, onion routing, and practical online safety.</p>
         <div class="meta-row" aria-label="Article metadata">
           <span class="pill">Beginner to Advanced</span>
-          <span class="pill">20-30 min read</span>
+          <span class="pill">25–35 min read</span>
           <span class="pill">Fictional examples only</span>
         </div>
         <p class="hero-note">This guide uses simulated examples for education. It does not show real stolen data, provide dark web links, or explain how to buy, sell, search for, or access illegal material.</p>
@@ -972,6 +1394,7 @@
       <a href="#threat-modeling">Threat modeling</a>
       <a href="#aggregation">How data is combined</a>
       <a href="#lifecycle">Breach lifecycle</a>
+      <a href="#law-enforcement">Law enforcement operations</a>
       <a href="#engineers">Engineer playbook</a>
       <a href="#security-pros">Security pro notes</a>
       <a href="#myths">Myths and facts</a>
@@ -1067,7 +1490,6 @@
             <p>Hidden does not mean automatically criminal. It means the page, file, database, or service is not openly indexed or reachable through ordinary search.</p>
           </div>
         </div>
-        <p>Dark web services are different because they are designed to hide network locations. That privacy design can protect vulnerable people, journalists, researchers, and activists. It can also attract scammers, malware operators, illegal marketplaces, and people selling stolen data.</p>
       </section>
 
       <section id="onion">
@@ -1089,8 +1511,7 @@
         </div>
 
         <h3>Why special browsers exist</h3>
-        <p>Privacy-focused browsers are configured to route traffic through anonymity networks and reduce fingerprinting. Fingerprinting means identifying a user by browser settings, fonts, screen size, plugins, language, and other details. A common browser can reveal more than many users expect.</p>
-        <p>Privacy technology itself is not illegal. It can be used for censorship resistance, source protection, abuse reporting, research, and personal privacy. The same technical properties can also be misused by people hiding scams, malware, stolen data, or illegal marketplaces.</p>
+        <p>Privacy-focused browsers are configured to route traffic through anonymity networks and reduce fingerprinting — identifying a user by browser settings, fonts, screen size, plugins, and language. Privacy technology itself is not illegal; it can protect journalists, activists, and abuse reporters. The same properties can also be misused for hiding scams, malware, or stolen data markets.</p>
       </section>
 
       <section id="hidden-addresses">
@@ -1102,39 +1523,36 @@
             <thead>
               <tr>
                 <th>Network</th>
-                <th>What it means</th>
-                <th>Safe visual example</th>
-                <th>What to remember</th>
+                <th>Example address</th>
+                <th>Key note</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Tor onion service</td>
-                <td>A service only reachable through the Tor network. Tor Project documentation says onion services are services such as websites that are accessible through Tor, and the address is generated for the service.</td>
-                <td><code>http://example-hidden-service.onion.invalid</code></td>
-                <td>Real onion addresses end in `.onion`, but this page uses `.onion.invalid` so it is not a working address.</td>
+                <td><strong>Tor</strong> onion service</td>
+                <td><code>http://example-service.onion.invalid</code></td>
+                <td>Reachable only through Tor. Address is auto-generated, not registered. Ends in <code>.onion</code>.</td>
               </tr>
               <tr>
-                <td>Lokinet SNApp / .loki style</td>
-                <td>Lokinet uses service names sometimes called SNApps. Lokinet documentation describes `.loki` names that can map to longer Lokinet addresses through its name system.</td>
+                <td><strong>Lokinet</strong> SNApp</td>
                 <td><code>http://example-service.loki.invalid</code></td>
-                <td>This is a different network from Tor. `.loki.invalid` here is only a visual placeholder.</td>
+                <td>Separate network from Tor. Uses <code>.loki</code> names. Does not work in Tor Browser.</td>
               </tr>
               <tr>
-                <td>I2P eepsite</td>
-                <td>I2P, the Invisible Internet Project, has hidden websites commonly called eepsites. I2P documentation describes `.i2p` names and generated `.b32.i2p` addresses.</td>
+                <td><strong>I2P</strong> eepsite</td>
                 <td><code>http://example-service.i2p.invalid</code></td>
-                <td>The correct name is I2P, not IP2. This example is made invalid by appending `.invalid`.</td>
+                <td>Invisible Internet Project. Uses <code>.i2p</code> names. Correct name is I2P, not IP2.</td>
               </tr>
               <tr>
-                <td>I2P Base32 address</td>
-                <td>A longer cryptographic-looking I2P destination format used when a human-readable address book name is not enough.</td>
-                <td><code>http://abcdefghijklmnopqrstuvwxyz234567.b32.i2p.invalid</code></td>
-                <td>Looks technical, but this is still a non-working placeholder.</td>
+                <td><strong>I2P</strong> Base32</td>
+                <td><code>http://abcdefgh…234567.b32.i2p.invalid</code></td>
+                <td>Cryptographic address used when no human-readable <code>.i2p</code> name exists.</td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <p>Each of these overlay networks handles encryption at their own network or protocol layer. That is why addresses in these networks commonly use <code>http://</code> rather than <code>https://</code> — the privacy and encryption is built into the network itself, not added on top through TLS certificates the way regular websites use HTTPS.</p>
 
         <h3>What ".onion" means</h3>
         <p>An onion service hides the server's network location by using Tor circuits and rendezvous-style routing. Users do not connect to a normal public IP address in the usual way. Instead, Tor handles discovery and routing inside the Tor network. The word "onion" refers to layered encryption and routing, not to a normal domain registration process.</p>
@@ -1170,34 +1588,24 @@
       <section id="compromised">
         <h2>What Compromised Data Means</h2>
         <p>Compromised data is personal, account, device, or business information that is exposed to someone who should not have it. The exposure may come from a hacked account, a company breach, malware, phishing, unsafe sharing links, or a person who already had access and misused it.</p>
-        <div class="grid-2">
-          <div class="card">
-            <h3>Common data types</h3>
-            <ul>
-              <li>Email addresses, usernames, passwords, or password hashes.</li>
-              <li>Phone numbers, addresses, identity documents, and invoices.</li>
-              <li>Private messages, photos, videos, screenshots, and cloud backups.</li>
-              <li>Cloud account data such as Gmail, Drive, Photos, contacts, synced browser settings, and saved-password metadata.</li>
-              <li>Banking clues, payment records, shopping accounts, and work logins.</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3>Common exposure sources</h3>
-            <ul>
-              <li>Phishing pages that capture logins.</li>
-              <li>Reused passwords from old breaches.</li>
-              <li>Malware on a phone or computer.</li>
-              <li>Public cloud links, weak recovery settings, or stolen devices.</li>
-            </ul>
-          </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data type</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td>Email, username, password / hash</td><td>Enables account takeover and credential stuffing across services.</td></tr>
+              <tr><td>Phone number, address, identity documents</td><td>Supports SIM swap, impersonation, fraud, and targeted scams.</td></tr>
+              <tr><td>Photos, videos, screenshots, cloud backups</td><td>Exposes faces, locations, relationships, and private messages.</td></tr>
+              <tr><td>Cloud account data (Gmail, Drive, Photos, contacts)</td><td>One account can expose an entire digital life and its recovery options.</td></tr>
+              <tr><td>Banking clues, payment records, work logins</td><td>Direct financial access or leverage for extortion and social engineering.</td></tr>
+            </tbody>
+          </table>
         </div>
         <p>Email is especially sensitive because it is often the recovery hub for other accounts. If an attacker controls email, they may reset passwords, search old receipts, find cloud links, impersonate the victim, or map the victim's life from years of messages.</p>
       </section>
 
       <section id="sale">
         <h2>How Stolen Data May Look When Advertised for Sale</h2>
-        <p>Underground sale posts often mimic product listings. A seller may claim a category, region, freshness, record count, sample preview, file format, and price. These claims may be real, exaggerated, outdated, duplicated, or completely fake.</p>
-        <p>The examples below are fictional and sanitized. They show the shape of risk without exposing real victims or giving operational marketplace details.</p>
+        <p>Underground sale posts often mimic product listings — complete with categories, freshness claims, record counts, and sample previews. These claims may be real, exaggerated, outdated, or completely fake.</p>
 
         <h3>Fake sale icon and disabled search UI</h3>
         <div class="callout danger">
@@ -1244,7 +1652,7 @@ Sample: redacted placeholders only
 Price: redacted for safety
 Status: unverified claim</pre>
         </div>
-        <p>Listings use ordinary product language to make stolen information feel routine. A "sample" is used to build trust, but even viewing or engaging with such posts can expose a person to scams, malware, and legal risk.</p>
+        <p>Listings use ordinary product language to make stolen information feel routine. A "sample" builds trust, but even viewing or engaging with such posts exposes a person to scams, malware, and legal risk.</p>
 
         <h3>Account access offer</h3>
         <div class="snippet">
@@ -1313,7 +1721,6 @@ Exposure level: High
 Seller note: "Account has recovery options attached"
 Price: Redacted</pre>
         </div>
-        <p>Email access is dangerous because email often controls password resets. An attacker may search for banking messages, cloud storage links, travel records, invoices, identity documents, contacts, and private conversations.</p>
 
         <h3>Compromised Google account bundle</h3>
         <div class="callout warning">
@@ -1376,51 +1783,84 @@ status = "fictional, sanitized, non-operational"</pre>
         </div>
         <p>Dark web pages do not all look the same. Some look like plain forums, some look like crude dashboards, and some are mostly text. Security articles often use terminal-style panels because they are easy to read, but this should not be interpreted as a command prompt or a workflow to follow.</p>
 
-        <h3>Phone photos and videos leak post</h3>
-        <div class="snippet">
-          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High</span></div>
-          <pre>Post: "Cloud backup media archive"
-Device type: Smartphone backup
-File types: photos, short videos, screenshots
-Claimed contents: personal gallery, documents, chat screenshots
-Identity details: partially visible in screenshots
-Status: Reposted by multiple users</pre>
-        </div>
-        <p>Personal media can expose faces, home details, school or workplace clues, relationships, medical information, and location history. Screenshots are often more sensitive than people realize.</p>
+        <h3>Redacted visual snapshot of a dark-web-style marketplace page</h3>
+        <p>The panel below is a CSS-rendered approximation of what a hidden-service listing page looks like. All content bars are blurred placeholders — no real page was accessed to produce it.</p>
+        <div class="mock-browser" aria-label="Fictional Tor Browser mock-up">
+          <div class="mock-browser-chrome">
+            <div class="mock-browser-tab-row">
+              <div class="mock-browser-tab">🧅 example-hidden-service.onion.invalid</div>
+            </div>
+            <div class="mock-browser-toolbar">
+              <div class="mock-browser-nav">
+                <button aria-hidden="true">←</button>
+                <button aria-hidden="true">→</button>
+                <button aria-hidden="true">↻</button>
+              </div>
+              <div class="mock-browser-onion">🧅 Tor Circuit</div>
+              <div class="mock-browser-url">http://example-hidden-service.onion.invalid/marketplace</div>
+              <div class="mock-browser-menu">≡</div>
+            </div>
+            <div class="mock-browser-circuit">
+              <span class="circuit-node">🌍 You</span>
+              <span class="circuit-arrow">→</span>
+              <span class="circuit-node">Guard relay</span>
+              <span class="circuit-arrow">→</span>
+              <span class="circuit-node">Middle relay</span>
+              <span class="circuit-arrow">→</span>
+              <span class="circuit-node">🧅 .onion service</span>
+            </div>
+          </div>
+          <div class="mock-browser-body">
+            <span class="mp-edu-badge">⚠ Educational Sample</span>
 
-        <h3>Credential dump preview</h3>
-        <div class="snippet">
-          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Medium to high</span></div>
-          <pre>Source: Unknown breach compilation
-Records: 48,000 claimed
-Fields: email, username, hashed_password, phone, signup_ip
-Sample:
-user001@example.invalid | hash_redacted | +00-0000-000000
-user002@example.invalid | hash_redacted | +00-0000-000000
-user003@example.invalid | hash_redacted | +00-0000-000000</pre>
-        </div>
-        <p>Hashed passwords are safer than plaintext passwords, but weak hashes or weak passwords may still be cracked. Unique passwords and a password manager reduce the damage from one breach.</p>
+            <div class="mp-js-warn">!! Javacript is dissabled or bloked. Sme fetures may not work corectly. Enabl scripting to vew full site. !!</div>
 
-        <h3>Identity record set listing</h3>
-        <div class="snippet">
-          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk high">High</span></div>
-          <pre>Bundle type: Identity profile
-Includes: name placeholder, address placeholder, phone placeholder, email placeholder
-Additional docs: redacted scans, utility bill placeholder
-Use claimed by seller: verification bypass
-Availability: limited sample shown</pre>
-        </div>
-        <p>Criminals combine data from many sources to build fuller profiles. A phone number from one breach, an address from another, and public social media can become a convincing impersonation kit.</p>
+            <div class="mp-page-inner">
+              <div class="mp-site-header">
+                <span class="mp-site-name">[SITE NAME REDACTED] Market</span>
+                <span class="mp-tagline">Trusted by comunity since [YEAR REDACTED] · Anonyimty guranteed · Use PGP</span>
+                <div class="mp-nav">
+                  <a>Home</a> | <a>Acounts</a> | <a>Digitl Goods</a> | <a>Servces</a> | <a>Forum</a>
+                  &nbsp; <span class="mp-nav-err">[err: search_widget failed to load]</span>
+                </div>
+              </div>
 
-        <h3>Account takeover discussion</h3>
-        <div class="snippet">
-          <div class="snippet-label"><span>Simulated example - not real data</span><span class="risk">Awareness</span></div>
-          <pre>Thread: "Reused password works on multiple services"
-User A: "Old breach list still gives access to shopping accounts."
-User B: "Check for saved cards and reward points."
-Moderator: "No direct personal data in public replies."</pre>
+              <div class="mp-listing">
+                <div class="mp-listing-head">
+                  FRESH ACNT BUNDLE — HIGH QUALTY &nbsp;
+                  <span class="mp-stars">★★★</span><span class="mp-stars-dim">★★</span>
+                </div>
+                <div class="mp-listing-meta">Catagory: Acount Acces &nbsp;|&nbsp; Sellar: [REDACTED] &nbsp;|&nbsp; Posted: 3 days ago &nbsp;|&nbsp; Sold: 12</div>
+                <div class="mp-listing-desc">Incudes: email inbox, coud reset lnks, shoping recipts. Veryfied fresh by sellar (unverified by market). Recovry options atached. Sourced form recent campain. Buyer resposible for verificaton.</div>
+                <div class="mp-listing-footer">
+                  <span class="mp-price">Price: ██████ XMR</span>
+                  <span class="mp-btn-disabled">[Add to cart — script disabled]</span>
+                </div>
+              </div>
+
+              <div class="mp-listing">
+                <div class="mp-listing-head">
+                  CREDNTIAL DUMP — COMBO LIST v4 &nbsp;
+                  <span class="mp-stars">★★</span><span class="mp-stars-dim">★★★</span>
+                </div>
+                <div class="mp-listing-meta">Catagory: Crendtials &nbsp;|&nbsp; Sellar: [REDACTED] &nbsp;|&nbsp; Posted: 11 days ago &nbsp;|&nbsp; Sold: 47</div>
+                <div class="mp-listing-desc">48k lines. email:pass formt. Sourced from mutiple old breches. Deduplicatd claimed by sellar. Untested bulk lot. Buyar beware — sellar unverified, claims may be exagerated or outdatd.</div>
+                <div class="mp-listing-footer">
+                  <span class="mp-price">Price: ██████ XMR</span>
+                  <span class="mp-btn-disabled">[Add to cart — script disabled]</span>
+                </div>
+              </div>
+
+              <div class="mp-thread">
+                <div class="mp-thread-title">[FORUM] Re: Old combo stil wrks on shoping sites — pg 3</div>
+                <div class="mp-thread-body">[err: thread_body render failed — javascrpit required for full vew] &nbsp; Raw fallback text: &nbsp; "Chek for saved cads and reward pionts befor reseling. Dont waste time on acounts with no blance. — post truncatd, enabl JS to read mor"</div>
+              </div>
+
+              <div class="mp-err-row">[err: sidebar_widgets timed out] &nbsp;·&nbsp; [err: price_ticker failed] &nbsp;·&nbsp; [err: captcha_challange not loaded] &nbsp;·&nbsp; [err: pgp_verify script blocked]</div>
+            </div>
+          </div>
         </div>
-        <p>Shopping accounts can contain saved addresses, order history, partial payment clues, gift cards, loyalty points, and social engineering material even when no full card number is visible.</p>
+        <p>Notice the hallmarks of a real dark web marketplace: broken grammar, deliberate misspellings, JS-disabled warnings (Tor Browser's "Safest" security level blocks scripts), disabled buy buttons, redacted prices, and cascading <code>[err:]</code> messages where JavaScript-dependent widgets failed to load. The diagonal watermark and ⚠ badge are added for this educational page — a real site would not have them.</p>
       </section>
 
       <section id="compromise-paths">
@@ -1437,8 +1877,7 @@ Moderator: "No direct personal data in public replies."</pre>
 
       <section id="believe-risk">
         <h2>Why People Should Believe the Risk</h2>
-        <p>The danger is not that every person is being personally targeted by an expert attacker. The danger is scale. Breached databases are copied, merged, resold, and tested automatically. Ordinary accounts are valuable because attackers can abuse many small opportunities at once.</p>
-        <p>A compromise may look quiet at first. A stolen email can be searched later. A leaked phone number can be used for scams months later. A cloud screenshot can reveal an address or recovery code. A password from an old breach can become serious when reused on a current account.</p>
+        <p>The danger is not that every person is personally targeted by an expert attacker — it is scale. Breached databases are copied, merged, resold, and tested automatically. Ordinary accounts are valuable because attackers abuse many small opportunities at once, and compromised data can be dormant for months before it is exploited.</p>
         <div class="callout danger">
           <strong>Why copied data is different</strong>
           When a physical document is stolen, one person may have it. When a digital file is copied, many people can have identical copies. Deleting the original does not guarantee that every copy is gone.
@@ -1453,6 +1892,13 @@ Moderator: "No direct personal data in public replies."</pre>
 
       <section id="email-recovery">
         <h2>What To Do If Your Email Is Compromised</h2>
+        <div class="hibp-callout">
+          <span class="hibp-icon">🔍</span>
+          <div>
+            <strong>Check Have I Been Pwned first</strong>
+            <p><a href="https://haveibeenpwned.com" target="_blank" rel="noopener">haveibeenpwned.com</a> is a free service created by security researcher Troy Hunt. Enter your email address to see whether it appears in any known public data breach. The site covers hundreds of breaches and is widely cited by security professionals. If your email appears in a breach, change the password for that service immediately and check whether the same password was reused elsewhere.</p>
+          </div>
+        </div>
         <ol class="checklist">
           <li>Change the password from a clean, trusted device.</li>
           <li>Enable multi-factor authentication or passkeys where available.</li>
@@ -1517,12 +1963,67 @@ Moderator: "No direct personal data in public replies."</pre>
         <h2>Advanced: From Breach to Underground Listing</h2>
         <p>This lifecycle is a defensive awareness model. It explains how stolen data can move without teaching participation in those markets.</p>
         <div class="flow">
-          <div class="flow-step"><span class="num">1</span><div><strong>Initial compromise.</strong><p>Data is stolen through phishing, malware, exposed storage, weak authentication, insider misuse, or a company breach.</p></div></div>
+          <div class="flow-step"><span class="num">1</span><div><strong>Initial compromise.</strong><p>Data is stolen through one or more of the methods covered in the <a href="#compromise-paths">compromise paths section</a> above.</p></div></div>
           <div class="flow-step"><span class="num">2</span><div><strong>Sorting.</strong><p>Attackers separate emails, phone numbers, documents, media, credentials, and payment-related clues.</p></div></div>
           <div class="flow-step"><span class="num">3</span><div><strong>Packaging.</strong><p>Records are grouped into lists, bundles, account-access offers, media archives, or identity profiles.</p></div></div>
           <div class="flow-step"><span class="num">4</span><div><strong>Advertising.</strong><p>Sellers post product-style claims in hidden forums, private groups, or closed communities.</p></div></div>
           <div class="flow-step"><span class="num">5</span><div><strong>Resale and abuse.</strong><p>Data is copied, merged with old leaks, resold, traded, and used for fraud, extortion, impersonation, spam, or social engineering.</p></div></div>
           <div class="flow-step"><span class="num">6</span><div><strong>Long tail.</strong><p>The same records can reappear months or years later, especially if passwords and recovery settings remain unchanged.</p></div></div>
+        </div>
+      </section>
+
+      <section id="law-enforcement">
+        <h2>Law Enforcement Operations Against Dark Web Markets</h2>
+        <p>Governments and international agencies actively monitor, infiltrate, and shut down dark web markets and cybercriminal networks. Some of the most effective operations have involved agencies posing as legitimate dark web services to identify and arrest users — a technique sometimes called a honeypot or sting operation. These takedowns demonstrate that anonymity tools do not guarantee safety from law enforcement.</p>
+
+        <div class="law-ops">
+          <div class="law-op">
+            <div class="law-op-icon">📱</div>
+            <div>
+              <strong>Operation Trojan Shield — ANOM (2021)</strong>
+              <p>The FBI and Australian Federal Police secretly created and distributed a supposedly secure encrypted phone called ANOM, which was marketed to criminal networks. Unknown to users, every message was routed through law enforcement. After three years of operation the agencies arrested over 800 people across 16 countries and seized tonnes of drugs, cash, and weapons.</p>
+            </div>
+          </div>
+          <div class="law-op">
+            <div class="law-op-icon">🕸️</div>
+            <div>
+              <strong>AlphaBay and Hansa Takedown (2017)</strong>
+              <p>When AlphaBay — at the time the largest dark web market — was seized by the FBI, DEA, and Europol, investigators did not immediately announce the shutdown of Hansa, another major market. Dutch police had already taken over Hansa and ran it covertly for a month, harvesting the credentials of tens of thousands of users who had migrated from AlphaBay, before announcing both takedowns simultaneously.</p>
+            </div>
+          </div>
+          <div class="law-op">
+            <div class="law-op-icon">🛡️</div>
+            <div>
+              <strong>Operation DisrupTor (2020)</strong>
+              <p>A coordinated effort between the FBI, DEA, Europol, and agencies from multiple countries that targeted vendors and buyers on dark web drug markets. It resulted in over 170 arrests and the seizure of drugs, firearms, and millions of dollars in cryptocurrency, building on intelligence gathered from the Wall Street Market takedown the previous year.</p>
+            </div>
+          </div>
+          <div class="law-op">
+            <div class="law-op-icon">🔓</div>
+            <div>
+              <strong>Hive Ransomware Disruption (2023)</strong>
+              <p>The FBI secretly infiltrated the Hive ransomware network and spent months inside their systems, obtaining decryption keys and providing them to over 300 active victims — preventing approximately 130 million dollars in ransom payments. The operation was only disclosed after the network's infrastructure was seized in coordination with European partners.</p>
+            </div>
+          </div>
+          <div class="law-op">
+            <div class="law-op-icon">🗂️</div>
+            <div>
+              <strong>Genesis Market Seizure (2023)</strong>
+              <p>Genesis Market was a major marketplace selling stolen browser fingerprints, cookies, and credentials that allowed buyers to impersonate victims without needing their passwords. The FBI-led Operation Cookie Monster seized the site and arrested dozens of users worldwide. The operation highlighted that stolen session data, not just passwords, is a significant criminal commodity.</p>
+            </div>
+          </div>
+          <div class="law-op">
+            <div class="law-op-icon">⚖️</div>
+            <div>
+              <strong>Silk Road Takedown (2013)</strong>
+              <p>The FBI identified and arrested Ross Ulbricht, the operator of Silk Road — the first large-scale dark web market — through a combination of operational security mistakes, forum post analysis, and follow-the-money investigation of Bitcoin transactions. The case established that blockchain transactions, despite being pseudonymous, can be traced with forensic analysis.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>What this means for users</strong>
+          Law enforcement agencies cooperate internationally and invest significant resources into infiltrating dark web platforms. In several documented cases, agencies ran compromised markets for weeks or months before making arrests, collecting user data throughout. Anonymity tools reduce passive surveillance but do not protect against targeted law enforcement operations.
         </div>
       </section>
 
@@ -1712,6 +2213,7 @@ Moderator: "No direct personal data in public replies."</pre>
       <section id="checklist">
         <h2>Final Practical Checklist</h2>
         <ul class="checklist">
+          <li>Check your email address on <a href="https://haveibeenpwned.com" target="_blank" rel="noopener">haveibeenpwned.com</a> to see if it appears in known data breaches.</li>
           <li>Use a password manager and create unique passwords for every important account.</li>
           <li>Enable MFA or passkeys, especially on email, banking, cloud, social media, and work accounts.</li>
           <li>Keep phones, computers, browsers, and apps updated.</li>
@@ -1729,6 +2231,7 @@ Moderator: "No direct personal data in public replies."</pre>
         <h2>Sources and Further Reading</h2>
         <p>These references support the article's factual framing. The article uses them for definitions, indexing behavior, onion-service terminology, and privacy-network distinctions.</p>
         <ul class="source-list">
+          <li><a href="https://haveibeenpwned.com" target="_blank" rel="noopener">Have I Been Pwned</a> — Free breach-check service by Troy Hunt. Enter an email address to see if it appears in any known public data breach.</li>
           <li><a href="https://developers.google.com/search/docs/essentials/technical">Google Search Central: Search technical requirements</a> - explains that private pages requiring login are not crawled by Googlebot.</li>
           <li><a href="https://developers.google.com/search/docs/crawling-indexing/control-what-you-share">Google Search Central: Control what you share with Google</a> - explains password protection and `noindex` for keeping content out of search.</li>
           <li><a href="https://torproject.github.io/manual/onion-services/">Tor Browser Manual: Onion Services</a> - explains that onion services are reachable through Tor and use generated `.onion` addresses.</li>
