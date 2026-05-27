@@ -9,27 +9,30 @@
   <meta property="og:title" content="Deep Web and Dark Web Explained">
   <meta property="og:description" content="Beginner-to-advanced guide to hidden web concepts, compromised data risks, fictional leak examples, and practical safety steps.">
   <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: dark;
-      --bg: #08111f;
-      --panel: #101b2b;
-      --panel-2: #142439;
-      --text: #eef5ff;
-      --muted: #a9bad0;
-      --soft: #6f8199;
-      --line: rgba(178, 203, 232, 0.18);
-      --accent: #48d6b5;
-      --accent-2: #8bb7ff;
-      --warn: #ffd166;
-      --danger: #ff6b7f;
-      --ok: #7ee787;
-      --code: #06101d;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-      --radius: 8px;
+      --bg: #12100e;
+      --panel: #1c1710;
+      --panel-2: #221d13;
+      --text: #ddd5c0;
+      --muted: #b8a484;
+      --soft: #8a7460;
+      --line: rgba(200, 155, 80, 0.22);
+      --accent: #c0392b;
+      --accent-2: #c87941;
+      --warn: #c89b30;
+      --danger: #c0392b;
+      --ok: #4a8a4a;
+      --code: #0a0906;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      --radius: 2px;
       --content: 1060px;
       --article: 780px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
     }
 
     * {
@@ -43,39 +46,50 @@
     body {
       margin: 0;
       background:
-        linear-gradient(90deg, rgba(72, 214, 181, 0.04) 1px, transparent 1px),
-        linear-gradient(rgba(139, 183, 255, 0.04) 1px, transparent 1px),
-        radial-gradient(circle at top left, rgba(72, 214, 181, 0.18), transparent 34rem),
-        radial-gradient(circle at 80% 10%, rgba(139, 183, 255, 0.12), transparent 28rem),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='560'%3E%3Ctext transform='rotate(-35 280 280)' x='20' y='310' fill='rgba(192%2C57%2C43%2C0.052)' font-size='42' font-family='Georgia%2C serif' font-weight='bold' letter-spacing='7'%3ECLASSIFIED%3C/text%3E%3C/svg%3E"),
+        radial-gradient(ellipse at top left, rgba(140, 30, 20, 0.13), transparent 44%),
+        radial-gradient(ellipse at bottom right, rgba(130, 80, 20, 0.09), transparent 42%),
         var(--bg);
-      background-size: 44px 44px, 44px 44px, auto, auto, auto;
+      background-size: 560px 560px, auto, auto, auto;
       color: var(--text);
-      font-size: 17px;
-      line-height: 1.72;
+      font-size: 18px;
+      line-height: 1.82;
     }
 
     a {
-      color: var(--accent);
+      color: var(--accent-2);
       text-decoration: none;
     }
 
     a:hover,
     a:focus {
+      color: var(--accent);
       text-decoration: underline;
     }
 
     a:focus,
     button:focus {
-      outline: 3px solid rgba(72, 214, 181, 0.5);
+      outline: 2px solid rgba(192, 57, 43, 0.6);
       outline-offset: 3px;
     }
 
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.87em;
+      background: rgba(200, 155, 80, 0.1);
+      border: 1px solid rgba(200, 155, 80, 0.22);
+      padding: 1px 5px;
+      border-radius: 2px;
+      color: var(--warn);
+    }
+
+    /* === PROGRESS BAR === */
     .progress {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 20;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.08);
+      height: 3px;
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .progress span {
@@ -85,12 +99,35 @@
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
 
+    /* === CLASSIFICATION BANNER === */
+    .classification-banner {
+      background: var(--accent);
+      color: rgba(255, 255, 255, 0.92);
+      text-align: center;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 6px 16px 5px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    /* === HEADER === */
     .site-header {
-      min-height: 92vh;
+      min-height: 90vh;
       display: flex;
       align-items: center;
-      padding: 64px 24px 48px;
-      border-bottom: 1px solid var(--line);
+      padding: 64px 24px 52px;
+      border-bottom: 2px solid rgba(192, 57, 43, 0.5);
+      position: relative;
+    }
+
+    .site-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(192, 57, 43, 0.07) 0%, transparent 45%);
+      pointer-events: none;
     }
 
     .hero {
@@ -98,7 +135,7 @@
       margin: 0 auto;
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-      gap: 48px;
+      gap: 52px;
       align-items: center;
     }
 
@@ -107,78 +144,103 @@
       align-items: center;
       gap: 10px;
       color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.76rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       margin: 0 0 18px;
+      padding: 4px 12px;
+      border: 1px solid rgba(192, 57, 43, 0.45);
+      background: rgba(192, 57, 43, 0.08);
     }
 
     .eyebrow::before {
-      content: "";
-      width: 26px;
-      height: 2px;
-      background: var(--accent);
+      content: "▌";
+      color: var(--accent);
+      font-size: 0.85rem;
     }
 
     h1,
     h2,
     h3,
     h4 {
-      line-height: 1.14;
+      line-height: 1.18;
       letter-spacing: 0;
-      color: #f7fbff;
+      color: #f0e8d8;
+      font-family: 'Crimson Text', Georgia, serif;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(2.6rem, 6vw, 5.8rem);
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
       max-width: 11ch;
+      font-weight: 600;
+      font-style: italic;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
     }
 
     .subtitle {
       max-width: 680px;
-      color: #d5e4f6;
-      font-size: clamp(1.08rem, 2vw, 1.35rem);
-      margin: 24px 0;
+      color: #ccbfa0;
+      font-size: clamp(1.08rem, 2vw, 1.28rem);
+      margin: 22px 0;
+      font-style: italic;
     }
 
     .meta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 24px 0;
+      margin: 22px 0;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      min-height: 34px;
-      padding: 6px 12px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(16, 27, 43, 0.82);
-      color: #dbe9fb;
-      font-size: 0.88rem;
-      font-weight: 700;
+      min-height: 30px;
+      padding: 4px 11px;
+      border: 1px solid rgba(200, 155, 80, 0.4);
+      border-radius: 2px;
+      background: rgba(28, 23, 16, 0.9);
+      color: var(--warn);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
     }
 
     .hero-note {
       max-width: 680px;
       border-left: 4px solid var(--accent);
       padding: 14px 18px;
-      background: rgba(72, 214, 181, 0.08);
-      color: #d9f8f1;
+      background: rgba(192, 57, 43, 0.07);
+      color: #d8ccb2;
       border-radius: 0 var(--radius) var(--radius) 0;
+      font-style: italic;
     }
 
+    /* === VISUAL PANEL === */
     .visual-panel {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(20, 36, 57, 0.9), rgba(8, 17, 31, 0.9));
+      border: 1px solid rgba(200, 155, 80, 0.35);
+      border-top: 3px solid var(--accent);
+      background: linear-gradient(180deg, rgba(28, 23, 16, 0.97), rgba(18, 16, 14, 0.97));
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow), inset 0 0 40px rgba(0, 0, 0, 0.2);
       overflow: hidden;
+      position: relative;
+    }
+
+    .visual-panel::after {
+      content: "FILE SUMMARY";
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      color: rgba(200, 155, 80, 0.35);
+      pointer-events: none;
     }
 
     .panel-head {
@@ -186,29 +248,33 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 800;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.25);
+      color: var(--warn);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(192, 57, 43, 0.08);
     }
 
     .dots {
       display: flex;
-      gap: 7px;
+      gap: 5px;
     }
 
     .dots span {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: var(--soft);
+      background: rgba(200, 155, 80, 0.25);
+      border: 1px solid rgba(200, 155, 80, 0.45);
     }
 
     .layer-stack {
-      padding: 24px;
+      padding: 20px;
       display: grid;
-      gap: 14px;
+      gap: 12px;
     }
 
     .layer {
@@ -216,14 +282,14 @@
       grid-template-columns: 92px 1fr;
       gap: 14px;
       align-items: center;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(200, 155, 80, 0.18);
+      background: rgba(255, 255, 255, 0.025);
       border-radius: var(--radius);
-      padding: 14px;
+      padding: 12px;
     }
 
     .layer strong {
-      color: #ffffff;
+      color: #f0e8d8;
     }
 
     .layer p {
@@ -235,65 +301,99 @@
 
     .layer .tag {
       min-width: 82px;
-      min-height: 42px;
+      min-height: 40px;
       display: grid;
       place-items: center;
-      border-radius: var(--radius);
-      color: #06101d;
-      font-weight: 900;
-      font-size: 0.78rem;
+      border-radius: 2px;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
+      border: 2px solid currentColor;
     }
 
-    .surface .tag { background: #8bb7ff; }
-    .deep .tag { background: #48d6b5; }
-    .dark .tag { background: #ffd166; }
+    .surface .tag { background: rgba(74, 138, 74, 0.15); color: #6aba6a; border-color: #6aba6a; }
+    .deep .tag { background: rgba(200, 155, 48, 0.12); color: var(--warn); border-color: var(--warn); }
+    .dark .tag { background: rgba(192, 57, 43, 0.15); color: var(--accent); border-color: var(--accent); }
 
+    /* === LAYOUT === */
     .wrap {
       width: min(var(--content), calc(100% - 36px));
       margin: 0 auto;
       display: grid;
       grid-template-columns: 250px minmax(0, 1fr);
       gap: 36px;
-      padding: 40px 0 76px;
+      padding: 44px 0 80px;
     }
 
+    /* === TOC === */
     .toc {
       position: sticky;
       top: 28px;
       align-self: start;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.28);
+      border-top: 2px solid var(--accent);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.78);
-      padding: 18px;
+      background: rgba(28, 23, 16, 0.9);
+      padding: 0;
       max-height: calc(100vh - 56px);
       overflow: auto;
     }
 
-    .toc h2 {
-      margin: 0 0 12px;
-      font-size: 0.95rem;
-      text-transform: uppercase;
+    .toc::before {
+      content: "— INDEX —";
+      display: block;
+      padding: 10px 18px;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.24em;
       color: var(--accent);
+      border-bottom: 1px solid rgba(200, 155, 80, 0.2);
+      background: rgba(192, 57, 43, 0.07);
+    }
+
+    .toc h2 {
+      display: none;
     }
 
     .toc a {
       display: block;
-      padding: 7px 0;
+      padding: 7px 18px;
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.35;
-      border-top: 1px solid rgba(178, 203, 232, 0.08);
+      font-size: 0.88rem;
+      line-height: 1.4;
+      border-top: 1px solid rgba(200, 155, 80, 0.1);
+      font-family: Georgia, serif;
     }
 
+    .toc a:hover {
+      color: var(--warn);
+      background: rgba(200, 155, 80, 0.06);
+      text-decoration: none;
+    }
+
+    .toc a:focus {
+      outline: 2px solid rgba(192, 57, 43, 0.5);
+      outline-offset: -2px;
+      color: var(--warn);
+      text-decoration: none;
+    }
+
+    .toc a[aria-current="true"] {
+      color: var(--accent);
+      background: rgba(192, 57, 43, 0.06);
+    }
+
+    /* === MAIN CONTENT === */
     main {
       max-width: var(--article);
       min-width: 0;
     }
 
     section {
-      padding: 34px 0;
-      border-bottom: 1px solid var(--line);
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.14);
     }
 
     section:first-child {
@@ -301,31 +401,50 @@
     }
 
     h2 {
-      margin: 0 0 18px;
-      font-size: clamp(1.8rem, 3vw, 2.65rem);
+      margin: 0 0 20px;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-style: italic;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 52px;
+      height: 2px;
+      background: var(--accent);
     }
 
     h3 {
       margin: 28px 0 12px;
-      font-size: 1.28rem;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: #e0d8c4;
     }
 
     h4 {
       margin: 20px 0 8px;
-      font-size: 1rem;
-      color: #d9e9ff;
+      font-size: 0.95rem;
+      color: #d4c8a0;
+      font-style: normal;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      letter-spacing: 0.06em;
     }
 
     p {
       margin: 0 0 16px;
-      color: #d5e2f2;
+      color: #d4c8ae;
     }
 
     ul,
     ol {
       margin: 0 0 18px;
       padding-left: 22px;
-      color: #d5e2f2;
+      color: #d4c8ae;
     }
 
     li {
@@ -333,35 +452,51 @@
     }
 
     .lead {
-      color: #e6f0fb;
+      color: #e2d6bc;
       font-size: 1.1rem;
+      font-style: italic;
     }
 
+    /* === CALLOUTS === */
     .callout {
       margin: 22px 0;
-      padding: 18px;
-      border: 1px solid var(--line);
+      padding: 16px 18px;
+      border: 1px solid rgba(200, 155, 80, 0.28);
       border-left: 4px solid var(--accent-2);
       border-radius: var(--radius);
-      background: rgba(139, 183, 255, 0.08);
+      background: rgba(200, 121, 65, 0.07);
     }
 
     .callout strong {
       display: block;
       margin-bottom: 6px;
-      color: #ffffff;
+      color: #f0e8d8;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
     }
 
     .warning {
       border-left-color: var(--warn);
-      background: rgba(255, 209, 102, 0.08);
+      background: rgba(200, 155, 48, 0.07);
     }
 
     .danger {
-      border-left-color: var(--danger);
-      background: rgba(255, 107, 127, 0.08);
+      border-left-color: var(--accent);
+      background: rgba(192, 57, 43, 0.07);
     }
 
+    .info {
+      border-left-color: #6a8aaa;
+      background: rgba(100, 140, 180, 0.07);
+    }
+
+    .info strong {
+      color: #a8c4dc;
+    }
+
+    /* === GRID / CARDS === */
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -370,9 +505,10 @@
     }
 
     .card {
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.22);
+      border-top: 2px solid rgba(200, 155, 80, 0.44);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.82);
+      background: rgba(28, 23, 16, 0.85);
       padding: 18px;
     }
 
@@ -381,10 +517,11 @@
       margin-top: 0;
     }
 
+    /* === TABLE === */
     .table-wrap {
       overflow-x: auto;
       margin: 20px 0;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.25);
       border-radius: var(--radius);
     }
 
@@ -392,31 +529,36 @@
       width: 100%;
       min-width: 640px;
       border-collapse: collapse;
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.8);
     }
 
     th,
     td {
-      padding: 13px 14px;
+      padding: 12px 14px;
       text-align: left;
       vertical-align: top;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid rgba(200, 155, 80, 0.14);
     }
 
     th {
-      color: #ffffff;
-      background: rgba(72, 214, 181, 0.1);
-      font-size: 0.88rem;
+      color: #f0e8d8;
+      background: rgba(192, 57, 43, 0.12);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
+      font-weight: 400;
+      border-bottom-color: rgba(192, 57, 43, 0.3);
     }
 
     td {
-      color: #d5e2f2;
+      color: #d4c8ae;
     }
 
+    /* === SNIPPETS / CODE BLOCKS === */
     .snippet {
       margin: 18px 0 22px;
-      border: 1px solid rgba(255, 209, 102, 0.28);
+      border: 1px solid rgba(200, 155, 80, 0.25);
       border-radius: var(--radius);
       background: var(--code);
       overflow: hidden;
@@ -426,50 +568,58 @@
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      padding: 10px 14px;
-      background: rgba(255, 209, 102, 0.12);
-      color: var(--warn);
-      font-size: 0.78rem;
-      font-weight: 900;
+      padding: 9px 14px;
+      background: rgba(192, 57, 43, 0.12);
+      color: var(--accent);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.13em;
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(255, 209, 102, 0.2);
+      border-bottom: 1px solid rgba(192, 57, 43, 0.25);
     }
 
     pre {
       margin: 0;
       padding: 16px;
       overflow-x: auto;
-      color: #dff7ef;
+      color: #c8b880;
       font: 0.88rem/1.62 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       white-space: pre;
     }
 
+    /* === RISK BADGES === */
     .risk {
       display: inline-flex;
-      min-height: 28px;
+      min-height: 26px;
       align-items: center;
-      padding: 3px 9px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 900;
-      color: #06101d;
-      background: var(--warn);
+      padding: 2px 9px;
+      border-radius: 2px;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      color: #f0e8d8;
+      background: rgba(200, 155, 48, 0.18);
+      border: 1px solid var(--warn);
     }
 
     .risk.high {
-      background: var(--danger);
-      color: #fff;
+      background: rgba(192, 57, 43, 0.18);
+      border-color: var(--accent);
+      color: #ffb8b8;
     }
 
     .risk.ok {
-      background: var(--ok);
+      background: rgba(74, 138, 74, 0.15);
+      border-color: #4a8a4a;
+      color: #88cc88;
     }
 
+    /* === MOCK SEARCH === */
     .mock-search {
       margin: 22px 0;
-      border: 1px solid rgba(255, 209, 102, 0.28);
+      border: 1px solid rgba(200, 155, 80, 0.28);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(16, 27, 43, 0.95), rgba(6, 16, 29, 0.95));
+      background: rgba(18, 16, 14, 0.96);
       overflow: hidden;
     }
 
@@ -477,20 +627,20 @@
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 12px;
-      padding: 14px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.035);
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.18);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .fake-input {
-      min-height: 42px;
+      min-height: 40px;
       display: flex;
       align-items: center;
       padding: 0 12px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.22);
       border-radius: var(--radius);
       color: var(--soft);
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.3);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       overflow: hidden;
       white-space: nowrap;
@@ -498,47 +648,50 @@
     }
 
     .disabled-button {
-      min-height: 42px;
+      min-height: 40px;
       padding: 0 14px;
-      border: 1px solid rgba(255, 209, 102, 0.36);
+      border: 1px solid rgba(200, 155, 80, 0.35);
       border-radius: var(--radius);
       color: var(--warn);
-      background: rgba(255, 209, 102, 0.09);
-      font-weight: 900;
+      background: rgba(200, 155, 48, 0.08);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.05em;
     }
 
     .filter-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.14);
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      min-height: 28px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: rgba(139, 183, 255, 0.12);
-      border: 1px solid rgba(139, 183, 255, 0.25);
-      color: #dce9ff;
-      font-size: 0.76rem;
-      font-weight: 900;
+      min-height: 26px;
+      padding: 2px 9px;
+      border-radius: 2px;
+      background: rgba(200, 121, 65, 0.1);
+      border: 1px solid rgba(200, 121, 65, 0.3);
+      color: #d4a070;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.71rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .badge.sale {
-      background: rgba(255, 209, 102, 0.13);
-      border-color: rgba(255, 209, 102, 0.36);
+      background: rgba(200, 155, 48, 0.1);
+      border-color: rgba(200, 155, 48, 0.35);
       color: var(--warn);
     }
 
     .badge.danger-badge {
-      background: rgba(255, 107, 127, 0.13);
-      border-color: rgba(255, 107, 127, 0.36);
-      color: #ff9aaa;
+      background: rgba(192, 57, 43, 0.1);
+      border-color: rgba(192, 57, 43, 0.35);
+      color: #e08080;
     }
 
     .mock-result {
@@ -563,31 +716,35 @@
     }
 
     .result-meta span {
-      padding: 9px 10px;
-      border: 1px solid var(--line);
+      padding: 8px 10px;
+      border: 1px solid rgba(200, 155, 80, 0.18);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
     }
 
+    /* === STACK VISUAL === */
     .stack-visual {
       margin: 24px 0;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.25);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.8);
       overflow: hidden;
     }
 
     .stack-heading {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.18);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .stack-heading strong {
       display: block;
-      color: #fff;
-      font-size: 1rem;
+      color: #f0e8d8;
+      font-size: 0.95rem;
       line-height: 1.3;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-weight: 400;
+      letter-spacing: 0.04em;
     }
 
     .stack-heading span {
@@ -603,8 +760,8 @@
       grid-template-columns: 144px minmax(220px, 1fr) 170px;
       gap: 16px;
       align-items: center;
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(200, 155, 80, 0.12);
     }
 
     .stack-row:last-child {
@@ -612,24 +769,17 @@
     }
 
     .stack-label {
-      color: #fff;
-      font-weight: 900;
+      color: #f0e8d8;
+      font-weight: 600;
+      font-style: italic;
     }
 
     .stack-bar {
-      height: 34px;
-      border-radius: var(--radius);
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.08) 0,
-          rgba(255, 255, 255, 0.08) 1px,
-          transparent 1px,
-          transparent 10%
-        ),
-        rgba(255, 255, 255, 0.055);
+      height: 30px;
+      border-radius: 2px;
+      background: rgba(200, 155, 80, 0.06);
+      border: 1px solid rgba(200, 155, 80, 0.15);
       overflow: hidden;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
     .stack-fill {
@@ -641,41 +791,42 @@
       height: 100%;
       border-radius: inherit;
       padding: 0 10px;
-      color: #06101d;
-      font-size: 0.82rem;
-      font-weight: 900;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.78rem;
       line-height: 1;
       white-space: nowrap;
     }
 
     .stack-fill.surface {
       width: 10%;
-      background: var(--accent-2);
+      background: #4a8a4a;
+      color: #fff;
     }
 
     .stack-fill.deep {
       width: 92%;
-      background: var(--accent);
+      background: var(--warn);
+      color: #12100e;
     }
 
     .stack-fill.dark {
       width: 1.5%;
       min-width: 12px;
       padding: 0;
-      background: var(--warn);
+      background: var(--accent);
     }
 
     .stack-fill.dark .stack-fill-text {
       position: absolute;
       left: 24px;
-      color: var(--warn);
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+      color: var(--accent);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
     }
 
     .stack-note {
       color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 800;
+      font-size: 0.88rem;
+      font-style: italic;
       text-align: right;
       line-height: 1.35;
     }
@@ -691,13 +842,13 @@
       grid-template-columns: 170px 1fr;
       gap: 14px;
       padding: 14px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.2);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.75);
     }
 
     .matrix-item strong {
-      color: #fff;
+      color: #f0e8d8;
     }
 
     .source-list {
@@ -711,9 +862,9 @@
     .source-list li {
       margin: 0;
       padding: 12px 14px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.2);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.75);
     }
 
     .flow {
@@ -728,20 +879,22 @@
       gap: 14px;
       align-items: start;
       padding: 14px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.2);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.75);
+      background: rgba(28, 23, 16, 0.75);
     }
 
     .num {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: var(--accent);
-      color: #06101d;
-      font-weight: 900;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.85rem;
+      background: rgba(192, 57, 43, 0.1);
     }
 
     .mock-browser {
@@ -777,7 +930,7 @@
       border-radius: 6px 6px 0 0;
       border: 1px solid rgba(120, 80, 200, 0.25);
       border-bottom: none;
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
       font-size: 0.78rem;
       color: #c8b8f8;
       white-space: nowrap;
@@ -821,7 +974,7 @@
       border: 1px solid rgba(120, 80, 200, 0.35);
       color: #b89dff;
       font-size: 0.78rem;
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
       white-space: nowrap;
       cursor: default;
     }
@@ -857,7 +1010,7 @@
       padding: 5px 10px;
       background: rgba(0,0,0,0.2);
       border-top: 1px solid rgba(120, 80, 200, 0.12);
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
       font-size: 0.72rem;
       color: #7a6fa0;
       overflow-x: auto;
@@ -877,7 +1030,7 @@
 
     .circuit-arrow {
       padding: 0 4px;
-      color: #4a3a6a;
+      color: #6a5a8a;
     }
 
     .mock-browser-body {
@@ -900,8 +1053,8 @@
       border: 1px solid rgba(255, 209, 102, 0.5);
       color: var(--warn);
       font-size: 0.68rem;
-      font-weight: 900;
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 400;
+      font-family: 'Special Elite', 'Courier New', monospace;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       padding: 3px 8px;
@@ -936,7 +1089,7 @@
 
     .mp-tagline {
       font-size: 0.72rem;
-      color: #666688;
+      color: #8888aa;
       display: block;
       margin-top: 2px;
     }
@@ -973,7 +1126,7 @@
     }
 
     .mp-listing-meta {
-      color: #666688;
+      color: #8888aa;
       font-size: 0.74rem;
       margin-bottom: 5px;
     }
@@ -1027,42 +1180,42 @@
     }
 
     .mp-thread-body {
-      color: #666677;
+      color: #7a7a8e;
       line-height: 1.5;
     }
 
     .mp-err-row {
       font-size: 0.7rem;
-      color: #553333;
+      color: #7a4444;
       padding: 5px 0;
       border-top: 1px solid #1e1e22;
     }
 
     .redacted-bar {
       height: 14px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.07);
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.06);
       margin-bottom: 8px;
       filter: blur(2px);
       pointer-events: none;
       user-select: none;
     }
 
-    .redacted-bar.title   { height: 20px; width: 60%; background: rgba(139, 183, 255, 0.18); }
+    .redacted-bar.title   { height: 20px; width: 60%; background: rgba(200, 155, 80, 0.15); }
     .redacted-bar.short   { width: 30%; }
     .redacted-bar.medium  { width: 55%; }
     .redacted-bar.long    { width: 80%; }
     .redacted-bar.full    { width: 100%; }
-    .redacted-bar.accent  { background: rgba(72, 214, 181, 0.2); }
-    .redacted-bar.warn    { background: rgba(255, 209, 102, 0.22); }
-    .redacted-bar.danger  { background: rgba(255, 107, 127, 0.22); height: 10px; }
+    .redacted-bar.accent  { background: rgba(200, 121, 65, 0.18); }
+    .redacted-bar.warn    { background: rgba(200, 155, 48, 0.2); }
+    .redacted-bar.danger  { background: rgba(192, 57, 43, 0.2); height: 10px; }
 
     .mock-listing-row {
       padding: 12px;
       margin-bottom: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .mock-browser-overlay {
@@ -1072,29 +1225,29 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(6, 16, 29, 0.62);
+      background: rgba(10, 9, 6, 0.65);
       backdrop-filter: blur(3px);
       gap: 10px;
       pointer-events: none;
     }
 
     .mock-browser-overlay .overlay-label {
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: 'Special Elite', 'Courier New', monospace;
       font-size: 0.78rem;
-      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--warn);
-      border: 1px solid rgba(255, 209, 102, 0.42);
+      border: 1px solid rgba(200, 155, 48, 0.5);
       padding: 6px 14px;
-      border-radius: 4px;
-      background: rgba(255, 209, 102, 0.08);
+      border-radius: 3px;
+      background: rgba(200, 155, 48, 0.08);
     }
 
     .mock-browser-overlay .overlay-sub {
-      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-      font-size: 0.75rem;
+      font-family: Georgia, serif;
+      font-size: 0.78rem;
       color: var(--muted);
+      font-style: italic;
     }
 
     .law-ops {
@@ -1109,26 +1262,27 @@
       gap: 14px;
       align-items: start;
       padding: 14px;
-      border: 1px solid rgba(72, 214, 181, 0.2);
+      border: 1px solid rgba(200, 155, 80, 0.2);
+      border-left: 3px solid var(--accent);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.75);
+      background: rgba(28, 23, 16, 0.75);
     }
 
     .law-op-icon {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(72, 214, 181, 0.14);
-      border: 1px solid rgba(72, 214, 181, 0.35);
+      background: rgba(192, 57, 43, 0.12);
+      border: 1px solid rgba(192, 57, 43, 0.35);
       display: grid;
       place-items: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
       flex-shrink: 0;
     }
 
     .law-op strong {
       display: block;
-      color: #fff;
+      color: #f0e8d8;
       margin-bottom: 4px;
     }
 
@@ -1145,20 +1299,24 @@
       align-items: start;
       margin: 18px 0;
       padding: 16px;
-      border: 1px solid rgba(72, 214, 181, 0.32);
+      border: 1px solid rgba(200, 155, 80, 0.28);
+      border-left: 3px solid var(--accent-2);
       border-radius: var(--radius);
-      background: rgba(72, 214, 181, 0.06);
+      background: rgba(200, 121, 65, 0.06);
     }
 
     .hibp-callout .hibp-icon {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       line-height: 1;
     }
 
     .hibp-callout strong {
       display: block;
-      color: var(--accent);
+      color: var(--accent-2);
       margin-bottom: 4px;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-size: 0.86rem;
+      letter-spacing: 0.06em;
     }
 
     .hibp-callout p {
@@ -1176,16 +1334,17 @@
 
     .onion-diagram div {
       min-height: 110px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.22);
       border-radius: var(--radius);
       padding: 12px;
-      background: linear-gradient(180deg, rgba(72, 214, 181, 0.12), rgba(16, 27, 43, 0.86));
+      background: linear-gradient(180deg, rgba(192, 57, 43, 0.1), rgba(28, 23, 16, 0.9));
     }
 
     .onion-diagram strong {
       display: block;
-      color: #fff;
+      color: #f0e8d8;
       margin-bottom: 6px;
+      font-style: italic;
     }
 
     .checklist {
@@ -1197,23 +1356,21 @@
 
     .checklist li {
       margin: 0;
-      padding: 12px 14px 12px 42px;
+      padding: 12px 14px 12px 44px;
       position: relative;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.2);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.72);
     }
 
     .checklist li::before {
-      content: "";
+      content: "□";
       position: absolute;
       left: 14px;
-      top: 17px;
-      width: 14px;
-      height: 14px;
-      border-radius: 4px;
-      background: var(--accent);
-      box-shadow: inset 0 0 0 3px #06101d;
+      top: 13px;
+      font-size: 1rem;
+      color: var(--accent);
+      font-family: Georgia, serif;
     }
 
     .glossary {
@@ -1224,16 +1381,17 @@
     }
 
     .term {
-      border: 1px solid var(--line);
+      border: 1px solid rgba(200, 155, 80, 0.2);
       border-radius: var(--radius);
-      background: rgba(16, 27, 43, 0.72);
+      background: rgba(28, 23, 16, 0.75);
       padding: 14px;
     }
 
     .term strong {
       display: block;
-      color: #fff;
+      color: #f0e8d8;
       margin-bottom: 5px;
+      font-style: italic;
     }
 
     .term span {
@@ -1245,8 +1403,22 @@
       padding: 36px 24px;
       text-align: center;
       color: var(--muted);
-      border-top: 1px solid var(--line);
-      background: rgba(6, 16, 29, 0.8);
+      border-top: 2px solid rgba(192, 57, 43, 0.4);
+      background: rgba(18, 16, 14, 0.92);
+      font-style: italic;
+      position: relative;
+    }
+
+    footer::before {
+      content: "— CLASSIFIED: EDUCATIONAL DOCUMENT —";
+      display: block;
+      font-family: 'Special Elite', 'Courier New', monospace;
+      font-style: normal;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: rgba(192, 57, 43, 0.55);
+      margin-bottom: 14px;
+      text-transform: uppercase;
     }
 
     @media (max-width: 940px) {
@@ -1319,6 +1491,7 @@
       }
 
       .progress,
+      .classification-banner,
       .toc {
         display: none;
       }
@@ -1336,6 +1509,7 @@
 </head>
 <body>
   <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <div class="classification-banner" aria-hidden="true">▌ CLASSIFIED — EDUCATIONAL DOCUMENT — SIMULATED DATA ONLY — NOT FOR DISTRIBUTION ▌</div>
 
   <header class="site-header">
     <div class="hero">
@@ -1382,6 +1556,7 @@
       <a href="#beginner">Beginner explanation</a>
       <a href="#onion">Onion networks</a>
       <a href="#hidden-addresses">Onion, Loki, I2P</a>
+      <a href="#dw-search">Dark web search engines</a>
       <a href="#misunderstood">Why it is misunderstood</a>
       <a href="#compromised">Compromised data</a>
       <a href="#sale">Data for sale examples</a>
@@ -1566,6 +1741,102 @@
         <div class="callout warning">
           <strong>Safety boundary</strong>
           These examples teach address shapes only. They do not provide real hidden-service links, directories, search terms, or access instructions.
+        </div>
+      </section>
+
+      <section id="dw-search">
+        <h2>Dark Web Search Engines</h2>
+        <p class="lead">Unlike Google or Bing, there is no authoritative, comprehensive search engine for the dark web. Discovery works differently — through tools with limited and rapidly stale coverage, curated link directories, and community word-of-mouth.</p>
+
+        <p>Several search tools exist that attempt to crawl and index <code>.onion</code> and other hidden services. Each has different design goals, filtering policies, and coverage gaps. Knowing these tools exist is useful context; using them to find illegal content is not what they are designed for and carries serious legal and safety risk.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Search engine</th>
+                <th>Network</th>
+                <th>Filters illegal content?</th>
+                <th>Clearnet accessible?</th>
+                <th>Notable notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ahmia</strong></td>
+                <td>Tor (.onion)</td>
+                <td>Yes — actively removes child abuse material and illegal listings</td>
+                <td>Yes — <code>ahmia.fi</code> is on the surface web</td>
+                <td>Most cited legitimate dark web search engine. Created by researcher Juha Nurmi. Used by journalists and security researchers. Also available as an onion service.</td>
+              </tr>
+              <tr>
+                <td><strong>Torch</strong></td>
+                <td>Tor (.onion)</td>
+                <td>No</td>
+                <td>No</td>
+                <td>One of the oldest Tor search engines, active since the mid-2010s. Claims a large index but applies no content filtering. Stale results are common.</td>
+              </tr>
+              <tr>
+                <td><strong>Haystak</strong></td>
+                <td>Tor (.onion)</td>
+                <td>Partial (paid tier filters more)</td>
+                <td>No</td>
+                <td>Claims one of the largest .onion indexes. Offers a free and a premium tier with more filtering. Coverage of recently created or short-lived sites is inconsistent.</td>
+              </tr>
+              <tr>
+                <td><strong>Not Evil</strong></td>
+                <td>Tor (.onion)</td>
+                <td>Yes — filters several illegal categories</td>
+                <td>No</td>
+                <td>Designed as a more curated alternative. Filters listings for certain harmful categories. Still has significant gaps in coverage.</td>
+              </tr>
+              <tr>
+                <td><strong>Excavator</strong></td>
+                <td>Tor (.onion)</td>
+                <td>Varies</td>
+                <td>No</td>
+                <td>A crawler-based .onion indexer. Coverage and freshness are inconsistent. Like most dark web search tools, results go stale quickly as sites appear and disappear.</td>
+              </tr>
+              <tr>
+                <td><strong>DuckDuckGo</strong> <em>(via Tor)</em></td>
+                <td>Surface web, accessible via Tor</td>
+                <td>N/A — indexes surface web only</td>
+                <td>Yes — has its own <code>.onion</code> address</td>
+                <td>Does <em>not</em> index .onion sites. Useful for anonymous surface-web browsing through Tor Browser without revealing queries to Google. Not a dark web search engine in the strict sense.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Why coverage is always incomplete</h3>
+        <p>Dark web search engines face structural problems that make comprehensive indexing nearly impossible:</p>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Sites block crawlers</h4>
+            <p>Many hidden services actively block automated crawlers through CAPTCHAs, invite-only registration, or rate limiting. A search engine cannot index what it cannot reach.</p>
+          </div>
+          <div class="card">
+            <h4>Sites disappear constantly</h4>
+            <p>Hidden services appear, move, or shut down far more frequently than surface-web sites. Search results become stale within days or weeks. A link that existed yesterday may resolve to nothing today.</p>
+          </div>
+          <div class="card">
+            <h4>No persistent addresses</h4>
+            <p>Onion addresses are long, cryptographic, and not tied to any registrar. Operators change addresses deliberately to evade tracking or law enforcement, which breaks any indexed link.</p>
+          </div>
+          <div class="card">
+            <h4>Trust is the real navigation tool</h4>
+            <p>In practice, people find dark web content through community forums, trusted referrals, or curated link lists — not search engines. This mirrors how the early surface web worked before Google.</p>
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <strong>Finding a result is not the same as it being safe or legal</strong>
+          A search result appearing in any of these tools does not mean the content is verified, real, legal, or safe to access. Many listings are scams. Some are honeypots operated by law enforcement. Others contain malware. The existence of a search result carries no endorsement of any kind.
+        </div>
+
+        <div class="callout warning">
+          <strong>Safety boundary</strong>
+          This section describes search tools by name for educational context only. It does not provide onion addresses, access instructions, search queries, or guidance on reaching any hidden service.
         </div>
       </section>
 
