@@ -337,6 +337,41 @@
             font-size: 0.86em;
         }
 
+        /* Verification box */
+        .verify-box {
+            background: #f2fbf5;
+            border-left: 6px solid #2f9e5f;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(47,158,95,0.08);
+        }
+
+        .verify-box h4 {
+            color: #1e7a45;
+            display: flex;
+            align-items: center;
+            font-size: 1.05em;
+        }
+
+        .verify-box h4::before {
+            content: '✅';
+            margin-right: 10px;
+        }
+
+        .verify-box p {
+            margin: 0 0 10px 0;
+            text-align: left;
+            color: #1c3d2b;
+        }
+
+        .verify-box p:last-child { margin-bottom: 0; }
+
+        .verify-box .formula-box {
+            margin: 12px 0 0 0;
+            font-size: 0.86em;
+        }
+
         /* Strategy checklist */
         .strategy-list {
             list-style: none;
@@ -372,6 +407,20 @@
         }
 
         .strategy-list p:last-child { margin-bottom: 0; }
+
+        .strategy-list .verify {
+            background: rgba(47, 158, 95, 0.10);
+            border-left: 3px solid #2f9e5f;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 12px 0 0 0;
+            font-size: 0.9em;
+            color: #1c3d2b;
+        }
+
+        .strategy-list .verify strong { color: #1e7a45; }
+
+        .strategy-list .verify code { background: rgba(47, 158, 95, 0.16); color: #14532d; }
 
         /* Warning / gotcha box */
         .warning-box {
@@ -913,6 +962,12 @@ claude --debug hooks,permissions            # shows which rule matched</div>
 
             <p>Most people's mental model is wrong in the same way. They picture the conversation as the cost. In a real agentic session the conversation is a rounding error, and the cost is tool result payloads, file contents, and the fixed overhead you pay on every single request.</p>
 
+            <h3>The window is a slope, not a cliff</h3>
+
+            <p>The reason to care about any of this is not primarily the bill. A context window does not fail loudly when it fills, it degrades quietly well before it. The symptom gets described the same way every time: the agent was sharp this morning and is somehow dense after lunch, in the same session, on the same codebase, with nothing changed about the model. What changed is that the window filled with material that stopped being relevant two tasks ago, and the part that matters got harder to find in it.</p>
+
+            <p>That reframes the whole exercise. Token management is not an accounting discipline you take up when the invoice arrives, it is how you keep the agent good at its job for the length of a working day. Teams that treat it as cost control optimise once and stop. Teams that treat it as <span class="highlight">quality control</span> build the habits, and the cost saving turns up as a side effect.</p>
+
             <div class="diagram-visual">
                 <h3>Anatomy of One Request's Input Tokens</h3>
                 <pre>
@@ -961,6 +1016,13 @@ claude --debug hooks,permissions            # shows which rule matched</div>
                 </div>
             </div>
 
+            <div class="warning-box">
+                <h4>The dynamic sections are a snapshot, and both halves of that bite</h4>
+                <p>Working directory, environment and git state are captured when the session starts and do not refresh as you work. That cuts two ways, and most people only ever notice one of them.</p>
+                <p><strong>The good half:</strong> committing, switching branch or moving directory mid-session does <em>not</em> invalidate your prefix, because the block is not re-read. If you assumed otherwise and have been batching commits to protect the cache, you can stop.</p>
+                <p><strong>The half that costs you:</strong> the agent's picture of git goes stale the moment you commit, so an hour in it is reasoning about a branch state that no longer exists. This is the actual cause of a whole category of confusing behaviour, including confidently describing changes as uncommitted when you committed them forty minutes ago. When git state matters to the task, make the agent run <code>git status</code> rather than trusting the block, and say so in CLAUDE.md once instead of remembering it every time.</p>
+            </div>
+
             <div class="example-box">
                 <h4>The Flag Almost Nobody Knows: <code>--exclude-dynamic-system-prompt-sections</code></h4>
                 <p>By default, per-machine details like your working directory, environment info, memory paths and git status are embedded in the system prompt, right at the front of the cacheable prefix. That means <strong>your prefix is unique to your machine and to your current git state</strong>. This flag moves those sections out of the system prompt and into the first user message instead, which dramatically improves cross-user prompt-cache reuse. For a platform team running Claude Code across dozens of similar CI jobs, or a shared gateway serving many engineers on one repo, that is a real line item, and it costs one flag. It only applies with the default system prompt.</p>
@@ -996,34 +1058,95 @@ Conversation history    → you needed /clear two tasks ago.</div>
             </div>
 
             <p>Worth knowing alongside it: <code>/usage</code> is not the same as <code>/cost</code>. <code>/cost</code> reports spend for the session, <code>/usage</code> shows you where you stand against your limits. If you are hitting ceilings rather than budgets, the second one is the one you want.</p>
+
+            <h3>Measuring it: the floor, and everything above it</h3>
+
+            <p>All of the above stays theory until you have two numbers. Run <code>/context</code> as the very first thing in a fresh session, before you type a single word. That reading is your <span class="highlight">floor</span>: system prompt, tool schemas, CLAUDE.md and the dynamic sections, paid on every request for the rest of the session no matter how carefully you work. Everything above the floor is variable, and belongs to how you work rather than how you are configured.</p>
+
+            <p>The distinction tells you which lever to pull. A high floor is a configuration problem, and no amount of disciplined prompting will move it. A low floor that balloons an hour in is a working-habits problem, and no amount of config tuning will fix it. Most teams have both and treat them as one thing, which is why the first fix they try usually does nothing.</p>
+
+            <p>One consequence worth internalising before you adopt the parallel workflows in §9: <span class="highlight">the floor is charged per session, not per person</span>. Four agents across four worktrees pay it four times, on every request each of them makes. That does not make parallelism a bad trade, it usually pays for itself several times over, but it does mean a bloated floor is the one inefficiency that scales with your cleverness. Fix the floor first, then fan out.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>What to measure</th><th>How</th><th>What healthy looks like</th></tr>
+                <tr><td><strong>The floor</strong></td><td><code>/context</code> in a fresh session, before typing</td><td>A small slice of the window. Anything approaching a quarter of it before work starts is a configuration bug, not a fact of life.</td></tr>
+                <tr><td><strong>MCP schemas</strong></td><td>The MCP line item in <code>/context</code></td><td>Zero in a repo that calls no servers. Schemas for a server this project never invokes are pure waste, billed per request.</td></tr>
+                <tr><td><strong>Memory</strong></td><td>The system prompt / memory line item</td><td>Small and flat over time. If CLAUDE.md is larger than it was last quarter and nobody decided to grow it, it accreted.</td></tr>
+                <tr><td><strong>Growth</strong></td><td><code>/context</code> at session start, then again after one representative task</td><td>Growth dominated by tool results. If conversation history dominates, the session outlived its task and wanted <code>/clear</code>.</td></tr>
+                <tr><td><strong>Spend</strong></td><td><code>/cost</code> for the session, <code>/usage</code> for headroom</td><td>Cost per completed task trending down as the floor comes down. Absolute session cost is the wrong denominator.</td></tr>
+            </table>
+            </div>
+
+            <div class="verify-box">
+                <h4>The measurement loop, and the mistake that invalidates it</h4>
+                <p>Change one thing, restart, re-measure, and compare the line item you targeted rather than the total. Two changes at once teach you nothing, because you cannot attribute the delta to either of them.</p>
+                <div class="formula-box">1.  claude  →  /context        # baseline floor, before typing anything
+2.  change ONE thing           # drop a server, prune memory, add deny rules
+3.  exit, claude  →  /context   # new floor, measured identically
+4.  diff the line item you touched, and confirm nothing else moved</div>
+                <p>The mistake is measuring mid-session. A <code>/context</code> reading taken an hour into a thread mixes the fixed floor with variable spend, so the drop you credit to a config change was probably the <code>/clear</code> you ran ten minutes earlier. Floor readings are only comparable against other floor readings, taken the same way, in a fresh session.</p>
+                <p>Comparing totals rather than line items has the same failure mode in miniature. A total that moved a few percent tells you nothing about whether the deny rules you just wrote actually match the paths you meant them to match, and a deny rule that matches nothing is indistinguishable from one you never wrote.</p>
+            </div>
+
+            <p>Across a team the per-session view stops scaling and you want the aggregate. Claude Code can emit OpenTelemetry metrics, and the one worth a dashboard is token usage split by type, because the ratio of fresh input tokens to cache reads is the single number that tells you whether your prefix is stable in practice. A healthy fleet reads from cache far more than it writes to it. A fleet where cache reads are rare has something near the front of the prefix invalidating it on every request, usually a per-machine dynamic section or a config change people make mid-session out of habit. Confirm the current metric and attribute names in the docs before wiring up dashboards, because they are versioned and they do move.</p>
+
+            <div class="formula-box">CLAUDE_CODE_ENABLE_TELEMETRY=1
+OTEL_METRICS_EXPORTER=otlp     # chart token usage broken down by type:
+                               # input / output / cacheRead / cacheCreation
+                               # low cacheRead share = prefix churn, not usage growth</div>
         </div>
 
         <!-- SECTION 6 -->
         <div class="section" id="strategies">
             <h2>6. Essential Token Management Strategies</h2>
 
-            <p>The previous section covered mechanics. This is the operational checklist, in rough order of return on effort.</p>
+            <p>The previous section covered the mechanics and how to measure them. This is the operational checklist, in rough order of return on effort. Every item carries the check that proves it worked, because a strategy you cannot verify is a habit you are hoping helps, and most of these fail silently when they fail at all.</p>
+
+            <h3>Start from the symptom, not the checklist</h3>
+
+            <p>Nobody arrives at this section wanting to optimise token usage in the abstract. They arrive because something specific is annoying them, and the useful move is to translate the annoyance into a diagnosis before reaching for a fix. Almost every row below gets misdiagnosed as the model having a bad day.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>What you notice</th><th>What it usually is</th><th>What actually fixes it</th></tr>
+                <tr><td>"It was sharp this morning and dense by mid-afternoon"</td><td>Not a bad day for the model. The window filled with material that stopped being relevant two tasks ago.</td><td><code>/clear</code> at task boundaries. One session per task is the highest-value habit here, and the one people resist hardest because the session feels like progress.</td></tr>
+                <tr><td>"It keeps re-reading files it already read"</td><td>Auto-compact fired and the tool results went with it. It is not being forgetful, the material is genuinely gone.</td><td>Compact deliberately at a boundary you choose rather than waiting for the threshold, and keep durable state in a file instead of in the window.</td></tr>
+                <tr><td>"It just re-proposed the design we rejected an hour ago"</td><td>Same cause. A generic summary discards rejected approaches first, because they read as dead ends rather than as decisions.</td><td><code>/compact</code> with an explicit instruction to keep them, verified immediately rather than discovered later.</td></tr>
+                <tr><td>"It spent twenty minutes going down a completely wrong path"</td><td>Those turns are still in the window, and you now pay for them on every subsequent request for the rest of the session.</td><td><code>/rewind</code> the conversation rather than talking it back on course. Correcting in place leaves the wrong path in context permanently, and the agent keeps half-referring to it.</td></tr>
+                <tr><td>"One test run ate a third of my window"</td><td>Verbose command output, which is a fixable property of the command rather than a fact about testing.</td><td>Make the command quiet at the source, then cap whatever is left with <code>BASH_MAX_OUTPUT_LENGTH</code>.</td></tr>
+                <tr><td>"It burns 40k tokens exploring before writing a line"</td><td>Discovery cost in a repo it has no map of. You are paying, per session, for knowledge you already have.</td><td>A short orientation section in CLAUDE.md, <code>@</code>-mentions for files you already know, and a subagent for searches that genuinely fan out.</td></tr>
+                <tr><td>"Costs jumped this week and nothing obvious changed"</td><td>Cache invalidation, not usage growth. Usually a config change someone now makes mid-session out of habit.</td><td>Compare cache read share rather than total tokens. Totals move for a dozen innocent reasons; the read share only moves when the prefix is churning.</td></tr>
+                <tr><td>"We hit the usage limit at 2pm on Tuesday"</td><td>Limits are a window, not a wallet. A burned window cannot be topped up, only waited out.</td><td><code>/usage</code> before starting anything long. On a plan with limits, efficiency buys back hours of your week, which is a harder currency than money.</td></tr>
+            </table>
+            </div>
 
             <ol class="strategy-list">
                 <li>
-                    <strong>Clear and Compact</strong>
-                    <p>You already know to use <code>/clear</code> between unrelated tasks and <code>/compact</code> on a long but still-relevant thread. The detail people miss is that <span class="highlight">compact takes an argument</span>. Bare <code>/compact</code> lets the model decide what matters. Steering it changes what survives, and rejected approaches are the first thing a generic summary throws away and the first thing you will wish you had kept.</p>
-                    <div class="formula-box">/compact keep the retry semantics, the decision to use exponential backoff,
-         and every approach we rejected and why
-
-claude --autocompact 200000     # tune the auto-compact window (100k–1M)</div>
+                    <strong>Take a baseline before you change anything</strong>
+                    <p>Everything below this line is a hypothesis until you have a floor reading to judge it against. Start a fresh session in the repo, run <code>/context</code> before typing, and write the number down somewhere durable, ideally in the repo itself next to the config it describes.</p>
+                    <p>This is the step people skip, and skipping it has a specific cost. A team without a baseline cannot tell whether a year of accumulated config tuning helped, so the tuning quietly stops, and the config drifts back toward whatever was easiest to add.</p>
+                    <p class="verify"><strong>Verify:</strong> you can state the floor for this repo as a number, and a teammate following your notes reproduces it within a few percent. If two people get materially different floors on the same repo, the difference is user-level config, and that is worth finding before you optimise anything else.</p>
                 </li>
                 <li>
-                    <strong>Manage Integrations</strong>
-                    <p>Disconnect idle MCP servers. Their tool definitions are re-sent with every single message, so a server you used once in March is still billing you on every request today.</p>
+                    <strong>Audit and scope your MCP servers</strong>
+                    <p>Their tool definitions are re-sent with every single message, so a server you used once in March is still billing you on every request today. This is usually the single largest recoverable line item, and it is recovered by configuration alone, with no change to how anyone works.</p>
                     <p>Scope them per project rather than globally. <code>enabledMcpjsonServers</code> allowlists explicitly, and when you want a guaranteed-clean set for one session, <code>--strict-mcp-config</code> ignores every other MCP configuration source.</p>
                     <div class="formula-box">claude mcp list                                          # audit what is connected
 claude --strict-mcp-config --mcp-config ./ci.mcp.json   # load ONLY these
 { "env": { "MAX_MCP_OUTPUT_TOKENS": "8000", "MCP_TIMEOUT": "10000" } }</div>
+                    <p class="verify"><strong>Verify:</strong> for every server still on the list, name a tool from it you actually invoked this month. If you cannot, it is not connected for a reason, it is connected out of inertia. Then re-measure the floor: the MCP line item should be zero in repos that call no servers, and the drop should account for most of the total change.</p>
                 </li>
                 <li>
-                    <strong>Optimise Configuration</strong>
-                    <p>Keep CLAUDE.md short and high-level. It is re-sent on every request forever, so treat 100 lines as a hard budget and push conditional detail into <code>@imports</code>.</p>
+                    <strong>Delegate the reading to subagents</strong>
+                    <p>Every other lever here reduces what enters your context. Subagents move the reading into a separate context window entirely, so those tokens are spent once and discarded. "Use a subagent to find every place we construct an HTTP client" costs you the twelve-line answer rather than the fifty files behind it.</p>
+                    <p>On a large repo this often beats everything else combined, and it is the only strategy on this list that gets <em>more</em> valuable as the codebase grows. Restricting the subagent's tools helps twice over: an explorer that cannot edit will not accidentally edit, and a narrower toolset is a smaller schema in its context too. See §11 for the file.</p>
+                    <p>The failure mode is over-delegation, and it is easy to fall into once the habit clicks. A subagent starts from nothing, so it pays its own floor and re-derives context the parent already had. For a two-file question that is a straight loss, and it costs you latency on top. The test is whether the answer is much smaller than the material needed to produce it. Fifty files in, twelve lines out, delegate. Two files in, a paragraph out, just read them.</p>
+                    <p class="verify"><strong>Verify:</strong> run the same investigation twice, once directly and once through a subagent, checking <code>/context</code> after each. The delegated version should grow your window by roughly the size of the answer rather than the size of the files. If it grew by the same amount either way, the subagent read everything back into the parent, which usually means the task was phrased as "show me" rather than "tell me".</p>
+                </li>
+                <li>
+                    <strong>Budget CLAUDE.md, and deny the noise</strong>
+                    <p>CLAUDE.md is re-sent on every request forever, so treat 100 lines as a hard budget and push conditional detail into <code>@imports</code>. Prune it on a schedule, because it accretes by default: every line was added by someone solving a real problem, and nobody is assigned to notice when that problem stops existing.</p>
                     <p>To stop build folders, lockfiles and env files loading, use <code>permissions.deny</code> with <code>Read()</code> rules. <span class="highlight">There is no <code>.claudeignore</code> file.</span> It is a persistent myth borrowed from other tools. The deny list is the real mechanism, and it is better anyway, because the harness enforces it and it constrains the agent's own exploration rather than just yours.</p>
                     <div class="formula-box">{
   "permissions": {
@@ -1035,26 +1158,70 @@ claude --strict-mcp-config --mcp-config ./ci.mcp.json   # load ONLY these
     ]
   }
 }</div>
+                    <p class="verify"><strong>Verify:</strong> two separate checks, and the second is the one people skip. Re-measure the memory line item in a fresh <code>/context</code>. Then ask the agent to read one denied path directly and confirm it is refused. <span class="highlight">A deny rule with a typo fails silently and looks exactly like a working one</span>, so an untested rule is a rule you have no evidence for. <code>/permissions</code> shows the resolved set, and <code>--debug</code> names the rule that actually matched.</p>
                 </li>
                 <li>
-                    <strong>Targeted Context</strong>
+                    <strong>Move "just in case" context into skills</strong>
+                    <p>A skill in <code>.claude/skills/&lt;name&gt;/SKILL.md</code> keeps only its short description in context, and the full body loads when the task calls for it. Anything you are currently keeping in CLAUDE.md because it is occasionally needed is a skill in disguise, and moving it converts a permanent per-request cost into an occasional one.</p>
+                    <p>The trade is real but small: a skill that never triggers is documentation nobody reads, so the description has to be written for the retrieval, not for a human skimming the directory.</p>
+                    <p class="verify"><strong>Verify:</strong> the floor drops by roughly the size of what you moved, <em>and</em> the skill still fires. Start a fresh session, give it a task the skill exists for, and confirm the skill loads. A skill that saves tokens by never triggering has not saved anything, it has deleted a capability and disguised it as an optimisation.</p>
+                </li>
+                <li>
+                    <strong>Give context instead of making it search</strong>
                     <p><code>@</code>-mention the files you already know are relevant instead of letting the agent discover them, and reference documents by path rather than pasting them.</p>
                     <p>The economics are stark. Letting the agent find a file costs a grep, a directory listing, two or three speculative reads, and then the file. Naming it costs the file. A pasted document is re-sent at full price on every subsequent turn, whereas a referenced one is read once. Spending your own knowledge of the codebase is free. Making the agent rediscover it is not.</p>
                     <div class="formula-box">✗  "Find the retry logic and fix the backoff"
 ✓  "In @src/infra/clients/http.ts, the backoff around line 80 is linear.
     Make it exponential with jitter."</div>
+                    <p>The same logic applies to how you hand over errors. A screenshot of a stack trace costs a great deal more than the stack trace, and it is harder to work with, because the agent cannot grep an image. Paste the text. Reserve screenshots for the cases where the pixels genuinely are the problem, such as a layout bug or a rendering artefact, where they are worth every token they cost.</p>
+                    <p class="verify"><strong>Verify:</strong> run the same task both ways in fresh sessions and compare how much the tool-result portion of <code>/context</code> grew. If naming the file changed nothing, the agent already had a cheap path to it, and your effort is better spent on the searches that genuinely fan out across the repo.</p>
                 </li>
                 <li>
-                    <strong>Monitor Usage</strong>
-                    <p>Run <code>/context</code> and <code>/cost</code> regularly, and <code>/usage</code> when you are bumping into limits rather than budgets. You cannot optimise what you have not measured, and the answer is almost never what the team assumes.</p>
+                    <strong>Clear and compact deliberately</strong>
+                    <p>Use <code>/clear</code> between unrelated tasks and <code>/compact</code> on a long but still-relevant thread. The detail people miss is that <span class="highlight">compact takes an argument</span>. Bare <code>/compact</code> lets the model decide what matters. Steering it changes what survives, and rejected approaches are the first thing a generic summary throws away and the first thing you will wish you had kept.</p>
+                    <div class="formula-box">/compact keep the retry semantics, the decision to use exponential backoff,
+         and every approach we rejected and why
+
+claude --autocompact 200000     # tune the auto-compact window (100k–1M)</div>
+                    <p>The deeper fix is to stop relying on compaction to preserve anything you care about. Auto-compact fires at a threshold, which is never the moment you would have chosen, and it takes whatever it judges least important with it. <span class="highlight">Durable state belongs on disk, not in the window.</span> A plan file the agent maintains as it works, or notes written back into CLAUDE.md at the end of a task, survive compaction, survive <code>/clear</code>, and survive the laptop closing. This is the difference between an agent that loses the thread at hour three and one that picks up on Monday where it left off on Friday.</p>
+                    <p class="verify"><strong>Verify:</strong> immediately after compacting, before doing anything else, ask the agent to restate the constraints and the approaches you ruled out. If it cannot, the summary dropped what mattered and you want to know now rather than three steps later, when the agent confidently re-proposes the design you rejected an hour ago.</p>
+                </li>
+                <li>
+                    <strong>Make output small at the source, then cap what is left</strong>
+                    <p>Truncation is a backstop, not a strategy. A test suite that prints 40,000 tokens of passing-test noise is a solved problem at the command, and solving it there means the agent sees a clean signal rather than a clipped wall of text it has to squint through. Write the quiet invocations into CLAUDE.md once so nobody has to remember them, because the agent will otherwise reach for whatever the README documents.</p>
+                    <div class="formula-box">pytest -q --tb=short              # not: pytest -v
+npm test -- --reporter=dot        # not: the default spec reporter
+cmd > /tmp/out.log 2>&1; tail -50 /tmp/out.log    # full log on disk, tail in context
+grep -c FAIL /tmp/out.log         # ask the question, do not read the answer</div>
+                    <p>Then set the ceilings from §5 for everything you did not anticipate, because those apply whether or not anyone remembered, and add a hard spend cap to anything running unattended.</p>
                     <div class="formula-box">claude -p "..." --max-budget-usd 2.00    # hard cap for anything autonomous</div>
+                    <p class="verify"><strong>Verify:</strong> trigger each limit on purpose once. Run a deliberately noisy command and confirm the output is truncated where you said it should be. An unverified ceiling is usually a misspelled environment variable, and a misspelled environment variable behaves identically to no ceiling at all right up until the run that needed it.</p>
                 </li>
             </ol>
 
-            <div class="tip-box">
-                <h4>Claude Code Tip: the two strategies that are not on anyone's list</h4>
-                <p><strong>Delegate the reading.</strong> The levers above reduce what enters your context. Subagents move the reading into a separate context window entirely, so those tokens are spent once and then discarded. "Use a subagent to find every place we construct an HTTP client" costs you the twelve-line answer rather than the fifty files. On a large repo this often beats everything else combined, and it is the one strategy that gets more valuable as the codebase grows.</p>
-                <p><strong>Use Skills for progressive disclosure.</strong> A skill in <code>.claude/skills/&lt;name&gt;/SKILL.md</code> keeps only its short description in context, and the full body loads when the task actually calls for it. Anything you are currently keeping in CLAUDE.md "just in case" is a skill in disguise, and moving it converts a permanent per-request cost into an occasional one. See §11 for the shape of the file.</p>
+            <div class="verify-box">
+                <h4>The ten-minute repo audit</h4>
+                <p>Run this on any repo you work in regularly. It is short enough to do between tasks and it catches the majority of what accumulates, which is rarely anything exotic.</p>
+                <div class="formula-box">$ cd repo && claude
+  /context                    → floor. record it.
+  /mcp                        → every server here must be one this repo calls
+  exit
+
+  edit .claude/settings.json  → deny build output, lockfiles, generated code
+  edit CLAUDE.md              → cut to what is true, specific, and durable
+
+$ claude
+  /context                    → compare LINE ITEM by line item, not totals
+  "read ./node_modules/left-pad/index.js"
+                              → must be refused; if not, the rule is wrong</div>
+                <p>Three pass criteria, all of them observable rather than felt: the floor is lower than it was, the reduction is attributable to the specific line items you targeted, and the deny rule you wrote actually refuses something. If any of the three fails, you changed configuration without changing behaviour, which is the most common outcome of an unverified cleanup.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Three optimisations that measure well and help nothing</h4>
+                <p><strong>Compacting when you should have cleared.</strong> Compaction preserves a summary of work that has nothing to do with your next task, so you pay to carry an irrelevant summary for the rest of the session. If the next task is unrelated, <code>/clear</code> is not the blunter tool, it is the correct one.</p>
+                <p><strong>Pruning CLAUDE.md by deleting whatever is longest.</strong> The longest section is often the one earning its keep, and cutting it shows up as a smaller floor and a worse agent, which is a trade you made without noticing. Cut what is stale, generic, or reproducible from the code, not what is merely large.</p>
+                <p><strong>Setting ceilings so tight the work retries.</strong> A truncated tool result the agent has to work around costs more than the untruncated result would have, and the cost lands as extra turns rather than as a bigger line item, so the metric you are watching improves while the bill does not. Set limits above your normal case and let them catch the outliers.</p>
             </div>
         </div>
 
