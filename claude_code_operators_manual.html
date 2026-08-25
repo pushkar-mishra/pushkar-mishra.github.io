@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Claude Code Operator's Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-100px) translateY(-100px); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(1)  { animation-delay: 0.1s; }
+        .section:nth-child(2)  { animation-delay: 0.2s; }
+        .section:nth-child(3)  { animation-delay: 0.3s; }
+        .section:nth-child(4)  { animation-delay: 0.4s; }
+        .section:nth-child(5)  { animation-delay: 0.5s; }
+        .section:nth-child(6)  { animation-delay: 0.6s; }
+        .section:nth-child(7)  { animation-delay: 0.7s; }
+        .section:nth-child(8)  { animation-delay: 0.8s; }
+        .section:nth-child(9)  { animation-delay: 0.9s; }
+        .section:nth-child(10) { animation-delay: 1.0s; }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #1e3c72;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #2a5298;
+            font-size: 1.3em;
+            margin: 25px 0 12px 0;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Analogy Box: pink/red gradient */
+        .analogy-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .analogy-box:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .analogy-box h4 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .analogy-box h4::before {
+            content: '💡';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .analogy-box p {
+            margin: 0;
+            text-align: left;
+        }
+
+        /* Example Box: cyan/blue gradient */
+        .example-box {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+        }
+
+        .example-box h4 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example-box h4::before {
+            content: '🔬';
+            margin-right: 10px;
+        }
+
+        .example-box p {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            text-align: left;
+        }
+
+        /* Impact / feature cards grid */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 22px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .impact-card h4 {
+            color: #1e3c72;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+        }
+
+        .impact-card p {
+            color: #2c3e50;
+            font-size: 0.92em;
+            text-align: left;
+            margin: 0;
+        }
+
+        /* Formula / code block */
+        .formula-box {
+            background: #1a1a2e;
+            color: #a8dadc;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.92em;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        /* Architecture / diagram visual */
+        .diagram-visual {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(102, 126, 234, 0.08);
+            border-radius: 15px;
+            border: 2px dashed #667eea;
+        }
+
+        .diagram-visual pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82em;
+            color: #1e3c72;
+            text-align: left;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        /* Inline highlight text */
+        .highlight {
+            background: linear-gradient(120deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        code {
+            background: rgba(102, 126, 234, 0.12);
+            color: #1e3c72;
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.92em;
+        }
+
+        .impact-card code {
+            background: rgba(30, 60, 114, 0.12);
+        }
+
+        /* Claude Code Tip box */
+        .tip-box {
+            background: #f0fdf9;
+            border-left: 6px solid #0d9488;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(13,148,136,0.08);
+        }
+
+        .tip-box h4 {
+            color: #0f766e;
+            display: flex;
+            align-items: center;
+            font-size: 1.05em;
+        }
+
+        .tip-box h4::before {
+            content: '🧠';
+            margin-right: 10px;
+        }
+
+        .tip-box p {
+            margin: 0 0 10px 0;
+            text-align: left;
+            color: #204b46;
+        }
+
+        .tip-box p:last-child { margin-bottom: 0; }
+
+        .tip-box .formula-box {
+            margin: 12px 0 0 0;
+            font-size: 0.86em;
+        }
+
+        /* Strategy checklist */
+        .strategy-list {
+            list-style: none;
+            margin: 25px 0;
+            counter-reset: strat;
+        }
+
+        .strategy-list > li {
+            counter-increment: strat;
+            background: linear-gradient(135deg, rgba(102,126,234,0.07), rgba(102,126,234,0.02));
+            border-left: 4px solid #2a5298;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+        }
+
+        .strategy-list > li > strong {
+            color: #1e3c72;
+            display: block;
+            font-size: 1.05em;
+            margin-bottom: 6px;
+        }
+
+        .strategy-list > li > strong::before {
+            content: counter(strat) ". ";
+            color: #667eea;
+        }
+
+        .strategy-list p {
+            margin: 0 0 8px 0;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .strategy-list p:last-child { margin-bottom: 0; }
+
+        /* Warning / gotcha box */
+        .warning-box {
+            background: #fff5f5;
+            border-left: 6px solid #e53e3e;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #c53030;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h4::before {
+            content: '⚠️';
+            margin-right: 10px;
+        }
+
+        .warning-box p {
+            margin: 0;
+            text-align: left;
+            color: #4a2020;
+        }
+
+        /* Step list for walkthrough */
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 18px 20px;
+            background: rgba(102, 126, 234, 0.06);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            transition: background 0.2s;
+        }
+
+        .step-list li:hover {
+            background: rgba(102, 126, 234, 0.12);
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+
+        .step-list li div strong {
+            color: #1e3c72;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.02em;
+        }
+
+        .step-list li div p {
+            margin: 0;
+            font-size: 0.94em;
+            color: #444;
+            text-align: left;
+        }
+
+        /* Comparison table */
+        .cmp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.93em;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .cmp-table th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .cmp-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e6eef7;
+            vertical-align: top;
+        }
+
+        .cmp-table tr:nth-child(even) td {
+            background: rgba(102, 126, 234, 0.04);
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        /* TOC */
+        .toc {
+            background: rgba(102, 126, 234, 0.06);
+            border-left: 4px solid #667eea;
+            border-radius: 0 12px 12px 0;
+            padding: 20px 25px;
+            margin-bottom: 35px;
+        }
+
+        .toc h3 {
+            color: #1e3c72;
+            margin: 0 0 12px 0;
+            font-size: 1.1em;
+        }
+
+        .toc ol {
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 5px 0;
+            font-size: 0.93em;
+            color: #2a5298;
+        }
+
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        /* Author bar */
+        .author-bar {
+            background: #fffbe6;
+            border-left: 6px solid #f5b041;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(245,176,65,0.08);
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .impact-grid { grid-template-columns: 1fr; }
+            .diagram-visual pre { font-size: 0.7em; }
+            .formula-box { font-size: 0.78em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="author-bar">
+    <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #e6eef7;">
+            <p style="color: #003366; font-size: 1.05em;">
+                <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
+                <strong>Curated by:</strong> Pushkar Mishra<br>
+                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #3182ce; text-decoration: underline;">
+                    LinkedIn Profile
+                </a>
+            </p>
+    <strong>Disclaimer:</strong> This article is intended for practicing engineers, platform teams, and technical leaders adopting agentic coding tools. Everything here reflects Claude Code 2.x and the tool ships rapidly, so re-verify before relying on it: <code>claude --help</code> covers the flags, and <a href="https://code.claude.com/docs" target="_blank" style="color:#3182ce;">code.claude.com/docs</a> is the reference for settings keys, which no CLI subcommand enumerates.
+</div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>⚙️ The Claude Code Operator's Manual</h1>
+        <p>Retention, sandboxing, cache behaviour and permission semantics: the operational layer underneath Claude Code that decides what your sessions cost and what they can reach.</p>
+    </div>
+
+    <div class="content">
+        <!-- TOC -->
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ol>
+                <li><a href="#sessions">Your Sessions Are Deleted After 30 Days</a></li>
+                <li><a href="#config">Which Settings File Actually Won</a></li>
+                <li><a href="#security">Permissions, Hooks and the Trust Boundary</a></li>
+                <li><a href="#sandbox">The Built-In Sandbox (and Credential Masking)</a></li>
+                <li><a href="#tokens">Where the Context Window Actually Goes</a></li>
+                <li><a href="#strategies">Essential Token Management Strategies</a></li>
+                <li><a href="#planmode">Permission Modes and Rewind</a></li>
+                <li><a href="#codebases">Greenfield vs. Inherited Codebases</a></li>
+                <li><a href="#microservices">Microservices and Multi-Repo Workflows</a></li>
+                <li><a href="#debugging">Debugging Claude Code Itself</a></li>
+                <li><a href="#recipes">Configuration Recipes</a></li>
+                <li><a href="#reference">Quick Reference</a></li>
+            </ol>
+        </div>
+
+        <p style="font-size:1.02em; color:#4a5568; border-left:4px solid #cbd5e0; padding-left:18px; font-style:italic;">
+            This assumes you already use Claude Code daily. There is nothing here about what <code>/clear</code> does or how to write a prompt. It covers the operational layer underneath: retention, sandboxing, cache behaviour, permission semantics, and the handful of settings that quietly decide what your sessions cost and what they can reach.
+        </p>
+
+        <!-- SECTION 1 -->
+        <div class="section" id="sessions">
+            <h2>1. Your Sessions Are Deleted After 30 Days</h2>
+
+            <p>Start here, because this one costs people real work and almost nobody finds out until after it has happened.</p>
+
+            <div class="warning-box">
+                <h4>Your sessions expire after 30 days by default</h4>
+                <p>Claude Code removes local session transcripts you have not touched in the last 30 days, and <code>cleanupPeriodDays</code> is the setting that controls it. Open a side project you left alone for six weeks and the history is simply gone. Set <code>cleanupPeriodDays</code> in <code>~/.claude/settings.json</code> to something much larger, and do it before you need it. Time Machine or File History might bail you out, but that is not a plan.</p>
+            </div>
+
+            <div class="formula-box">// ~/.claude/settings.json
+{
+  "cleanupPeriodDays": 3650    // ~10 years. Retention is cheap. Lost context is not.
+}</div>
+
+            <p>The number you want is not "how long do I want history for?" It is "what is the longest gap between two visits to my least-active repo?" For anyone juggling several clients or a few dormant side projects, that gap runs to months. The 30-day default quietly assumes you live in one repository.</p>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: renaming a project directory orphans its history</h4>
+                <p>Transcripts are stored under <code>~/.claude/projects/</code> in a folder named after the project's absolute path with the separators flattened. Move <code>~/code/payments</code> to <code>~/work/payments</code> and Claude Code starts fresh in the new location while every prior session sits in a folder keyed to a path that no longer exists. Nothing is deleted, but <code>/resume</code> cannot see it, and the retention sweep will eventually collect it.</p>
+                <p>Look before you reorganise anything:</p>
+                <div class="formula-box">ls ~/.claude/projects/
+# -Users-you-code-payments-api   ← keyed to the OLD path
+# rename this to match the new flattened path after you move the repo</div>
+            </div>
+
+            <div class="analogy-box">
+                <h4>The Lab Notebook Analogy</h4>
+                <p>A session is a lab notebook, not a chat log. It records what you tried, what failed, which constraint you hit on attempt four, and why you threw away the obvious approach. Six weeks later the code shows what you built. Only the session shows why the obvious design was wrong. Deleting it throws away the negative results, which are the most expensive and least reproducible thing you produced.</p>
+            </div>
+
+            <h3>The resumption flags that are not <code>--continue</code></h3>
+
+            <p>Everyone knows <code>claude -c</code>. These three are the ones that change how you work:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>🌿 <code>--fork-session</code></h4>
+                    <p>Resume into a <em>new</em> session ID instead of writing over the original. Branch an investigation without destroying the trunk you branched from.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🔗 <code>--from-pr 482</code></h4>
+                    <p>Jump back to the session tied to a pull request. A reviewer's question six days later lands in the context that produced the code.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🆔 <code>--session-id &lt;uuid&gt;</code></h4>
+                    <p>Pin a deterministic session ID. This is what makes CI jobs able to resume their own prior runs.</p>
+                </div>
+            </div>
+
+            <p>One habit worth building: name anything that will outlive the afternoon. <code>claude -n "rate-limiter-redesign"</code> costs three seconds and saves ten minutes of picker archaeology later. Combined with a long retention window, <code>~/.claude/projects/</code> turns into a searchable record of engineering decisions, and arguably a more honest one than your commit history, since it still contains the paths you abandoned.</p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="section" id="config">
+            <h2>2. Which Settings File Actually Won</h2>
+
+            <p>Most confusing Claude Code behaviour traces back to not knowing which settings file took precedence. A permission that auto-approves when you expected a prompt, an MCP server that will not appear, a hook that fires in one repo and not another: all the same root cause.</p>
+
+            <div class="diagram-visual">
+                <h3>Settings Resolution Order</h3>
+                <pre>
+   HIGHEST PRECEDENCE
+        │
+   ┌────▼──────────────────────────────┐
+   │  Enterprise managed policy         │  ← IT-controlled, cannot be overridden
+   ├────▼──────────────────────────────┤
+   │  Command-line flags                │  ← --model, --permission-mode, --settings
+   ├────▼──────────────────────────────┤
+   │  .claude/settings.local.json       │  ← per-developer, gitignored
+   ├────▼──────────────────────────────┤
+   │  .claude/settings.json             │  ← project, COMMITTED to the repo
+   ├────▼──────────────────────────────┤
+   │  ~/.claude/settings.json           │  ← your personal defaults
+   └───────────────────────────────────┘
+        │
+   LOWEST PRECEDENCE
+                </pre>
+            </div>
+
+            <p>The split that keeps teams out of trouble is simple. Personal defaults and retention go in your home directory. Anything that should apply to every engineer on the repo, meaning permission policy, hooks, required MCP servers, shared agents and commands, goes in the committed project file. Machine-specific paths and experiments go in the gitignored local file.</p>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: never put a credential in a settings file</h4>
+                <p><code>apiKeyHelper</code> takes a <em>command</em> that produces the key rather than the key itself. The secret stays in your OS keychain or your vault, and the settings file, which often gets committed, screenshotted and read by the agent, holds only a shell invocation.</p>
+                <div class="formula-box">// ~/.claude/settings.json
+{
+  "apiKeyHelper": "/bin/sh -c 'security find-generic-password -s anthropic -w'"
+  // or: "aws secretsmanager get-secret-value --secret-id claude --query SecretString --output text"
+}</div>
+                <p>For teams, <code>forceLoginMethod</code> pins everyone to one auth path so nobody ends up running on a personal key against a corporate repo.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Settings files fail silently in headless mode</h4>
+                <p>In print mode, meaning <code>-p</code> or any run where stdout is not a TTY, <strong>settings files that fail validation are ignored without an error</strong>. A trailing comma in your project <code>settings.json</code> produces a friendly warning on your laptop and then quietly drops your entire permission policy in CI. That is a security control disappearing with no signal at all.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: validate settings JSON in pre-commit</h4>
+                <p>Given the above, this is probably the highest-value ten-line hook in this article.</p>
+                <div class="formula-box">#!/bin/sh
+# .git/hooks/pre-commit
+for f in .claude/settings.json .mcp.json; do
+  [ -f "$f" ] || continue
+  python3 -c "import json,sys; json.load(open('$f'))" 2>/dev/null \
+    || { echo "✗ $f is not valid JSON, commit blocked"; exit 1; }
+done</div>
+            </div>
+
+            <h3>The three bisection flags</h3>
+
+            <p>These exist for the moment when your configuration <em>is</em> the problem. Between them they turn "Claude Code is acting weird" into a five-minute diagnosis.</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>🛟 <code>--safe-mode</code></h4>
+                    <p>Starts with all customization off: CLAUDE.md, skills, plugins, hooks, MCP servers, custom commands, agents, output styles, keybindings. Auth, model and permissions still work. If the problem vanishes, it is yours.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🧪 <code>--bare</code></h4>
+                    <p>Goes further and skips hooks, LSP, plugin sync, auto-memory, background prefetches, keychain reads and CLAUDE.md discovery. This is your clean room for a bug report.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🎚️ <code>--setting-sources</code></h4>
+                    <p>Load only the tiers you name, from <code>user</code>, <code>project</code> and <code>local</code>. Three runs tell you which file is responsible without editing anything.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="section" id="security">
+            <h2>3. Permissions, Hooks and the Trust Boundary</h2>
+
+            <p>Two things live under this heading and people routinely conflate them. Containment is about limiting what the agent can touch, and it is configuration. Trust is about recognising that every file, tool result, web page and MCP response entering the context is untrusted input that may contain instructions, and that is architecture.</p>
+
+            <h3>Sort permissions by reversibility, not by danger</h3>
+
+            <p>The <code>deny</code> list beats <code>allow</code>, which makes it the right home for anything that must never reach a context window. Once a secret is in the transcript it is on disk, and it may well survive into a compacted summary.</p>
+
+            <p>The tier people underuse is <code>ask</code>. It lets you run in <code>acceptEdits</code> for speed while still forcing a human decision on the few operations that leave your machine or touch production. Reversibility is the criterion that matters. Edits can be undone. Pushes, publishes, applies and deletes cannot.</p>
+
+            <div class="formula-box">// .claude/settings.json  (commit this)
+{
+  "permissions": {
+    "deny": ["Read(./.env*)", "Read(./secrets/**)", "Read(~/.aws/**)", "Read(~/.ssh/**)"],
+    "ask":  ["Bash(git push:*)", "Bash(npm publish:*)", "Bash(terraform apply:*)", "Bash(kubectl delete:*)"],
+    "allow": ["Bash(npm test:*)", "Read(./src/**)", "Edit(./src/**)"],
+    "defaultMode": "acceptEdits"
+  }
+}</div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: a deny rule is a prefix match, not a command name</h4>
+                <p>This catches nearly everyone once. <code>Bash(git:*)</code> blocks <code>git status</code> and <code>git diff</code> right along with <code>git push</code>, and the resulting behaviour reads as the model being unhelpful rather than as a rule misfiring. Write rules at the specificity you actually mean, and check with <code>/permissions</code> before blaming the model.</p>
+                <div class="formula-box">✗  "deny": ["Bash(git:*)"]                  // blocks ALL git, including reads
+✓  "deny": ["Bash(git push --force:*)", "Bash(git reset --hard:*)"]
+✓  "ask":  ["Bash(git push:*)"]
+
+claude --debug hooks,permissions            # shows which rule matched</div>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: lock out permission bypass at the policy layer</h4>
+                <p>A deny list is only as good as the flag that skips it. <code>disableBypassPermissionsMode</code> makes <code>--dangerously-skip-permissions</code> unavailable rather than merely frowned upon. Set it in enterprise managed policy, where it sits above every other tier and no local file can override it.</p>
+                <div class="formula-box">// enterprise managed policy
+{ "permissions": { "disableBypassPermissionsMode": "disable" } }</div>
+                <p>The same logic applies in reverse to <code>disableAllHooks</code>. It is a useful debugging switch, which makes it a useful attack switch too. If a security guarantee of yours depends on a <code>PreToolUse</code> hook, understand that anyone who can set that key has switched your guarantee off.</p>
+            </div>
+
+            <h3>Hooks are rules; prompt text is a request</h3>
+
+            <p>This distinction is worth internalising. A line in CLAUDE.md saying "always run the linter" is advice the model weighs against everything else in context. A <code>PostToolUse</code> hook that runs the linter is a deterministic guarantee executed by the harness. Anything that must happen every time belongs in a hook.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Event</th><th>Fires</th><th>Worth using for</th></tr>
+                <tr><td><code>PreToolUse</code></td><td>Before a tool runs</td><td>Blocking dangerous commands, scanning diffs for secrets. A blocking exit stops the call and returns your message to the model.</td></tr>
+                <tr><td><code>PostToolUse</code></td><td>After a tool succeeds</td><td>Formatting, type checking, running affected tests, audit logging.</td></tr>
+                <tr><td><code>UserPromptSubmit</code></td><td>Before your message is processed</td><td>Injecting dynamic context such as the current ticket or deploy-freeze status, without bloating the static prompt.</td></tr>
+                <tr><td><code>PreCompact</code></td><td>Before compaction</td><td>Persisting decisions to a file before they get summarised away. The most underrated hook here.</td></tr>
+                <tr><td><code>SessionStart</code> / <code>SessionEnd</code></td><td>Session boundaries</td><td>Snapshotting git state, exporting transcripts to a team knowledge base.</td></tr>
+            </table>
+            </div>
+
+            <div class="example-box">
+                <h4>A Secret-Scanning PreToolUse Hook</h4>
+                <p>Match a <code>PreToolUse</code> hook to <code>Edit|Write</code> and pipe the proposed content through <code>gitleaks</code> or a regex battery. If it spots an AWS key, a JWT or a private key header, exit with the blocking status and a message like <em>"Refusing write: credential-shaped string at line 42. Use environment variables."</em> The model reads that and corrects itself. Credential leakage is now structurally impossible rather than culturally discouraged, and the same hook covers the engineer who never read your security wiki.</p>
+            </div>
+
+            <h3>Prompt injection is a supply-chain problem</h3>
+
+            <p>This is the part experienced engineers tend to underweight. When Claude Code fetches a web page, reads a dependency's README, pulls an issue body through MCP or ingests a log file, that content lands in the same context as your instructions. A well-crafted string in a third-party file is an instruction the agent may act on.</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>🔐 MCP servers are dependencies</h4>
+                    <p>An MCP server can read your context and take actions. Vet the source, pin the version, scope its tools. A committed <code>.mcp.json</code> means the same vetted set for everyone and additions go through review.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🧱 Split read scope from write scope</h4>
+                    <p>Read broadly, edit narrowly. Config, CI definitions and infrastructure files are exactly where an injected edit does the most damage.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🚧 Restrict the toolset for untrusted work</h4>
+                    <p><code>--tools "Read,Grep,Glob"</code> is blunt and effective. An agent with no <code>WebFetch</code> tool cannot be talked into using one.</p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: never auto-approve project MCP servers</h4>
+                <p><code>enableAllProjectMcpServers</code> connects every server a repo declares in its <code>.mcp.json</code>. Convenient for a repo you own, and a genuine hole for one you just cloned, since auto-approving whatever a repository declares is much the same as running its install scripts unread. Keep it off and allowlist by name. The explicit list doubles as a record of which integrations have actually been reviewed.</p>
+                <div class="formula-box">{
+  "enableAllProjectMcpServers": false,
+  "enabledMcpjsonServers": ["sentry", "postgres-readonly"]
+}</div>
+            </div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="section" id="sandbox">
+            <h2>4. The Built-In Sandbox (and Credential Masking)</h2>
+
+            <p>Claude Code ships an OS-level sandbox, and a surprising number of teams are still solving this problem with disposable containers because they do not know it is there. It uses Seatbelt on macOS, bubblewrap on Linux, and a dedicated user plus network filters on Windows. Bash commands run inside it by default, and it controls both which paths they can touch and which hosts they can reach.</p>
+
+            <p>Run <code>/sandbox</code> to see and manage the current restrictions. On some platforms you will need <code>/sandbox install</code> once, which sets up the sandbox user and network filters and needs an elevation prompt.</p>
+
+            <div class="diagram-visual">
+                <h3>What the Sandbox Controls</h3>
+                <pre>
+                    ┌──────────────────────────────┐
+   bash command ───▶│      OS SANDBOX              │
+                    │                              │
+                    │  filesystem ── allowWrite    │──▶ writes outside the
+                    │              ── denyRead     │    allowlist are blocked
+                    │              ── denyWrite    │
+                    │                              │
+                    │  network ──── allowedDomains │──▶ hosts not listed are
+                    │           ──── deniedDomains │    denied, not prompted
+                    │                              │
+                    │  credentials ─ deny  (unset) │──▶ the command sees a
+                    │              ─ mask  (fake)  │    SENTINEL, not the secret
+                    └──────────────────────────────┘
+                                  │
+              allowUnsandboxedCommands: false
+                     ⇒ dangerouslyDisableSandbox is ignored entirely
+                </pre>
+            </div>
+
+            <h3>Credential masking is the feature to know about</h3>
+
+            <p>Everything above is useful, but this is the part almost nobody has found. Under <code>sandbox.credentials</code>, environment variables and files each take an access mode of <code>deny</code> or <code>mask</code>. <code>deny</code> unsets the variable or blocks the read. <code>mask</code> is the interesting one: the sandboxed command is shown a <em>sentinel value</em> instead of the real secret, and for files you get a sentinel-substituted copy, either whole-file or only the spans you capture with <code>extract</code>.</p>
+
+            <p>The practical difference matters. Denying <code>Read(./.env)</code> stops the file being read at all, which also stops the command that legitimately needed it from working. Masking lets the command run normally while never exposing the real value. For anything where the agent needs to exercise a code path that touches credentials without ever seeing them, this is what you want.</p>
+
+            <div class="formula-box">// .claude/settings.json
+{
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": ["registry.npmjs.org", "*.internal.example.com"],
+      "deniedDomains": ["*.pastebin.com"],
+      "allowManagedDomainsOnly": true    // deny unlisted hosts outright, do not prompt
+    },
+    "filesystem": {
+      "allowWrite": ["./build", "./.cache"],
+      "denyRead":  ["./secrets/**"]
+    },
+    "credentials": {
+      "envVars": {
+        "AWS_SECRET_ACCESS_KEY": { "mode": "mask" },   // sandboxed cmds see a sentinel
+        "GITHUB_TOKEN":          { "mode": "deny" }    // unset entirely
+      },
+      "files": {
+        "~/.aws/credentials": { "mode": "mask" }
+      }
+    },
+    "allowUnsandboxedCommands": false,   // dangerouslyDisableSandbox becomes inert
+    "autoAllowBashIfSandboxed": true,    // sandboxed commands need no extra prompt
+    "failIfUnavailable": true            // if the sandbox cannot start, refuse to run
+  }
+}</div>
+
+            <div class="warning-box">
+                <h4>Decide whether the sandbox fails open or closed</h4>
+                <p>The sandbox does not always come up. A platform without support, a missing filter install, a nested or restricted environment: any of these can leave it unavailable, and <code>failIfUnavailable</code> is what decides the outcome. Set it to false and commands run unsandboxed instead. Leave it true and they are refused.</p>
+                <p>This is the setting that determines whether the rest of §4 is a guarantee or a preference. Locking down <code>allowUnsandboxedCommands</code> while the sandbox can silently fail open buys you much less than it appears to, and the failure is quiet, because nothing announces that today's session is running without the containment you configured. Fail closed for anything sensitive and treat a refusal as the signal to go fix the sandbox.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: <code>allowUnsandboxedCommands: false</code> is the real lock</h4>
+                <p>Individual bash calls can normally escape with a <code>dangerouslyDisableSandbox</code> parameter. Set <code>allowUnsandboxedCommands</code> to false and that parameter is ignored completely, so every command must run sandboxed with no exceptions. This is a harder guarantee than <code>disableBypassPermissionsMode</code>, because it constrains what the agent can do inside a session rather than how the session was started. Put it in managed policy for anything sensitive.</p>
+                <p><code>excludedCommands</code> is the pressure valve. List the specific commands that genuinely cannot work sandboxed, rather than turning the whole thing off because one tool broke.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Use <code>$TMPDIR</code>, never <code>/tmp</code></h4>
+                <p>Under the sandbox, <code>TMPDIR</code> is set to the sandbox-writable temp directory and <code>/tmp</code> is not writable. Any hook, script or slash command of yours that hardcodes <code>/tmp</code> will fail in a way that looks like a permissions bug. Claude Code's own guidance to the model is explicit about this, and your tooling should follow the same rule.</p>
+            </div>
+
+            <h3>Where this leaves the sandbox hierarchy</h3>
+
+            <p>The old advice was to reach for a disposable container whenever you wanted real isolation. With the built-in sandbox that is usually more machinery than the job needs. A more accurate ladder now looks like this:</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Posture</th><th>Setup</th><th>Fits</th></tr>
+                <tr><td><strong>Sandbox on, domains allowlisted, credentials masked</strong></td><td><code>sandbox.enabled</code> plus a network allowlist and credential modes</td><td>The daily default. Real containment with no container to manage.</td></tr>
+                <tr><td><strong>Sandbox plus locked policy</strong></td><td>Add <code>allowUnsandboxedCommands: false</code>, <code>failIfUnavailable: true</code> and <code>disableBypassPermissionsMode</code> in managed policy</td><td>Regulated environments, shared machines, anything where you cannot rely on individual discipline.</td></tr>
+                <tr><td><strong>Read-only toolset, plan mode</strong></td><td><code>--tools "Read,Grep,Glob" --permission-mode plan</code></td><td>Reviewing an untrusted PR or an unfamiliar dependency. Nothing can execute or be written.</td></tr>
+                <tr><td><strong>Disposable container, permissions bypassed</strong></td><td>Throwaway VM or CI runner, no credentials, no egress</td><td>Still the right answer for fully autonomous long runs, but no longer the first thing to reach for.</td></tr>
+            </table>
+            </div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="section" id="tokens">
+            <h2>5. Where the Context Window Actually Goes</h2>
+
+            <p>Most people's mental model is wrong in the same way. They picture the conversation as the cost. In a real agentic session the conversation is a rounding error, and the cost is tool result payloads, file contents, and the fixed overhead you pay on every single request.</p>
+
+            <div class="diagram-visual">
+                <h3>Anatomy of One Request's Input Tokens</h3>
+                <pre>
+ ┌──────────────────────────────────────────────────┐
+ │  SYSTEM PROMPT + TOOL DEFINITIONS                 │  ← paid EVERY request,
+ │  • built-in tool schemas                          │    grows with each MCP
+ │  • every MCP server's tool schemas   ⚠️ the tax    │    server you connect
+ ├──────────────────────────────────────────────────┤
+ │  CLAUDE.md (project + user + imports)             │  ← paid EVERY request
+ ├──────────────────────────────────────────────────┤
+ │  DYNAMIC SECTIONS                                 │  ← cwd, env, git status,
+ │  (cwd, environment, memory paths, git status)     │    memory paths
+ ├──────────────────────────────────────────────────┤
+ │  CONVERSATION HISTORY                             │
+ │  ├─ your messages          (small)                │
+ │  ├─ assistant messages     (small)                │
+ │  └─ TOOL RESULTS           (ENORMOUS) ◄───────────┼─ the real cost centre
+ └──────────────────────────────────────────────────┘
+             │
+             ▼
+   Everything above the first changed byte is CACHE-READ (~10% cost).
+   Everything from that byte onward is FULL PRICE.
+                </pre>
+            </div>
+
+            <h3>The prefix-cache rule that governs everything</h3>
+
+            <p>Prompt caching is a prefix match. The cached span runs from the start of the request to the first byte that differs from last time. Change one byte early and everything after it gets reprocessed at full price. That single fact explains most surprising cost behaviour:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>💥 Editing CLAUDE.md mid-session</h4>
+                    <p>It sits near the front of the prefix, so editing it invalidates the cache for the entire conversation after it. Batch memory edits and do them at a session boundary.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>💥 Adding an MCP server mid-session</h4>
+                    <p>Tool definitions render before everything else. Adding, removing or reordering one rebuilds the whole prefix. Configure MCP at session start and leave it alone.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>💥 Switching models mid-session</h4>
+                    <p>Caches are model-scoped, so a mid-session switch starts from zero. If you want a cheaper model for a sub-task, delegate to a subagent instead.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>✅ Long tool loops</h4>
+                    <p>Counter-intuitively the healthiest pattern. Appending results at the end never invalidates the prefix, so a hundred-step loop reads cache on every step.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>The Flag Almost Nobody Knows: <code>--exclude-dynamic-system-prompt-sections</code></h4>
+                <p>By default, per-machine details like your working directory, environment info, memory paths and git status are embedded in the system prompt, right at the front of the cacheable prefix. That means <strong>your prefix is unique to your machine and to your current git state</strong>. This flag moves those sections out of the system prompt and into the first user message instead, which dramatically improves cross-user prompt-cache reuse. For a platform team running Claude Code across dozens of similar CI jobs, or a shared gateway serving many engineers on one repo, that is a real line item, and it costs one flag. It only applies with the default system prompt.</p>
+            </div>
+
+            <h3>The MCP tax</h3>
+
+            <p>Every MCP server you connect injects its full tool schemas into every request, permanently. A rich server can carry dozens of tools with detailed descriptions and JSON schemas. Five of them, casually enabled and never audited, can eat a five-figure token count before you have typed anything.</p>
+
+            <p>Run <code>/context</code> and look at the breakdown. Most people doing this for the first time find their largest single line item is a set of MCP tools they used once, months ago. The fix is to enable servers per project through a committed <code>.mcp.json</code> rather than globally. A repo that never touches your ticketing system should not be paying for its schemas.</p>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: four environment variables that cap runaway costs</h4>
+                <p>Asking the agent to keep output short is advice. These are ceilings the harness enforces, and they defend against the case where one command, whether a verbose test run or a chatty MCP server, dumps tens of thousands of tokens into a context you then carry for the rest of the session.</p>
+                <div class="formula-box">{
+  "env": {
+    "BASH_MAX_OUTPUT_LENGTH":        "20000",  // truncate huge command output
+    "MAX_MCP_OUTPUT_TOKENS":         "8000",   // cap chatty MCP tool responses
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "16000",  // ceiling on model output per turn
+    "MAX_THINKING_TOKENS":           "8000"    // bound reasoning depth
+  }
+}</div>
+                <p>Set these once in your user settings and they apply everywhere. <code>BASH_MAX_OUTPUT_LENGTH</code> alone tends to pay for the exercise the first time somebody runs a test suite without a quiet flag.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: read <code>/context</code> as a ranked list of suspects</h4>
+                <p>Most people glance at <code>/context</code>, note that the number is big, and move on. The value is in which line item is largest, because each diagnosis has a completely different fix and applying the wrong one is wasted effort.</p>
+                <div class="formula-box">MCP tools dominate      → configuration problem. Disconnect servers. Prompting will not help.
+Tool results dominate   → your commands are too verbose. Fix them in CLAUDE.md.
+System prompt / memory  → CLAUDE.md has accreted. Prune it.
+Conversation history    → you needed /clear two tasks ago.</div>
+            </div>
+
+            <p>Worth knowing alongside it: <code>/usage</code> is not the same as <code>/cost</code>. <code>/cost</code> reports spend for the session, <code>/usage</code> shows you where you stand against your limits. If you are hitting ceilings rather than budgets, the second one is the one you want.</p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="section" id="strategies">
+            <h2>6. Essential Token Management Strategies</h2>
+
+            <p>The previous section covered mechanics. This is the operational checklist, in rough order of return on effort.</p>
+
+            <ol class="strategy-list">
+                <li>
+                    <strong>Clear and Compact</strong>
+                    <p>You already know to use <code>/clear</code> between unrelated tasks and <code>/compact</code> on a long but still-relevant thread. The detail people miss is that <span class="highlight">compact takes an argument</span>. Bare <code>/compact</code> lets the model decide what matters. Steering it changes what survives, and rejected approaches are the first thing a generic summary throws away and the first thing you will wish you had kept.</p>
+                    <div class="formula-box">/compact keep the retry semantics, the decision to use exponential backoff,
+         and every approach we rejected and why
+
+claude --autocompact 200000     # tune the auto-compact window (100k–1M)</div>
+                </li>
+                <li>
+                    <strong>Manage Integrations</strong>
+                    <p>Disconnect idle MCP servers. Their tool definitions are re-sent with every single message, so a server you used once in March is still billing you on every request today.</p>
+                    <p>Scope them per project rather than globally. <code>enabledMcpjsonServers</code> allowlists explicitly, and when you want a guaranteed-clean set for one session, <code>--strict-mcp-config</code> ignores every other MCP configuration source.</p>
+                    <div class="formula-box">claude mcp list                                          # audit what is connected
+claude --strict-mcp-config --mcp-config ./ci.mcp.json   # load ONLY these
+{ "env": { "MAX_MCP_OUTPUT_TOKENS": "8000", "MCP_TIMEOUT": "10000" } }</div>
+                </li>
+                <li>
+                    <strong>Optimise Configuration</strong>
+                    <p>Keep CLAUDE.md short and high-level. It is re-sent on every request forever, so treat 100 lines as a hard budget and push conditional detail into <code>@imports</code>.</p>
+                    <p>To stop build folders, lockfiles and env files loading, use <code>permissions.deny</code> with <code>Read()</code> rules. <span class="highlight">There is no <code>.claudeignore</code> file.</span> It is a persistent myth borrowed from other tools. The deny list is the real mechanism, and it is better anyway, because the harness enforces it and it constrains the agent's own exploration rather than just yours.</p>
+                    <div class="formula-box">{
+  "permissions": {
+    "deny": [
+      "Read(./node_modules/**)", "Read(./dist/**)", "Read(./build/**)",
+      "Read(./.next/**)",        "Read(./coverage/**)",
+      "Read(./**/*.lock)",       "Read(./**/*.min.js)",
+      "Read(./src/generated/**)"
+    ]
+  }
+}</div>
+                </li>
+                <li>
+                    <strong>Targeted Context</strong>
+                    <p><code>@</code>-mention the files you already know are relevant instead of letting the agent discover them, and reference documents by path rather than pasting them.</p>
+                    <p>The economics are stark. Letting the agent find a file costs a grep, a directory listing, two or three speculative reads, and then the file. Naming it costs the file. A pasted document is re-sent at full price on every subsequent turn, whereas a referenced one is read once. Spending your own knowledge of the codebase is free. Making the agent rediscover it is not.</p>
+                    <div class="formula-box">✗  "Find the retry logic and fix the backoff"
+✓  "In @src/infra/clients/http.ts, the backoff around line 80 is linear.
+    Make it exponential with jitter."</div>
+                </li>
+                <li>
+                    <strong>Monitor Usage</strong>
+                    <p>Run <code>/context</code> and <code>/cost</code> regularly, and <code>/usage</code> when you are bumping into limits rather than budgets. You cannot optimise what you have not measured, and the answer is almost never what the team assumes.</p>
+                    <div class="formula-box">claude -p "..." --max-budget-usd 2.00    # hard cap for anything autonomous</div>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: the two strategies that are not on anyone's list</h4>
+                <p><strong>Delegate the reading.</strong> The levers above reduce what enters your context. Subagents move the reading into a separate context window entirely, so those tokens are spent once and then discarded. "Use a subagent to find every place we construct an HTTP client" costs you the twelve-line answer rather than the fifty files. On a large repo this often beats everything else combined, and it is the one strategy that gets more valuable as the codebase grows.</p>
+                <p><strong>Use Skills for progressive disclosure.</strong> A skill in <code>.claude/skills/&lt;name&gt;/SKILL.md</code> keeps only its short description in context, and the full body loads when the task actually calls for it. Anything you are currently keeping in CLAUDE.md "just in case" is a skill in disguise, and moving it converts a permanent per-request cost into an occasional one. See §11 for the shape of the file.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div class="section" id="planmode">
+            <h2>7. Permission Modes and Rewind: Controls Worth Rewiring Your Habits For</h2>
+
+            <p>These get mentioned in passing constantly and explained almost never, which is a shame because between them they change how much risk you can take.</p>
+
+            <h3>The four modes on Shift+Tab</h3>
+
+            <p>Shift+Tab cycles the permission mode mid-session. Most people find two of these and never meet the other two.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Mode</th><th>Behaviour</th><th>Reach for it when</th></tr>
+                <tr><td><strong>default</strong></td><td>Asks before every edit</td><td>Unfamiliar territory, or you want to see each change as it happens.</td></tr>
+                <tr><td><strong>accept edits</strong></td><td>Edits freely, asks for commands</td><td>The daily driver for work you understand.</td></tr>
+                <tr><td><strong>plan</strong></td><td>Researches and proposes, never touches files</td><td>Big refactors, and anything you do not trust.</td></tr>
+                <tr><td><strong>auto</strong></td><td>Claude decides what is safe, backed by a classifier</td><td>Long unattended runs where stopping to ask defeats the point.</td></tr>
+            </table>
+            </div>
+
+            <p>Auto mode is the one worth knowing about, because it is not simply a looser version of accept-edits. A separate classifier evaluates each action, and it is deliberately fail-closed: if the classifier cannot be reached or its answer cannot be parsed, the call is held back rather than allowed through. Those outcomes are distinct from a policy decision, which matters when you are reading logs and trying to work out whether something was denied or merely never evaluated. Note also that auto mode ignores Bash allow rules entirely, so a permission rule you rely on elsewhere does not carry over into it.</p>
+
+            <p>The Shift+Tab cycle shows four modes, but <code>--permission-mode</code> accepts six: <code>default</code>, <code>acceptEdits</code>, <code>plan</code>, <code>auto</code>, <code>dontAsk</code> and <code>bypassPermissions</code>, plus <code>manual</code>. If you are scripting Claude Code, work from the flag list rather than what the cycler shows you.</p>
+
+            <h3>Plan mode</h3>
+
+            <p>Plan mode lets the agent read and reason but not write or execute. It investigates, then comes back with a plan you approve or reject before anything happens.</p>
+
+            <p>It is worth treating as two separate tools. As a workflow control, it is how you keep an agent from confidently implementing the wrong design: the cost of a bad plan is a paragraph you disagree with, rather than eleven files you have to unpick. As a security control, it is the safest way to look at code you do not trust, because nothing can execute while you read.</p>
+
+            <div class="formula-box"># Investigate an unfamiliar or untrusted codebase with no ability to act
+claude --permission-mode plan --tools "Read,Grep,Glob"
+
+# The pattern that pays for itself on anything non-trivial:
+#   1. plan mode  → agree the approach
+#   2. acceptEdits → let it run
+#   3. review the diff, not the summary</div>
+
+            <p>The habit worth building is using it for anything touching auth, payments, migrations or infrastructure, regardless of how small the change looks. Those are the areas where a confident wrong answer is most expensive and where the plan is most likely to reveal a wrong assumption early.</p>
+
+            <h3>Rewind</h3>
+
+            <p>Claude Code checkpoints your files before every edit, and <code>/rewind</code> rolls back to any prior state. Double-tap Esc gets you there quickly.</p>
+
+            <p>The part that is easy to miss: rewind covers <strong>code, conversation, or both</strong>, and you choose which. That makes it two tools rather than one. Rolling back files is the obvious use. Rolling back only the conversation is the one people never think to reach for, and it is how you escape a thread that has gone somewhere unproductive without discarding the work that came out of it. The reverse is just as useful when the reasoning was sound but the edits were not.</p>
+
+            <p>Either beats asking the agent to undo its own work, which depends on it correctly remembering everything it touched. Treat <code>git commit</code> as your coarse checkpoint and rewind as the fine one. Between them, abandoning an approach becomes cheap, and that is what makes aggressive experimentation reasonable in the first place. Most people discover rewind the session after the one where they needed it.</p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div class="section" id="codebases">
+            <h2>8. Greenfield vs. Inherited Codebases</h2>
+
+            <p>The two situations need opposite instincts. On a new project you can design the context surface before it grows. On an inherited one you cannot change the surface at all, only control how much of it enters any given session.</p>
+
+            <h3>New project: design the surface early</h3>
+
+            <p>CLAUDE.md is paid on every request forever, and that constraint should discipline it hard. It is not documentation and not a style guide. It is the set of facts that change the agent's behaviour: canonical commands, architectural invariants, the two or three conventions that are not obvious from reading the code, and the directories that are off-limits. Nothing the agent could trivially infer.</p>
+
+            <p>Three decisions on day one that keep paying:</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>🤫 Canonical quiet commands</h4>
+                    <p>Put the filtered, quiet test command in CLAUDE.md from the start. Every future session inherits the saving, and retrofitting this once the agent has learned verbose habits is oddly hard to undo.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>📐 Plan the architecture, do not autocomplete it</h4>
+                    <p>The design conversation before any file exists is the highest-leverage use of a strong model. Getting boundaries right saves more than every micro-optimisation here, because it prevents the refactor.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🗄️ A <code>PreCompact</code> hook for decisions</h4>
+                    <p>Early architectural decisions are exactly what summarisation flattens. Append them to <code>docs/decisions.md</code> before compaction and you have turned transient context into an ADR log.</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>How CLAUDE.md goes wrong</h4>
+                <p>The usual failure is accretion by incident. The agent does something annoying, someone appends a rule. Six months on the file is 600 lines of narrow prohibitions, each traceable to one bad afternoon, and the agent is navigating a maze of special cases instead of a coherent principle. Prune on a schedule. If a rule cannot be justified by someone who was not there when it was written, delete it and see what breaks.</p>
+            </div>
+
+            <h3>Inherited codebase: never let it explore when you could just tell it</h3>
+
+            <p>In a repository with thousands of files, discovery is where the tokens die. Ask an agent to "fix the retry logic in the payment flow" with no map and it will grep, read, follow imports, read more, and burn tens of thousands of tokens before writing a line. The fix is a navigation layer in CLAUDE.md. Not documentation of what the code does, but a directory of where things live.</p>
+
+            <div class="formula-box"># Codebase Map
+
+- HTTP handlers:    src/api/**/handler.ts
+- Business logic:   src/domain/**            (no I/O here, keep it pure)
+- Persistence:      src/infra/repo/**
+- External clients: src/infra/clients/**     (retry/backoff lives here)
+- Generated code:   src/generated/**         DO NOT EDIT. Regenerate: `npm run codegen`
+
+## Conventions that are not obvious
+- All money is `bigint` minor units. Never float.
+- `src/domain` must not import from `src/infra`. Enforced by `npm run lint:deps`.
+- Anything under `legacy/` is frozen. Changes go in `src/` behind an adapter.</div>
+
+            <p>That block costs maybe 200 tokens a request and routinely saves tens of thousands. The "DO NOT EDIT" and "frozen" markers alone head off a whole class of expensive, well-intentioned mistakes.</p>
+
+            <div class="example-box">
+                <h4>The Scout-Then-Build Pattern</h4>
+                <p>Turn one: <em>"Use a subagent to find every place we construct an HTTP client. Report the file paths, the retry configuration at each, and any that differ from the default."</em> The subagent reads fifty files in its own context and hands back twelve lines. Turn two: <em>"Standardise those onto the shared client."</em> Your main context now holds a twelve-line map and the task rather than fifty files. On a large repo this regularly turns a session that would have compacted twice into one that never compacts at all, which also means the model never loses its early decisions to summarisation.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 9 -->
+        <div class="section" id="microservices">
+            <h2>9. Microservices and Multi-Repo Workflows</h2>
+
+            <p>This is where most teams' practice quietly breaks down, because the tool's defaults assume one repository and microservices assume the opposite. A change to a payment flow touches the gateway repo, the payments service, a shared contracts repo and probably Terraform. By default the agent sees one of them.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Topology</th><th>Setup</th><th>Right when</th></tr>
+                <tr><td><strong>Single-service</strong></td><td>Start in one repo</td><td>The change is genuinely local. Should be your default, because most changes really are.</td></tr>
+                <tr><td><strong>Anchored multi-repo</strong></td><td><code>--add-dir ../contracts ../gateway</code></td><td>One service is clearly the subject and the others are supporting context.</td></tr>
+                <tr><td><strong>Workspace root</strong></td><td>A parent directory holding all the repos as siblings, with its own CLAUDE.md</td><td>Cross-cutting work: a protocol bump, a shared library upgrade, a tracing rollout across eight services.</td></tr>
+            </table>
+            </div>
+
+            <h3>The workspace-root CLAUDE.md is the highest-leverage file you will write</h3>
+
+            <p>Not because of what it documents, but because it encodes the thing no single repository can know, which is the shape of the system. Dependency direction, which service owns which data, where the contract lives, deploy ordering, and which changes need a coordinated release.</p>
+
+            <div class="formula-box"># Platform Topology
+
+## Call graph (direction matters, never introduce a reverse edge)
+  client → gateway → payments-svc → ledger-svc
+                   ↘ notifications-svc
+
+## Ownership
+  - `payments-svc` owns the `payments` schema. Nothing else writes to it.
+  - `ledger-svc` owns `ledger`. Payments reads it ONLY via the gRPC API.
+
+## Contracts
+  - Source of truth: `contracts/proto/**`. Generated stubs are committed, never hand-edited.
+  - A breaking change requires: contracts PR → consumer PRs → producer PR. In that order.
+
+## Coordinated-release triggers
+  Any change touching `contracts/proto/payments/v1/**` needs a release plan.
+  Flag this to me rather than proceeding.</div>
+
+            <p>That last section is the one platform engineers appreciate immediately. It converts tribal release knowledge into something the agent will respect, and turns "the agent broke prod because it did not know about deploy ordering" into a non-event.</p>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: <code>--add-dir</code> grants access, not attention</h4>
+                <p>Adding a directory makes it reachable. It does not tell the agent the directory matters or what is in it. The common disappointment, "I added the contracts repo and it still did not check the schema", is exactly this gap. Pair every added directory with a line in CLAUDE.md explaining its role and the behaviour changes immediately.</p>
+                <div class="formula-box">claude --add-dir ../contracts ../gateway
+
+# ...and in the workspace CLAUDE.md:
+#   ../contracts  → source of truth for all inter-service schemas.
+#                   ALWAYS check here before changing a request/response shape.
+#   ../gateway    → the only caller of payments-svc. Check its client before
+#                   altering any public endpoint.</div>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: keep the shell anchored across repos</h4>
+                <p>With several repos mounted, a <code>cd</code> inside one bash call silently changes the working directory for later commands, and the agent then runs your test suite from the wrong service. <code>CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR</code> forces every command back to the project root, which turns a whole class of confusing cross-repo failures into a non-issue.</p>
+                <div class="formula-box">{ "env": { "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1" } }</div>
+            </div>
+
+            <h3>Parallelism: worktrees and background agents</h3>
+
+            <p>Multi-repo work invites parallel sessions, and several terminals in one working tree produces conflicting edits and mutual confusion. Git worktrees solve it properly, and Claude Code has first-class support.</p>
+
+            <div class="formula-box">claude --worktree payments-retry           # isolated tree + branch + session
+claude --worktree contract-v2 --tmux      # with a tmux session (iTerm2 panes if available)
+claude --bg -p "run the contract audit"   # background agent, returns immediately
+claude agents                             # manage running background agents</div>
+
+            <div class="analogy-box">
+                <h4>The Assembly Line Analogy</h4>
+                <p>Three agents in one working tree is three mechanics reaching into the same engine bay. Three worktrees is three engines on three bays with a shared parts shelf, which is the contracts repo. Setting up the bay costs almost nothing next to untangling three sets of half-finished edits, and worktrees make "abandon this attempt entirely" cheap, which is what makes parallel exploration viable at all.</p>
+            </div>
+
+            <h3>Contract-first is what keeps it honest</h3>
+
+            <p>The failure mode in agentic multi-repo work is drift. The agent changes the producer, the consumer's stub is stale, tests pass in both repos independently, and integration breaks. The countermeasure is structural rather than something you can prompt your way out of.</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>1️⃣ Contract change first</h4>
+                    <p>Write it into the workspace CLAUDE.md that any cross-service change starts in the contracts repo, so the agent propagates from one source of truth rather than inferring shape from one side.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>2️⃣ A contract-auditor subagent</h4>
+                    <p>One subagent whose only job is comparing producer and consumer against the spec. Cheap, isolated context, catches exactly this failure.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>3️⃣ Regenerate, never hand-edit</h4>
+                    <p>Deny <code>Edit</code> on generated stub directories in every repo. The agent is entirely capable of "fixing" a generated file, which works locally and silently diverges from the spec.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>4️⃣ Integration test as the gate</h4>
+                    <p>Unit tests passing in both repos proves nothing about the seam between them. Wire the cross-service tests into a hook or a slash command.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 10 -->
+        <div class="section" id="debugging">
+            <h2>10. Debugging Claude Code Itself</h2>
+
+            <p>When the agent misbehaves, meaning a hook that will not fire, an MCP tool that never appears, permissions prompting when they should not, or latency out of nowhere, the debug flag has a category filter almost nobody uses.</p>
+
+            <div class="formula-box">claude --debug api,hooks              # only these categories
+claude --debug '!1p,!file'           # everything EXCEPT first-party noise and file ops
+claude --debug-file /tmp/cc.log      # write to a file (implicitly enables debug mode)</div>
+
+            <p>The negation syntax is the useful half. Raw debug output is overwhelming, and subtractive filtering, where you turn everything on then silence what you know is irrelevant, converges on the signal far faster than guessing which category to enable.</p>
+
+            <h3>The bisection ladder</h3>
+
+            <ol class="step-list">
+                <li>
+                    <div>
+                        <strong>Does it reproduce in <code>--safe-mode</code>?</strong>
+                        <p>All customization off. If the problem disappears, it is your configuration, and you have eliminated the entire product surface in one command.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Narrow by tier with <code>--setting-sources</code></strong>
+                        <p>Load only <code>user</code>, then only <code>project</code>, then only <code>local</code>. Three runs identify the file without you editing anything.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Isolate MCP with <code>--strict-mcp-config</code></strong>
+                        <p>With an explicit <code>--mcp-config</code>, this loads only the servers you name. Fastest way to find out whether a server is the culprit, and which one.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Drop to <code>--bare</code> for a clean room</strong>
+                        <p>Skips hooks, LSP, plugin sync, auto-memory, prefetches, keychain reads and CLAUDE.md discovery. This is the baseline for a bug report, because it proves the issue is in the tool rather than your environment.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Check for a deny rule matching too broadly</strong>
+                        <p>A surprising share of "the agent will not do X" reports are a prefix rule catching more than intended. The debug output names the rule that matched.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="warning-box">
+                <h4>Hooks fail silently in ways that look like model behaviour</h4>
+                <p>A hook with a bad path, a missing execute bit, or a dependency that is not on <code>PATH</code> in the hook's environment produces symptoms that read as the model ignoring instructions. The formatter "did not run". The validator "let it through". Test every hook command standalone in a clean shell before wiring it up, and have it log somewhere. <code>--debug hooks</code> shows the invocation and its exit status, which resolves this in seconds once you know to look.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>Claude Code Tip: capture a reproducible log before you report anything</h4>
+                <p><code>--debug-file</code> turns on debug mode and writes to a path, so you can reproduce an issue and hand someone the artifact rather than describing it. Combine it with <code>--bare</code> and a fixed <code>--session-id</code> so the run stays addressable afterwards.</p>
+                <div class="formula-box">claude --bare \
+       --debug-file /tmp/cc-repro.log \
+       --session-id 3f2b8c10-7d4e-4a91-b5c2-9e1f0a6d8b34 \
+       -p "reproduce the failing case"</div>
+            </div>
+        </div>
+
+        <!-- SECTION 11 -->
+        <div class="section" id="recipes">
+            <h2>11. Configuration Recipes</h2>
+
+            <p>Four artifacts. Each is small, each gets committed, and each replaces something a human would otherwise have to remember.</p>
+
+            <h3>A read-only subagent</h3>
+
+            <p>Subagents live in <code>.claude/agents/</code>. The design choice that matters is restricting tools, because an explorer that cannot edit will not accidentally edit, and a narrower toolset also means a smaller schema in its context.</p>
+
+            <div class="formula-box">---
+name: codebase-scout
+description: Read-only investigator. Use for "where is X", "how does Y work",
+             "find every place that Z". Returns findings, never edits.
+tools: Read, Grep, Glob
+model: sonnet
+---
+
+You investigate and report. You never modify files.
+
+Return findings in this shape:
+1. Direct answer, two or three sentences.
+2. Evidence: file:line references for every claim.
+3. Anything surprising you found on the way.
+4. What you could NOT determine, stated plainly.
+
+Be exhaustive in your reading and ruthlessly brief in your output.
+The caller's context window is the scarce resource, not yours.</div>
+
+            <p>Note the model choice. Scouting is reading and extraction rather than deep reasoning, so a faster model does it well, and the delegation keeps your main thread on the strong model without paying for it to read fifty files.</p>
+
+            <h3>A skill, for anything you keep repeating</h3>
+
+            <p>Skills live in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>. Only the frontmatter description sits in context by default, and the body loads when the task matches. That progressive disclosure is what makes them different from CLAUDE.md content, which you pay for always.</p>
+
+            <div class="formula-box">---
+name: add-endpoint
+description: How to add an HTTP endpoint in this service. Use whenever adding,
+             modifying or removing a route, handler or its validation schema.
+---
+
+# Adding an endpoint
+
+1. Define the schema in `src/api/schemas/` first. Never inline it in the handler.
+2. Handler goes in `src/api/&lt;resource&gt;/handler.ts`, thin, no business logic.
+3. Business logic goes in `src/domain/&lt;resource&gt;/`, pure, no I/O.
+4. Register in `src/api/routes.ts`. Alphabetical order, we lint for it.
+5. Contract test in `tests/contract/&lt;resource&gt;.spec.ts` is mandatory.
+
+## Gotchas
+- Auth middleware is opt-out, not opt-in. Public routes need `{ public: true }`.
+- Anything returning money must use the `MoneySchema`, never a raw number.</div>
+
+            <p>Anything in your CLAUDE.md that starts with "when you are doing X..." is a skill in disguise. Moving it converts a permanent per-request cost into an occasional one, and the skill can be much longer than you would ever allow in CLAUDE.md.</p>
+
+            <h3>A slash command that encodes a workflow</h3>
+
+            <p>Commands live in <code>.claude/commands/</code>. The <code>!</code> prefix runs a shell command and injects its output, <code>@</code> references a file, and <code>$ARGUMENTS</code> captures what you typed.</p>
+
+            <div class="formula-box">---
+description: Review the current branch's diff against main
+allowed-tools: Bash(git diff:*), Bash(git log:*), Read, Grep
+---
+
+Current diff against main:
+!`git diff main...HEAD`
+
+Project conventions: @docs/conventions.md
+
+Review the diff above. Focus specifically on: $ARGUMENTS
+
+For each finding give file:line, the concrete failure scenario, and a suggested
+fix. Rank by severity. If you find nothing significant, say so plainly rather
+than manufacturing findings.</div>
+
+            <p>Invoked as <code>/review-branch concurrency and error handling</code>. The shell commands run before the model sees anything, so the diff is already in context, with no tool round-trip and no negotiation about which commands to run.</p>
+
+            <h3>A hook that makes a rule structural</h3>
+
+            <div class="formula-box">{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Edit|Write",
+      "hooks": [
+        { "type": "command", "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\" 2>/dev/null || true" },
+        { "type": "command", "command": "npx tsc --noEmit 2>&1 | head -40" }
+      ]
+    }],
+    "PreCompact": [{
+      "hooks": [{ "type": "command", "command": ".claude/scripts/persist-decisions.sh" }]
+    }]
+  }
+}</div>
+
+            <p>The formatter guarantees consistency with no prompt text at all. The type check surfaces errors while the agent still has the change in working context, rather than at the end of the session when rebuilding that context is expensive. Note the <code>|| true</code>: a hook that fails loudly on an unformattable file becomes noise you learn to ignore, which defeats the point.</p>
+        </div>
+
+        <!-- SECTION 12 -->
+        <div class="section" id="reference">
+            <h2>12. Quick Reference</h2>
+
+            <h3>Settings worth knowing</h3>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Key</th><th>Does</th></tr>
+                <tr><td><code>cleanupPeriodDays</code></td><td>Session retention. Default 30 days. Raise it.</td></tr>
+                <tr><td><code>apiKeyHelper</code></td><td>Command that produces the API key, so no secret sits in the file.</td></tr>
+                <tr><td><code>permissions.deny / ask / allow</code></td><td>Prefix-matched tool rules. Deny wins.</td></tr>
+                <tr><td><code>permissions.disableBypassPermissionsMode</code></td><td>Makes <code>--dangerously-skip-permissions</code> unavailable.</td></tr>
+                <tr><td><code>permissions.additionalDirectories</code></td><td>Extra directories the agent may reach.</td></tr>
+                <tr><td><code>sandbox.enabled</code></td><td>OS-level sandbox for bash commands.</td></tr>
+                <tr><td><code>sandbox.network.allowedDomains / deniedDomains</code></td><td>Egress allowlist and blocklist.</td></tr>
+                <tr><td><code>sandbox.network.allowManagedDomainsOnly</code></td><td>Deny unlisted hosts outright instead of prompting.</td></tr>
+                <tr><td><code>sandbox.filesystem.allowRead / allowWrite / denyRead / denyWrite</code></td><td>Path controls inside the sandbox. Merged with your <code>Read()</code> and <code>Edit()</code> permission rules.</td></tr>
+                <tr><td><code>sandbox.credentials.envVars / files</code></td><td><code>deny</code> unsets or blocks; <code>mask</code> substitutes a sentinel value.</td></tr>
+                <tr><td><code>sandbox.allowUnsandboxedCommands</code></td><td>False makes <code>dangerouslyDisableSandbox</code> inert.</td></tr>
+                <tr><td><code>sandbox.failIfUnavailable</code></td><td>Fail closed when the sandbox cannot start. False runs unsandboxed instead.</td></tr>
+                <tr><td><code>excludedCommands</code></td><td>The few commands allowed to run outside the sandbox. Verify the nesting against the docs before use.</td></tr>
+                <tr><td><code>enableAllProjectMcpServers</code></td><td>Auto-connects a repo's declared MCP servers. Keep off.</td></tr>
+                <tr><td><code>enabledMcpjsonServers</code></td><td>Explicit MCP allowlist by name.</td></tr>
+                <tr><td><code>env.BASH_MAX_OUTPUT_LENGTH</code></td><td>Truncates runaway command output.</td></tr>
+                <tr><td><code>env.MAX_MCP_OUTPUT_TOKENS</code></td><td>Caps chatty MCP responses.</td></tr>
+                <tr><td><code>env.CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR</code></td><td>Pins bash back to the project root each command.</td></tr>
+            </table>
+            </div>
+
+            <h3>Flags worth knowing</h3>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Flag</th><th>Does</th></tr>
+                <tr><td><code>--exclude-dynamic-system-prompt-sections</code></td><td>Moves per-machine data out of the cacheable prefix. Big win for shared/CI use.</td></tr>
+                <tr><td><code>--safe-mode</code> / <code>--bare</code></td><td>All customization off / clean room.</td></tr>
+                <tr><td><code>--setting-sources user,project,local</code></td><td>Load only the tiers you name.</td></tr>
+                <tr><td><code>--strict-mcp-config --mcp-config F</code></td><td>Load only these MCP servers.</td></tr>
+                <tr><td><code>--debug 'api,hooks'</code> / <code>--debug '!1p,!file'</code></td><td>Category filtering, including negation.</td></tr>
+                <tr><td><code>--debug-file PATH</code></td><td>Debug output to a file.</td></tr>
+                <tr><td><code>--permission-mode</code></td><td>Six values: <code>default</code>, <code>acceptEdits</code>, <code>plan</code>, <code>auto</code>, <code>dontAsk</code>, <code>bypassPermissions</code> (plus <code>manual</code>). Shift+Tab cycles only four of them.</td></tr>
+                <tr><td><code>--tools "Read,Grep,Glob"</code></td><td>Restrict the built-in toolset.</td></tr>
+                <tr><td><code>--worktree NAME</code> / <code>--tmux</code></td><td>Isolated git worktree, optionally in tmux.</td></tr>
+                <tr><td><code>--bg</code> / <code>claude agents</code></td><td>Background agent, and how to manage them.</td></tr>
+                <tr><td><code>--fork-session</code> / <code>--from-pr N</code> / <code>--session-id UUID</code></td><td>Branch, PR-linked, and deterministic sessions.</td></tr>
+                <tr><td><code>--autocompact auto|TOKENS</code></td><td>Auto-compact window, 100k to 1M.</td></tr>
+                <tr><td><code>--effort low|medium|high|xhigh|max</code></td><td>Reasoning depth and spend. A dial, not a setting.</td></tr>
+                <tr><td><code>--max-budget-usd N</code></td><td>Hard spend cap in print mode.</td></tr>
+                <tr><td><code>--fallback-model A,B</code></td><td>Retry list when the primary is overloaded.</td></tr>
+                <tr><td><code>--append-system-prompt</code></td><td>Add to the system prompt without touching CLAUDE.md.</td></tr>
+                <tr><td><code>--add-dir</code></td><td>Extra directories for this session.</td></tr>
+            </table>
+            </div>
+
+            <h3>In-session commands</h3>
+
+            <div class="formula-box">/context      what is consuming the window, as a ranked list
+/cost         spend this session          /usage    where you stand against limits
+/compact ARG  steer what survives         /clear    wipe history
+/sandbox      view and manage sandbox restrictions
+/permissions  inspect and edit rules      /hooks    manage hooks
+/agents       manage subagents            /skills   manage skills
+/mcp          manage MCP servers          /plugin   manage plugins
+/rewind       roll back code, conversation, or both (or double-tap Esc)
+/add-dir      mount another directory     /export   export the conversation
+/doctor       full health check, can fix what it finds</div>
+
+            <div class="analogy-box">
+                <h4>The Final Perspective</h4>
+                <p>The instinct with a capable coding agent is to get better at asking. That instinct is half right and mostly misdirected. The people getting disproportionate returns are not writing better prompts, they are engineering the environment the agent works in. A tight CLAUDE.md that costs 200 tokens and saves 20,000. Hooks that make quality structural instead of aspirational. Permissions sorted by reversibility. A sandbox that masks credentials rather than hiding files. Subagents that keep the main context clean. Retention set so six months of hard-won context survives. None of this is really about the model. It is ordinary systems engineering, applied to a new kind of process, and the prompt is the least durable artifact you will produce.</p>
+            </div>
+        </div>
+
+    </div><!-- end .content -->
+
+    <div class="footer">
+        <p>"The best prompt is the one you never have to write, because the environment already encodes the answer."</p>
+    </div>
+
+</div><!-- end .container -->
+
+<script>
+    // Intersection Observer for scroll-triggered animations
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.impact-card, .analogy-box, .example-box, .warning-box, .step-list li');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
