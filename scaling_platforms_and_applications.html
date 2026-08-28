@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scaling Platforms and Applications: From Seed to Harvest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <style>
         * {
             margin: 0;
@@ -12,26 +16,33 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', sans-serif;
             line-height: 1.7;
-            color: #333;
-            background: linear-gradient(135deg, #dcdde1 0%, #764ba2 100%);
+            color: #14211d;
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.1), transparent 30%),
+                radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 26%),
+                linear-gradient(180deg, #fbf8f2 0%, #f3efe7 100%);
             min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-radius: 10px;
+            background: #fffdf8;
+            box-shadow: 0 24px 70px rgba(28, 43, 38, 0.14);
+            border-radius: 20px;
             overflow: hidden;
             margin-top: 20px;
             margin-bottom: 40px;
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, #13231f, #0f766e);
             color: white;
             padding: 3rem 2rem;
             text-align: center;
@@ -65,8 +76,8 @@
             display: flex;
             align-items: center;
             padding: 1rem 2rem;
-            background: #f0f4f8;
-            border-bottom: 1px solid #e0e0e0;
+            background: #f7f2ea;
+            border-bottom: 1px solid rgba(20, 33, 29, 0.14);
         }
 
         .author-bar img {
@@ -77,7 +88,7 @@
         }
 
         .author-bar a {
-            color: #3182ce;
+            color: #0f766e;
             text-decoration: underline;
         }
 
@@ -86,15 +97,15 @@
         }
 
         .intro {
-            background: #f8f9fa;
+            background: #f7f2ea;
             padding: 2rem;
-            border-left: 5px solid #3498db;
+            border-left: 5px solid #0f766e;
             margin-bottom: 2.5rem;
             border-radius: 5px;
         }
 
         .intro h2 {
-            color: #2c3e50;
+            color: #13231f;
             margin-bottom: 1rem;
         }
 
@@ -103,11 +114,11 @@
         }
 
         .section h2 {
-            color: #165391;
+            color: #0b5d56;
             font-size: 1.8rem;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid #0f766e;
         }
 
         .section p {
@@ -124,7 +135,7 @@
 
         .stage-card {
             background: white;
-            border: 1px solid #e0e0e0;
+            border: 1px solid rgba(20, 33, 29, 0.14);
             border-radius: 10px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.07);
@@ -139,7 +150,7 @@
 
         .stage-badge {
             display: inline-block;
-            background: #3498db;
+            background: #0f766e;
             color: white;
             font-size: 0.75rem;
             font-weight: 700;
@@ -151,19 +162,19 @@
         }
 
         .stage-card h3 {
-            color: #2c3e50;
+            color: #13231f;
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
         }
 
         .stage-card .analogy {
-            background: #e8f4fd;
-            border-left: 3px solid #3498db;
+            background: #f2ede1;
+            border-left: 3px solid #0f766e;
             padding: 0.6rem 0.9rem;
             border-radius: 4px;
             margin: 0.8rem 0;
             font-style: italic;
-            color: #1a5276;
+            color: #0b5d56;
             font-size: 0.95rem;
         }
 
@@ -179,21 +190,21 @@
 
         /* Analogy callout block */
         .analogy-block {
-            background: linear-gradient(135deg, #e8f5e8, #d4efdf);
-            border-left: 5px solid #27ae60;
+            background: linear-gradient(135deg, #e7f3ec, #e7f3ec);
+            border-left: 5px solid #15803d;
             padding: 1.5rem 1.8rem;
             border-radius: 8px;
             margin: 2rem 0;
         }
 
         .analogy-block h4 {
-            color: #1e8449;
+            color: #15803d;
             font-size: 1.1rem;
             margin-bottom: 0.6rem;
         }
 
         .analogy-block p {
-            color: #1a5c35;
+            color: #14532d;
             margin-bottom: 0.5rem;
         }
 
@@ -201,28 +212,28 @@
         .key-insight {
             background: rgba(52, 152, 219, 0.08);
             padding: 1rem;
-            border-left: 4px solid #f1c40f;
+            border-left: 4px solid #d97706;
             margin: 1rem 0;
             border-radius: 5px;
         }
 
         /* Warning / correction box */
         .correction-box {
-            background: #fff8e1;
-            border-left: 5px solid #f39c12;
+            background: #fdf3e2;
+            border-left: 5px solid #b45309;
             padding: 1.2rem 1.5rem;
             border-radius: 6px;
             margin: 1.5rem 0;
         }
 
         .correction-box h4 {
-            color: #b7770d;
+            color: #b45309;
             margin-bottom: 0.5rem;
         }
 
         /* Roadmap section */
         .roadmap {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #0f766e, #0b5d56);
             color: white;
             padding: 2rem;
             border-radius: 10px;
@@ -248,7 +259,7 @@
         .phase h4 {
             font-size: 1.1rem;
             margin-bottom: 0.8rem;
-            color: #f1c40f;
+            color: #d97706;
         }
 
         .phase ul {
@@ -267,13 +278,13 @@
             content: '→';
             position: absolute;
             left: 0;
-            color: #f1c40f;
+            color: #d97706;
             font-weight: bold;
         }
 
         /* Conclusion */
         .conclusion {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: linear-gradient(135deg, #15803d, #16a34a);
             color: white;
             padding: 2rem;
             border-radius: 10px;
@@ -313,7 +324,7 @@
         }
 
         .comparison-table th {
-            background: #3498db;
+            background: #0f766e;
             color: white;
             padding: 1rem;
             font-weight: 600;
@@ -322,12 +333,12 @@
 
         .comparison-table td {
             padding: 0.8rem 1rem;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid rgba(20, 33, 29, 0.14);
             font-size: 0.95rem;
         }
 
         .comparison-table tr:nth-child(even) {
-            background: #f8f9fa;
+            background: #f7f2ea;
         }
 
         /* Stage number badge in cards */
@@ -335,8 +346,8 @@
             position: absolute;
             top: -12px;
             right: 16px;
-            background: #2c3e50;
-            color: #f1c40f;
+            background: #13231f;
+            color: #d97706;
             font-size: 0.8rem;
             font-weight: 800;
             padding: 0.2rem 0.7rem;
@@ -355,8 +366,8 @@
 <div style="margin-top: 24px; display: flex; align-items: center; max-width: 1100px; margin-left: auto; margin-right: auto; padding: 0 1rem 0.5rem 1rem;">
     <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; margin-right: 12px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
     <div>
-        <strong style="color: #003366;">Curated By:</strong> Pushkar Mishra<br>
-        <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #3182ce; text-decoration: underline;">LinkedIn Profile</a>
+        <strong style="color: #13231f;">Curated By:</strong> Pushkar Mishra<br>
+        <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #0f766e; text-decoration: underline;">LinkedIn Profile</a>
     </div>
 </div>
 
@@ -384,77 +395,77 @@
         <!-- TABLE OF CONTENTS -->
         <div class="section" id="toc-section">
             <h2>📋 Table of Contents</h2>
-            <div style="background:#f8f9fa; border:1px solid #e0e0e0; border-radius:10px; padding:1.8rem 2rem; line-height:1;">
+            <div style="background:#f7f2ea; border:1px solid rgba(20, 33, 29, 0.14); border-radius:10px; padding:1.8rem 2rem; line-height:1;">
                 <ol style="list-style:none; padding:0; margin:0;">
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-analogy" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">1.</span>
+                        <a href="#toc-analogy" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">1.</span>
                             <span>🌱 Why the Farm and Fertilizer Analogy Works</span>
                         </a>
                     </li>
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-stages" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">2.</span>
+                        <a href="#toc-stages" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">2.</span>
                             <span>📈 The Seven Stages of Platform Scale</span>
                         </a>
                         <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 1 — Pre-launch: Static Web Framework</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 2 — ~10 Users: Single Virtual Machine</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 3 — ~100 Users: Separate VMs for Backend &amp; Database</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 4 — ~1,000 Users: Availability Zones &amp; Read Replicas</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage5" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 5 — ~10,000 Users: Load Balancers, Autoscaling &amp; CDN</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage6" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 6 — ~100,000 Users: Microservices &amp; Kubernetes</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage7" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 7 — ~1 Million Users: Federation, Partitioning &amp; Multi-Region</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage1" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 1 — Pre-launch: Static Web Framework</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage2" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 2 — ~10 Users: Single Virtual Machine</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage3" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 3 — ~100 Users: Separate VMs for Backend &amp; Database</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage4" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 4 — ~1,000 Users: Availability Zones &amp; Read Replicas</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage5" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 5 — ~10,000 Users: Load Balancers, Autoscaling &amp; CDN</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage6" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 6 — ~100,000 Users: Microservices &amp; Kubernetes</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-stage7" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 7 — ~1 Million Users: Federation, Partitioning &amp; Multi-Region</a></li>
                         </ol>
                     </li>
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-corrections" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">3.</span>
+                        <a href="#toc-corrections" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">3.</span>
                             <span>🔧 Corrections &amp; Clarifications to the Common Narrative</span>
                         </a>
                     </li>
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-summary" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">4.</span>
+                        <a href="#toc-summary" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">4.</span>
                             <span>📊 Stage-by-Stage Summary Table</span>
                         </a>
                     </li>
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-roadmap" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">5.</span>
+                        <a href="#toc-roadmap" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">5.</span>
                             <span>🗺️ Evolutionary Roadmap: How to Plan the Journey</span>
                         </a>
                         <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 1 — Validate (0 to 1K Users)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 2 — Stabilise (1K to 10K Users)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 3 — Accelerate (10K to 100K Users)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Phase 4 — Globalise (100K to 1M+ Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase1" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Phase 1 — Validate (0 to 1K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase2" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Phase 2 — Stabilise (1K to 10K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase3" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Phase 3 — Accelerate (10K to 100K Users)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-phase4" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Phase 4 — Globalise (100K to 1M+ Users)</a></li>
                         </ol>
                     </li>
 
                     <li style="margin-bottom:0.55rem;">
-                        <a href="#toc-team" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">6.</span>
+                        <a href="#toc-team" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">6.</span>
                             <span>👥 Team Sizing at Each Stage: The Human Side of Scaling</span>
                         </a>
                         <ol style="list-style:none; padding:0; margin:0.5rem 0 0.3rem 2rem;">
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team-framework" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ The Demand-Signal Framework: When to Hire</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team1" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 1–2: The Founding Crew (1–3 Engineers)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team2" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 3–4: First Specialists (3–6 Engineers)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team3" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 5: Operational Maturity (8–15 Engineers)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team4" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 6: Squad Model (20–45 Engineers)</a></li>
-                            <li style="margin-bottom:0.3rem;"><a href="#toc-team5" style="color:#666; text-decoration:none; font-size:0.93rem;">↳ Stage 7: Federated Engineering (60–150+ Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team-framework" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ The Demand-Signal Framework: When to Hire</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team1" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 1–2: The Founding Crew (1–3 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team2" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 3–4: First Specialists (3–6 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team3" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 5: Operational Maturity (8–15 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team4" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 6: Squad Model (20–45 Engineers)</a></li>
+                            <li style="margin-bottom:0.3rem;"><a href="#toc-team5" style="color:#5d6a66; text-decoration:none; font-size:0.93rem;">↳ Stage 7: Federated Engineering (60–150+ Engineers)</a></li>
                         </ol>
                     </li>
 
                     <li>
-                        <a href="#toc-conclusion" style="color:#165391; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
-                            <span style="color:#3498db; font-weight:700; min-width:1.6rem;">7.</span>
+                        <a href="#toc-conclusion" style="color:#0b5d56; text-decoration:none; font-weight:600; font-size:1.05rem; display:flex; align-items:baseline; gap:0.5rem;">
+                            <span style="color:#0f766e; font-weight:700; min-width:1.6rem;">7.</span>
                             <span>🌾 The Harvest: Key Takeaways</span>
                         </a>
                     </li>
@@ -777,8 +788,8 @@
         <div class="section" id="toc-team">
             <h2>👥 Team Sizing at Each Stage: The Human Side of Scaling</h2>
 
-            <div class="intro" style="background:#f0f4ff; border-left-color:#667eea;">
-                <h2 style="color:#3d3d8f;">Why Team Size Is as Important as Architecture</h2>
+            <div class="intro" style="background:#f7f2ea; border-left-color:#0f766e;">
+                <h2 style="color:#0b5d56;">Why Team Size Is as Important as Architecture</h2>
                 <p>Every architecture decision is also a team decision. The right infrastructure for 3 engineers will collapse under the weight of 50 if the team organisation does not evolve with it. Conversely, hiring aggressively before demand justifies it burns runway and creates coordination overhead that slows you down.</p>
                  <div class="analogy-block">
                 <p><strong>The honest reality in 2026:</strong> AI-assisted coding (GitHub Copilot, OpenAI CodeEx, Cursor, Claude Code) is compressing the <em>code-writing</em> effort by 30–60% for well-understood problems. But AI does not know your domain model, your legacy integrations, your database quirks, or the unwritten rules your team has built over years. The headcount savings from AI tools are real — but they accrue at the <em>execution</em> layer, not at the <em>architecture, judgment, and integration</em> layer. Plan accordingly: AI amplifies good engineers; it does not replace the judgment to know what to build.</p>
@@ -791,8 +802,8 @@
             </div>
 
             <!-- Team Sizing Framework -->
-            <div class="correction-box" id="toc-team-framework" style="background:#e8f4fd; border-left-color:#3498db;">
-                <h4 style="color:#1a5276;">🧭 The Demand-Signal Framework: How to Know When to Hire</h4>
+            <div class="correction-box" id="toc-team-framework" style="background:#f2ede1; border-left-color:#0f766e;">
+                <h4 style="color:#0b5d56;">🧭 The Demand-Signal Framework: How to Know When to Hire</h4>
                 <p>Rather than hiring to a fixed headcount plan, hire when one of these <strong>four demand signals</strong> fires:</p>
                 <ol style="padding-left:1.5rem; margin-top:0.8rem; line-height:2;">
                     <li><strong>Throughput bottleneck:</strong> shipping velocity has dropped and the backlog is growing faster than the team can clear it</li>
@@ -808,7 +819,7 @@
 
                 <!-- Stage 1–2 -->
                 <div class="stage-card" id="toc-team1">
-                    <span class="stage-badge" style="background:#27ae60;">Stage 1–2 · 0–10 Users</span>
+                    <span class="stage-badge" style="background:#15803d;">Stage 1–2 · 0–10 Users</span>
                     <h3>🌱 The Founding Crew: 1–3 Engineers</h3>
                     <div class="analogy">One farmer, one plot, one season. Speed of learning matters more than division of labour.</div>
                     <p>At pre-launch to 10 users, organisational overhead is your enemy. A tiny team of generalists who own everything end-to-end is far more productive than a larger team with specialised silos.</p>
@@ -827,7 +838,7 @@
 
                 <!-- Stage 3–4 -->
                 <div class="stage-card" id="toc-team2">
-                    <span class="stage-badge" style="background:#2980b9;">Stage 3–4 · 100–1K Users</span>
+                    <span class="stage-badge" style="background:#0b5d56;">Stage 3–4 · 100–1K Users</span>
                     <h3>🌿 First Specialists: 3–6 Engineers</h3>
                     <div class="analogy">The farm hires its first specialist: an irrigation engineer. Everyone else still does multiple jobs, but one critical function gets dedicated focus.</div>
                     <p>Real users mean real bugs, real data, and real support requests. You now need someone who owns the infrastructure and someone who owns the product experience — even if those are part-time roles worn by the same two people.</p>
@@ -846,7 +857,7 @@
 
                 <!-- Stage 5 -->
                 <div class="stage-card" id="toc-team3">
-                    <span class="stage-badge" style="background:#8e44ad;">Stage 5 · ~10K Users</span>
+                    <span class="stage-badge" style="background:#b45309;">Stage 5 · ~10K Users</span>
                     <h3>🚁 Operational Maturity: 8–15 Engineers</h3>
                     <div class="analogy">The farm now has a full-time mechanic, a logistics coordinator, and a crop scientist. Each role exists because the farm's complexity has outgrown generalism.</div>
                     <p>At 10K users you are operating a real service with SLAs, on-call rotations, and a pipeline of features. Team specialisation is no longer optional — it is a reliability requirement.</p>
@@ -867,7 +878,7 @@
 
                 <!-- Stage 6 -->
                 <div class="stage-card" id="toc-team4">
-                    <span class="stage-badge" style="background:#c0392b;">Stage 6 · ~100K Users</span>
+                    <span class="stage-badge" style="background:#991b1b;">Stage 6 · ~100K Users</span>
                     <h3>🏭 Squad Model: 20–45 Engineers</h3>
                     <div class="analogy">The agri-corp now has specialist divisions: soil science, logistics, R&amp;D, compliance. Each division operates semi-autonomously but reports into a shared mission and platform.</div>
                     <p>At 100K users you have crossed into the territory where <strong>Conway's Law</strong> governs your architecture. Your system will reflect your team structure. If you want microservices, you need domain-aligned squads. If your team is still a single group of generalists, your "microservices" will be a distributed monolith.</p>
@@ -891,7 +902,7 @@
 
                 <!-- Stage 7 -->
                 <div class="stage-card" id="toc-team5">
-                    <span class="stage-badge" style="background:#16a085;">Stage 7 · ~1M+ Users</span>
+                    <span class="stage-badge" style="background:#0f766e;">Stage 7 · ~1M+ Users</span>
                     <h3>🌍 Federated Engineering: 60–150+ Engineers</h3>
                     <div class="analogy">The global agri-corporation. Each regional operation has its own engineering team understanding local regulations, local integrations, and local crops — but all build on a shared platform with shared standards.</div>
                     <p>At a million users, team topology becomes a first-class architectural concern. You likely have geographically distributed teams, multiple product lines, and a shared platform that must serve them all without becoming a bottleneck.</p>
@@ -913,7 +924,7 @@
             </div><!-- end stage-grid -->
 
             <!-- Summary Table: Team Sizing -->
-            <h3 style="color:#165391; margin: 2rem 0 1rem; font-size:1.4rem; border-bottom:2px solid #3498db; padding-bottom:0.4rem;">📊 Team Size Quick Reference</h3>
+            <h3 style="color:#0b5d56; margin: 2rem 0 1rem; font-size:1.4rem; border-bottom:2px solid #0f766e; padding-bottom:0.4rem;">📊 Team Size Quick Reference</h3>
             <div class="comparison-table">
                 <table>
                     <thead>

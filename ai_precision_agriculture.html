@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI as the Intelligence Layer of Precision Agriculture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <style>
         * {
             margin: 0;
@@ -12,21 +16,28 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', sans-serif;
             line-height: 1.7;
-            color: #2c3e50;
-            background: linear-gradient(135deg, #f4f7f9 0%, #eaf0f6 100%);
+            color: #13231f;
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.1), transparent 30%),
+                radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 26%),
+                linear-gradient(180deg, #fbf8f2 0%, #f3efe7 100%);
             min-height: 100vh;
             padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.97);
+            background: rgba(255, 253, 248, 0.97);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 24px 70px rgba(28, 43, 38, 0.14);
             overflow: hidden;
             animation: fadeIn 1s ease-out;
         }
@@ -37,7 +48,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #003366 0%, #004f8c 50%, #006699 100%);
+            background: linear-gradient(135deg, #13231f 0%, #0b5d56 50%, #0b5d56 100%);
             color: white;
             padding: 50px 40px;
             text-align: center;
@@ -115,27 +126,26 @@
         }
 
         h2 {
-            color: #003366;
+            color: #13231f;
             font-size: 1.75em;
             margin-bottom: 18px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #C8962A;
+            border-bottom: 3px solid #d97706;
         }
 
         h3 {
-            color:  #003366;
+            color:  #13231f;
             font-size: 1.3em;
             margin: 22px 0 12px 0;
         }
 
         p {
             margin-bottom: 15px;
-            text-align: justify;
         }
 
         /* Analogy / Insight Box */
         .analogy-box {
-            background: linear-gradient(135deg, #003366 0%, #003366 100%);
+            background: linear-gradient(135deg, #13231f 0%, #13231f 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -164,7 +174,7 @@
 
         /* Example / Technical Box */
         .example-box {
-            background: linear-gradient(135deg, #004f8c 0%, #003366 100%);
+            background: linear-gradient(135deg, #0b5d56 0%, #13231f 100%);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -220,7 +230,7 @@
         }
 
         .impact-card {
-            background: linear-gradient(135deg, #eaf4f0 0%, #d0e8e0 100%);
+            background: linear-gradient(135deg, #e7f3ec 0%, #e7f3ec 100%);
             padding: 22px;
             border-radius: 15px;
             text-align: center;
@@ -231,17 +241,17 @@
         .impact-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: #C8962A;
+            border-color: #d97706;
         }
 
         .impact-card h4 {
-            color: #003366;
+            color: #13231f;
             font-size: 1.1em;
             margin-bottom: 12px;
         }
 
         .impact-card p {
-            color: #2c3e50;
+            color: #13231f;
             font-size: 0.9em;
             text-align: left;
         }
@@ -249,21 +259,21 @@
         /* Architecture / Visual Box */
         .arch-box {
             background: rgba(0, 51, 102, 0.05);
-            border: 2px dashed #C8962A;
+            border: 2px dashed #d97706;
             border-radius: 15px;
             padding: 28px;
             margin: 25px 0;
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
-            color: #003366;
+            color: #13231f;
             white-space: pre-wrap;
             line-height: 1.8;
         }
 
         /* Pseudocode Box */
         .code-box {
-            background: #1e1e2e;
-            color: #cdd6f4;
+            background: #13231f;
+            color: #d8d2c4;
             padding: 25px;
             border-radius: 15px;
             margin: 25px 0;
@@ -274,15 +284,15 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
-        .code-box .kw  { color: #cba6f7; }
-        .code-box .fn  { color: #89b4fa; }
-        .code-box .cm  { color: #6c7086; font-style: italic; }
-        .code-box .str { color: #a6e3a1; }
-        .code-box .num { color: #fab387; }
+        .code-box .kw  { color: #e8a33d; }
+        .code-box .fn  { color: #0f766e; }
+        .code-box .cm  { color: #5d6a66; font-style: italic; }
+        .code-box .str { color: #86c9ab; }
+        .code-box .num { color: #e8a33d; }
 
         /* Highlight text */
         .highlight {
-            background: linear-gradient(120deg, #003366 0%, #003366 50%, #003366 50%, #C8962A 100%);
+            background: linear-gradient(120deg, #13231f 0%, #13231f 50%, #13231f 50%, #d97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -298,7 +308,7 @@
         }
 
         th {
-            background: #003366;
+            background: #13231f;
             color: white;
             padding: 12px 15px;
             text-align: left;
@@ -309,12 +319,12 @@
             border-bottom: 1px solid #e4ecf2;
         }
 
-        tr:nth-child(even) { background: #f0f4f8; }
-        tr:hover { background: #ddeaf4; }
+        tr:nth-child(even) { background: #f7f2ea; }
+        tr:hover { background: #f2ede1; }
 
         /* Footer */
         .footer {
-            background: #003366;
+            background: #13231f;
             color: white;
             text-align: center;
             padding: 30px;
@@ -322,8 +332,8 @@
         }
 
         .disclaimer {
-            background: #fffbe6;
-            border-left: 6px solid #f9a825;
+            background: #fdf3e2;
+            border-left: 6px solid #d97706;
             padding: 18px 24px;
             margin-bottom: 28px;
             border-radius: 10px;
@@ -339,19 +349,19 @@
         .author-bar hr {
             margin-bottom: 18px;
             border: none;
-            border-top: 1px solid #b8cfe0;
+            border-top: 1px solid #c9c2b3;
         }
 
         .toc {
-            background: #f0f4f8;
-            border-left: 5px solid #C8962A;
+            background: #f7f2ea;
+            border-left: 5px solid #d97706;
             padding: 22px 28px;
             border-radius: 10px;
             margin: 0 0 35px 0;
         }
 
         .toc h4 {
-            color:  #003366;
+            color:  #13231f;
             margin-bottom: 12px;
             font-size: 1.1em;
         }
@@ -362,17 +372,17 @@
 
         .toc li {
             margin-bottom: 5px;
-            color: #1d007b;
+            color: #0b5d56;
             font-size: 0.95em;
         }
 
         .toc a {
-            color:  #003366;
+            color:  #13231f;
             text-decoration: none;
             transition: color 0.2s, text-decoration 0.2s;
         }
         .toc a:hover {
-            color: #C8962A;
+            color: #d97706;
             text-decoration: underline;
         }
 
@@ -392,10 +402,10 @@
 
 <div class="author-bar">
     <hr>
-    <p style="color:#003366; font-size:1em;">
+    <p style="color:#13231f; font-size:1em;">
         <img src="profile.png" alt="Pushkar Mishra" style="width:48px;height:48px;border-radius:50%;vertical-align:middle;margin-right:10px;box-shadow:0 2px 8px rgba(0,51,0,0.12);">
         <strong>Curated by:</strong> Pushkar Mishra &nbsp;|&nbsp;
-        <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" rel="noopener noreferrer" style="color:#003366;text-decoration:underline;">LinkedIn Profile</a>
+        <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" rel="noopener noreferrer" style="color:#13231f;text-decoration:underline;">LinkedIn Profile</a>
     </p>
 </div>
 

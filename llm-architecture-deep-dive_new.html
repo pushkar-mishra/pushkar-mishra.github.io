@@ -5,24 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inside the Machine: A Technical Deep Dive into Large Language Models</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <style>
   :root {
-    --ink: #0f0e0d;
-    --paper: #f5f2ec;
-    --accent: #c0392b;
-    --accent2: #2c3e50;
-    --muted: #6b6560;
-    --code-bg: #1a1a2e;
-    --code-text: #a8dadc;
-    --rule: #d4cec5;
-    --highlight: #fef3cd;
+    --ink: #14211d;
+    --paper: #f7f2ea;
+    --accent: #d97706;
+    --accent2: #13231f;
+    --muted: #5d6a66;
+    --code-bg: #13231f;
+    --code-text: #bcdcd6;
+    --rule: #d8d2c4;
+    --highlight: #fdecc8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     background: var(--paper);
     color: var(--ink);
     font-size: 17px;
@@ -60,7 +62,7 @@
     position: relative;
   }
   .masthead h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(2rem, 5vw, 3.6rem);
     font-weight: 900;
     line-height: 1.1;
@@ -69,7 +71,7 @@
     position: relative;
   }
   .masthead h1 em {
-    color: #e74c3c;
+    color: var(--accent);
     font-style: italic;
   }
   .masthead-sub {
@@ -134,7 +136,7 @@
     margin-bottom: 0.4rem;
   }
   h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     color: var(--accent2);
@@ -143,14 +145,14 @@
     margin-bottom: 1.5rem;
   }
   h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--ink);
     margin: 2rem 0 0.75rem;
   }
   h4 {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -160,7 +162,7 @@
   }
   p {
     margin-bottom: 1.1rem;
-    color: #2a2724;
+    color: #14211d;
     font-weight: 400;
   }
 
@@ -190,12 +192,12 @@
 
   .analogy {
     background: var(--highlight);
-    border-left: 3px solid #e6a817;
+    border-left: 3px solid #d97706;
     padding: 1rem 1.4rem;
     margin: 1.5rem 0;
     font-size: 0.93rem;
   }
-  .analogy strong { color: #7a5c00; }
+  .analogy strong { color: #8a5a12; }
 
   /* Code / formula blocks */
   .formula {
@@ -273,7 +275,7 @@
     font-size: 1.7rem;
   }
   .walkthrough p { color: rgba(255,255,255,0.82); }
-  .walkthrough h3 { color: #e74c3c; }
+  .walkthrough h3 { color: var(--accent); }
   .step {
     display: flex;
     gap: 1.25rem;
@@ -316,7 +318,7 @@
 
   /* Print styles */
   @media print {
-    .masthead { background: #1a1a1a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .masthead { background: #14211d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
 </head>
@@ -664,7 +666,7 @@ headᵢ = Attention(QWᵢQ, KWᵢK, VWᵢV)</div>
   <div class="container">
     <span class="section-number" style="color: rgba(255,255,255,0.4);">§ 10</span>
     <h2>How an LLM Generates a Response — End-to-End Walkthrough</h2>
-    <p style="margin-bottom:2rem;">Let's trace exactly what happens from the moment you press Enter to the moment you see the first word of a response. The prompt is: <code style="font-family:monospace; color:#a8dadc;">"Explain the Pythagorean theorem in simple terms."</code></p>
+    <p style="margin-bottom:2rem;">Let's trace exactly what happens from the moment you press Enter to the moment you see the first word of a response. The prompt is: <code style="font-family:monospace; color:#bcdcd6;">"Explain the Pythagorean theorem in simple terms."</code></p>
 
     <div class="step">
       <div class="step-num">01</div>
@@ -746,7 +748,7 @@ headᵢ = Attention(QWᵢQ, KWᵢK, VWᵢV)</div>
       </div>
     </div>
 
-    <div style="margin-top:2.5rem; padding:1.5rem; background:rgba(255,255,255,0.06); border-left:3px solid #e74c3c;">
+    <div style="margin-top:2.5rem; padding:1.5rem; background:rgba(255,255,255,0.06); border-left:3px solid #d97706;">
       <p style="color:rgba(255,255,255,0.6); font-size:0.82rem; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;">Key Takeaway</p>
       <p style="margin:0; font-size:1.05rem;">Every word you see is the product of a probability distribution sampled over 50,000+ candidates, shaped by billions of parameters trained on trillions of tokens, executed in milliseconds on specialized silicon. The model doesn't "know" the Pythagorean theorem — it has learned that given this context, these tokens have high probability of following one another in a coherent and accurate way.</p>
     </div>

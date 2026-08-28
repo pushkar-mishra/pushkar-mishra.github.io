@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Claude Code Operator's Manual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <style>
         * {
             margin: 0;
@@ -12,21 +16,28 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Manrope', sans-serif;
             line-height: 1.7;
-            color: #2c3e50;
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            color: #13231f;
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.1), transparent 30%),
+                radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 26%),
+                linear-gradient(180deg, #fbf8f2 0%, #f3efe7 100%);
             min-height: 100vh;
             padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 253, 248, 0.97);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 24px 70px rgba(28, 43, 38, 0.14);
             overflow: hidden;
             animation: fadeIn 1s ease-out;
         }
@@ -37,7 +48,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #13231f 0%, #0f766e 100%);
             color: white;
             padding: 50px 40px;
             text-align: center;
@@ -104,15 +115,15 @@
         }
 
         h2 {
-            color: #1e3c72;
+            color: #13231f;
             font-size: 1.8em;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+            border-bottom: 3px solid #0f766e;
         }
 
         h3 {
-            color: #2a5298;
+            color: #0f766e;
             font-size: 1.3em;
             margin: 25px 0 12px 0;
         }
@@ -124,12 +135,11 @@
 
         p {
             margin-bottom: 15px;
-            text-align: justify;
         }
 
         /* Analogy Box: pink/red gradient */
         .analogy-box {
-            background: linear-gradient(135deg, #b56bb8 0%, #c04f63 100%);
+            background: linear-gradient(135deg, #d97706 0%, #991b1b 100%);
             color: #fdf6f7;
             padding: 25px;
             border-radius: 15px;
@@ -163,8 +173,8 @@
 
         /* Example Box: cyan/blue gradient */
         .example-box {
-            background: linear-gradient(135deg, #3d7ea6 0%, #2f9ca8 100%);
-            color: #f5fcfd;
+            background: linear-gradient(135deg, #0f766e 0%, #0f766e 100%);
+            color: #f7f2ea;
             padding: 25px;
             border-radius: 15px;
             margin: 25px 0;
@@ -220,7 +230,7 @@
         }
 
         .impact-card {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #cdece7 0%, #f6e3c6 100%);
             padding: 22px;
             border-radius: 15px;
             text-align: center;
@@ -231,17 +241,17 @@
         .impact-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: #667eea;
+            border-color: #0f766e;
         }
 
         .impact-card h4 {
-            color: #1e3c72;
+            color: #13231f;
             font-size: 1.05em;
             margin-bottom: 10px;
         }
 
         .impact-card p {
-            color: #2c3e50;
+            color: #13231f;
             font-size: 0.92em;
             text-align: left;
             margin: 0;
@@ -249,8 +259,8 @@
 
         /* Formula / code block */
         .formula-box {
-            background: #1a1a2e;
-            color: #a8dadc;
+            background: #13231f;
+            color: #bcdcd6;
             font-family: 'Courier New', Courier, monospace;
             font-size: 0.92em;
             padding: 20px 25px;
@@ -268,13 +278,13 @@
             padding: 25px;
             background: rgba(102, 126, 234, 0.08);
             border-radius: 15px;
-            border: 2px dashed #667eea;
+            border: 2px dashed #0f766e;
         }
 
         .diagram-visual pre {
             font-family: 'Courier New', monospace;
             font-size: 0.82em;
-            color: #1e3c72;
+            color: #13231f;
             text-align: left;
             display: inline-block;
             line-height: 1.5;
@@ -282,7 +292,7 @@
 
         /* Inline highlight text */
         .highlight {
-            background: linear-gradient(120deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            background: linear-gradient(120deg, #e8a33d 0%, #b45309 50%, #0f766e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -291,7 +301,7 @@
 
         code {
             background: rgba(102, 126, 234, 0.12);
-            color: #1e3c72;
+            color: #13231f;
             padding: 2px 6px;
             border-radius: 5px;
             font-family: 'Courier New', Courier, monospace;
@@ -304,8 +314,8 @@
 
         /* Claude Code Tip box */
         .tip-box {
-            background: #f0fdf9;
-            border-left: 6px solid #0d9488;
+            background: #e7f3ec;
+            border-left: 6px solid #0f766e;
             padding: 20px 24px;
             border-radius: 0 12px 12px 0;
             margin: 25px 0;
@@ -327,7 +337,7 @@
         .tip-box p {
             margin: 0 0 10px 0;
             text-align: left;
-            color: #204b46;
+            color: #13231f;
         }
 
         .tip-box p:last-child { margin-bottom: 0; }
@@ -339,8 +349,8 @@
 
         /* Verification box */
         .verify-box {
-            background: #f2fbf5;
-            border-left: 6px solid #2f9e5f;
+            background: #e7f3ec;
+            border-left: 6px solid #15803d;
             padding: 20px 24px;
             border-radius: 0 12px 12px 0;
             margin: 25px 0;
@@ -348,7 +358,7 @@
         }
 
         .verify-box h4 {
-            color: #1e7a45;
+            color: #0b5d56;
             display: flex;
             align-items: center;
             font-size: 1.05em;
@@ -362,7 +372,7 @@
         .verify-box p {
             margin: 0 0 10px 0;
             text-align: left;
-            color: #1c3d2b;
+            color: #13231f;
         }
 
         .verify-box p:last-child { margin-bottom: 0; }
@@ -382,14 +392,14 @@
         .strategy-list > li {
             counter-increment: strat;
             background: linear-gradient(135deg, rgba(102,126,234,0.07), rgba(102,126,234,0.02));
-            border-left: 4px solid #2a5298;
+            border-left: 4px solid #0f766e;
             border-radius: 0 12px 12px 0;
             padding: 18px 22px;
             margin-bottom: 16px;
         }
 
         .strategy-list > li > strong {
-            color: #1e3c72;
+            color: #13231f;
             display: block;
             font-size: 1.05em;
             margin-bottom: 6px;
@@ -397,7 +407,7 @@
 
         .strategy-list > li > strong::before {
             content: counter(strat) ". ";
-            color: #667eea;
+            color: #0f766e;
         }
 
         .strategy-list p {
@@ -410,29 +420,29 @@
 
         .strategy-list .verify {
             background: rgba(47, 158, 95, 0.10);
-            border-left: 3px solid #2f9e5f;
+            border-left: 3px solid #15803d;
             border-radius: 0 8px 8px 0;
             padding: 10px 14px;
             margin: 12px 0 0 0;
             font-size: 0.9em;
-            color: #1c3d2b;
+            color: #13231f;
         }
 
-        .strategy-list .verify strong { color: #1e7a45; }
+        .strategy-list .verify strong { color: #0b5d56; }
 
         .strategy-list .verify code { background: rgba(47, 158, 95, 0.16); color: #14532d; }
 
         /* Warning / gotcha box */
         .warning-box {
             background: #fff5f5;
-            border-left: 6px solid #e53e3e;
+            border-left: 6px solid #b91c1c;
             padding: 20px 24px;
             border-radius: 0 12px 12px 0;
             margin: 25px 0;
         }
 
         .warning-box h4 {
-            color: #c53030;
+            color: #991b1b;
             display: flex;
             align-items: center;
         }
@@ -445,7 +455,7 @@
         .warning-box p {
             margin: 0;
             text-align: left;
-            color: #4a2020;
+            color: #43514d;
         }
 
         /* Step list for walkthrough */
@@ -464,7 +474,7 @@
             padding: 18px 20px;
             background: rgba(102, 126, 234, 0.06);
             border-radius: 12px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0f766e;
             transition: background 0.2s;
         }
 
@@ -474,7 +484,7 @@
 
         .step-list li::before {
             content: counter(step-counter);
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #13231f, #0f766e);
             color: white;
             min-width: 32px;
             height: 32px;
@@ -488,7 +498,7 @@
         }
 
         .step-list li div strong {
-            color: #1e3c72;
+            color: #13231f;
             display: block;
             margin-bottom: 4px;
             font-size: 1.02em;
@@ -497,7 +507,7 @@
         .step-list li div p {
             margin: 0;
             font-size: 0.94em;
-            color: #444;
+            color: #43514d;
             text-align: left;
         }
 
@@ -513,7 +523,7 @@
         }
 
         .cmp-table th {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #13231f, #0f766e);
             color: white;
             padding: 12px 14px;
             text-align: left;
@@ -522,7 +532,7 @@
 
         .cmp-table td {
             padding: 12px 14px;
-            border-bottom: 1px solid #e6eef7;
+            border-bottom: 1px solid #f2ede1;
             vertical-align: top;
         }
 
@@ -535,14 +545,14 @@
         /* TOC */
         .toc {
             background: rgba(102, 126, 234, 0.06);
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0f766e;
             border-radius: 0 12px 12px 0;
             padding: 20px 25px;
             margin-bottom: 35px;
         }
 
         .toc h3 {
-            color: #1e3c72;
+            color: #13231f;
             margin: 0 0 12px 0;
             font-size: 1.1em;
         }
@@ -554,11 +564,11 @@
         .toc li {
             margin: 5px 0;
             font-size: 0.93em;
-            color: #2a5298;
+            color: #0f766e;
         }
 
         .toc a {
-            color: #2a5298;
+            color: #0f766e;
             text-decoration: none;
             font-weight: 500;
         }
@@ -567,7 +577,7 @@
 
         /* Footer */
         .footer {
-            background: #1e3c72;
+            background: #13231f;
             color: white;
             text-align: center;
             padding: 30px;
@@ -576,8 +586,8 @@
 
         /* Author bar */
         .author-bar {
-            background: #fffbe6;
-            border-left: 6px solid #f5b041;
+            background: #fdf3e2;
+            border-left: 6px solid #d97706;
             padding: 16px 24px;
             margin-bottom: 24px;
             border-radius: 10px;
@@ -597,15 +607,15 @@
 <body>
 
 <div class="author-bar">
-    <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #e6eef7;">
-            <p style="color: #003366; font-size: 1.05em;">
+    <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #f2ede1;">
+            <p style="color: #13231f; font-size: 1.05em;">
                 <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
                 <strong>Curated by:</strong> Pushkar Mishra<br>
-                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #3182ce; text-decoration: underline;">
+                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #0f766e; text-decoration: underline;">
                     LinkedIn Profile
                 </a>
             </p>
-    <strong>Disclaimer:</strong> This article is intended for practicing engineers, platform teams, and technical leaders adopting agentic coding tools. Everything here reflects Claude Code 2.x and the tool ships rapidly, so re-verify before relying on it: <code>claude --help</code> covers the flags, and <a href="https://code.claude.com/docs" target="_blank" style="color:#3182ce;">code.claude.com/docs</a> is the reference for settings keys, which no CLI subcommand enumerates.
+    <strong>Disclaimer:</strong> This article is intended for practicing engineers, platform teams, and technical leaders adopting agentic coding tools. Everything here reflects Claude Code 2.x and the tool ships rapidly, so re-verify before relying on it: <code>claude --help</code> covers the flags, and <a href="https://code.claude.com/docs" target="_blank" style="color:#0f766e;">code.claude.com/docs</a> is the reference for settings keys, which no CLI subcommand enumerates.
 </div>
 
 <div class="container">
@@ -636,7 +646,7 @@
             </ol>
         </div>
 
-        <p style="font-size:1.02em; color:#4a5568; border-left:4px solid #cbd5e0; padding-left:18px; font-style:italic;">
+        <p style="font-size:1.02em; color:#43514d; border-left:4px solid #d8d2c4; padding-left:18px; font-style:italic;">
             This assumes you already use Claude Code daily. There is nothing here about what <code>/clear</code> does or how to write a prompt. It covers the operational layer underneath: retention, sandboxing, cache behaviour, permission semantics, and the handful of settings that quietly decide what your sessions cost and what they can reach.
         </p>
 
