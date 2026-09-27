@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Trust Calibration Playbook: Why Your Manager Won't Let Go, and How to Fix It</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.7;
+            color: #13231f;
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.1), transparent 30%),
+                radial-gradient(circle at top right, rgba(217, 119, 6, 0.1), transparent 26%),
+                linear-gradient(180deg, #fbf8f2 0%, #f3efe7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 253, 248, 0.97);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 24px 70px rgba(28, 43, 38, 0.14);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #13231f 0%, #2c4a6b 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-100px) translateY(-100px); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(1)  { animation-delay: 0.1s; }
+        .section:nth-child(2)  { animation-delay: 0.2s; }
+        .section:nth-child(3)  { animation-delay: 0.3s; }
+        .section:nth-child(4)  { animation-delay: 0.4s; }
+        .section:nth-child(5)  { animation-delay: 0.5s; }
+        .section:nth-child(6)  { animation-delay: 0.6s; }
+        .section:nth-child(7)  { animation-delay: 0.7s; }
+        .section:nth-child(8)  { animation-delay: 0.8s; }
+        .section:nth-child(9)  { animation-delay: 0.9s; }
+        .section:nth-child(10) { animation-delay: 1.0s; }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #13231f;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2c4a6b;
+        }
+
+        h3 {
+            color: #2c4a6b;
+            font-size: 1.3em;
+            margin: 25px 0 12px 0;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Analogy Box: pink/red gradient */
+        .analogy-box {
+            background: linear-gradient(135deg, #d97706 0%, #7c2d12 100%);
+            color: #fdf6f7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateX(2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .analogy-box:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.02);
+        }
+
+        .analogy-box h4 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .analogy-box h4::before {
+            content: '💡';
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .analogy-box p {
+            margin: 0;
+            text-align: left;
+        }
+
+        /* Example Box: cyan/blue gradient */
+        .example-box {
+            background: linear-gradient(135deg, #2c4a6b 0%, #2c4a6b 100%);
+            color: #f7f2ea;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+        }
+
+        .example-box h4 {
+            font-size: 1.2em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example-box h4::before {
+            content: '🔬';
+            margin-right: 10px;
+        }
+
+        .example-box p {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            text-align: left;
+        }
+
+        /* Impact / feature cards grid */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, #cdece7 0%, #f6e3c6 100%);
+            padding: 22px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: #2c4a6b;
+        }
+
+        .impact-card h4 {
+            color: #13231f;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+        }
+
+        .impact-card p {
+            color: #13231f;
+            font-size: 0.92em;
+            text-align: left;
+            margin: 0;
+        }
+
+        /* Formula / code block */
+        .formula-box {
+            background: #13231f;
+            color: #bcdcd6;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.92em;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+            white-space: pre;
+        }
+
+        /* Architecture / diagram visual */
+        .diagram-visual {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(44, 74, 107, 0.08);
+            border-radius: 15px;
+            border: 2px dashed #2c4a6b;
+        }
+
+        .diagram-visual pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.82em;
+            color: #13231f;
+            text-align: left;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        /* Inline highlight text */
+        .highlight {
+            background: linear-gradient(120deg, #e8a33d 0%, #b45309 50%, #2c4a6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        code {
+            background: rgba(44, 74, 107, 0.12);
+            color: #13231f;
+            padding: 2px 6px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.92em;
+        }
+
+        .impact-card code {
+            background: rgba(30, 60, 114, 0.12);
+        }
+
+        /* Claude Code Tip box */
+        .tip-box {
+            background: #e7f3ec;
+            border-left: 6px solid #2c4a6b;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(13,148,136,0.08);
+        }
+
+        .tip-box h4 {
+            color: #2c4a6b;
+            display: flex;
+            align-items: center;
+            font-size: 1.05em;
+        }
+
+        .tip-box h4::before {
+            content: '🧠';
+            margin-right: 10px;
+        }
+
+        .tip-box p {
+            margin: 0 0 10px 0;
+            text-align: left;
+            color: #13231f;
+        }
+
+        .tip-box p:last-child { margin-bottom: 0; }
+
+        .tip-box .formula-box {
+            margin: 12px 0 0 0;
+            font-size: 0.86em;
+        }
+
+        /* Verification box */
+        .verify-box {
+            background: #e7f3ec;
+            border-left: 6px solid #3f6b4f;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+            box-shadow: 0 2px 8px rgba(47,158,95,0.08);
+        }
+
+        .verify-box h4 {
+            color: #2f5942;
+            display: flex;
+            align-items: center;
+            font-size: 1.05em;
+        }
+
+        .verify-box h4::before {
+            content: '✅';
+            margin-right: 10px;
+        }
+
+        .verify-box p {
+            margin: 0 0 10px 0;
+            text-align: left;
+            color: #13231f;
+        }
+
+        .verify-box p:last-child { margin-bottom: 0; }
+
+        .verify-box .formula-box {
+            margin: 12px 0 0 0;
+            font-size: 0.86em;
+        }
+
+        /* Strategy checklist */
+        .strategy-list {
+            list-style: none;
+            margin: 25px 0;
+            counter-reset: strat;
+        }
+
+        .strategy-list > li {
+            counter-increment: strat;
+            background: linear-gradient(135deg, rgba(102,126,234,0.07), rgba(102,126,234,0.02));
+            border-left: 4px solid #2c4a6b;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+        }
+
+        .strategy-list > li > strong {
+            color: #13231f;
+            display: block;
+            font-size: 1.05em;
+            margin-bottom: 6px;
+        }
+
+        .strategy-list > li > strong::before {
+            content: counter(strat) ". ";
+            color: #2c4a6b;
+        }
+
+        .strategy-list p {
+            margin: 0 0 8px 0;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .strategy-list p:last-child { margin-bottom: 0; }
+
+        .strategy-list .verify {
+            background: rgba(63, 107, 79, 0.10);
+            border-left: 3px solid #3f6b4f;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 12px 0 0 0;
+            font-size: 0.9em;
+            color: #13231f;
+        }
+
+        .strategy-list .verify strong { color: #2f5942; }
+
+        .strategy-list .verify code { background: rgba(63, 107, 79, 0.16); color: #1f3d2c; }
+
+        /* Warning / gotcha box */
+        .warning-box {
+            background: #fff5f5;
+            border-left: 6px solid #9a3412;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .warning-box h4 {
+            color: #7c2d12;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box h4::before {
+            content: '⚠️';
+            margin-right: 10px;
+        }
+
+        .warning-box p {
+            margin: 0;
+            text-align: left;
+            color: #43514d;
+        }
+
+        /* Step list for walkthrough */
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            padding: 18px 20px;
+            background: rgba(44, 74, 107, 0.06);
+            border-radius: 12px;
+            border-left: 4px solid #2c4a6b;
+            transition: background 0.2s;
+        }
+
+        .step-list li:hover {
+            background: rgba(44, 74, 107, 0.12);
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            background: linear-gradient(135deg, #13231f, #2c4a6b);
+            color: white;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+
+        .step-list li div strong {
+            color: #13231f;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.02em;
+        }
+
+        .step-list li div p {
+            margin: 0;
+            font-size: 0.94em;
+            color: #43514d;
+            text-align: left;
+        }
+
+        /* Comparison table */
+        .cmp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.93em;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .cmp-table th {
+            background: linear-gradient(135deg, #13231f, #2c4a6b);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .cmp-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f2ede1;
+            vertical-align: top;
+        }
+
+        .cmp-table tr:nth-child(even) td {
+            background: rgba(44, 74, 107, 0.04);
+        }
+
+        .table-wrap { overflow-x: auto; }
+
+        /* TOC */
+        .toc {
+            background: rgba(44, 74, 107, 0.06);
+            border-left: 4px solid #2c4a6b;
+            border-radius: 0 12px 12px 0;
+            padding: 20px 25px;
+            margin-bottom: 35px;
+        }
+
+        .toc h3 {
+            color: #13231f;
+            margin: 0 0 12px 0;
+            font-size: 1.1em;
+        }
+
+        .toc ol {
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 5px 0;
+            font-size: 0.93em;
+            color: #2c4a6b;
+        }
+
+        .toc a {
+            color: #2c4a6b;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover { text-decoration: underline; }
+
+        /* Footer */
+        .footer {
+            background: #13231f;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        /* Author bar */
+        .author-bar {
+            background: #fdf3e2;
+            border-left: 6px solid #d97706;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(245,176,65,0.08);
+            font-size: 1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .impact-grid { grid-template-columns: 1fr; }
+            .diagram-visual pre { font-size: 0.7em; }
+            .formula-box { font-size: 0.78em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="author-bar">
+    <hr style="margin-bottom: 18px; border: none; border-top: 1px solid #f2ede1;">
+            <p style="color: #13231f; font-size: 1.05em;">
+                <img src="profile.png" alt="Pushkar Mishra" style="width: 48px; height: 48px; border-radius: 50%; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 8px rgba(0,51,102,0.12);">
+                <strong>Written by:</strong> Pushkar Mishra<br>
+                <a href="https://www.linkedin.com/in/pushkar-mishra-engineering-leader/" target="_blank" style="color: #2c4a6b; text-decoration: underline;">
+                    LinkedIn Profile
+                </a>
+            </p>
+    <strong>Note:</strong> This is written for both sides of the relationship: the manager who feels the need to step back in, and the engineer who wants that to stop. Neither role is the villain here. What follows is a way to figure out what's really going on, not a list of complaints.
+</div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🔎 The Trust Calibration Playbook</h1>
+        <p>Micromanagement is rarely a personality trait. It's almost always a lack of trust that looks like a need for control. Here is a working framework for finding the real gap and closing it, from both sides of the reporting line.</p>
+    </div>
+
+    <div class="content">
+        <!-- TOC -->
+        <div class="toc">
+            <h3>📋 Table of Contents</h3>
+            <ol>
+                <li><a href="#reframe">Micromanagement Is a Symptom, Not a Character Flaw</a></li>
+                <li><a href="#six-gaps">The Six Trust Gaps</a></li>
+                <li><a href="#decision-rights">Decision Rights Are the Real Fix</a></li>
+                <li><a href="#reasoning">Externalizing Your Reasoning</a></li>
+                <li><a href="#rhythm">The Update Rhythm That Removes the Need to Ask</a></li>
+                <li><a href="#escalation">Building an Escalation Contract</a></li>
+                <li><a href="#velocity">Trust Has a Trend, Not Just a Level</a></li>
+                <li><a href="#manager-side">What the Manager Owes This Process</a></li>
+                <li><a href="#reference">Quick Reference</a></li>
+            </ol>
+        </div>
+
+        <p style="font-size:1.02em; color:#43514d; border-left:4px solid #d8d2c4; padding-left:18px; font-style:italic;">
+            Every team has had this moment: a decision gets reversed, a piece of work gets rewritten, or an approval gets demanded for something that felt already decided. The gut reaction is "my manager doesn't trust me," or from the other seat, "this person can't be given an inch." Both reactions stop one level too early. Underneath almost every micromanagement episode is a specific, clear gap. It's usually about visibility, risk ownership, or unclear standards, and each of those gaps needs a different fix. Treat them as one problem and you'll end up applying the wrong solution, over and over.
+        </p>
+
+        <!-- SECTION 1 -->
+        <div class="section" id="reframe">
+            <h2>1. Micromanagement Is a Symptom, Not a Character Flaw</h2>
+
+            <p>Most advice on this topic tells the engineer to "build trust" and tells the manager to "let go," which is true and also useless, because neither party knows what specific behavior to change on Monday morning. Trust is not a mood a manager decides to have. It is a running estimate, updated every time your manager sees evidence of how you decide, what you flag, and what you quietly absorb without them ever finding out.</p>
+
+            <p>The moment a manager reverses a decision, or asks for an update you didn't offer, or rewrites your document, they're telling you something, often without meaning to. Their model of your judgment has a hole in it. The right response isn't to feel diminished by that. It's to find the hole and patch it with evidence, not with reassurance.</p>
+
+            <div class="analogy-box">
+                <h4>The Autopilot Analogy</h4>
+                <p>A pilot does not hand full control to autopilot because the system asked nicely. They hand it over because the system has proven, across a specific and growing range of conditions, that it fails gracefully and reports honestly when it isn't sure. Autonomy in a reporting relationship works the same way. It isn't given as a reward for time served. It's handed over a little at a time, tied to a track record inside a specific range of decisions, and it gets pulled back the moment that track record produces a surprise.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="section" id="six-gaps">
+            <h2>2. The Six Trust Gaps</h2>
+
+            <p>Micromanagement shows up as one of six common behaviors. Each one points to a specific missing input, and each one has a specific fix, not a generic one.</p>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Observed Behavior</th><th>Likely Gap</th><th>What to Try</th></tr>
+                <tr><td>Decisions get reversed after the fact</td><td>Your reasoning was never visible, only your conclusion</td><td>Share the tradeoffs and the path not taken, before the decision lands, not after it's challenged</td></tr>
+                <tr><td>Unscheduled requests for status</td><td>There is no reliable signal between visits, so silence reads as risk</td><td>Set up a regular update schedule that arrives before the ask, sized to the stakes</td></tr>
+                <tr><td>Insistence on approving everything</td><td>They are holding downside risk they cannot independently see or check</td><td>Make the risk visible yourself, and name which parts of it you now own outright</td></tr>
+                <tr><td>Constant rewriting of your output</td><td>The standard was never spelled out, so every draft is a fresh guess at an unstated bar</td><td>Convert the second and third rewrite into a written standard, so the first draft hits it next time</td></tr>
+                <tr><td>Direct involvement in your team's work</td><td>They are still solving problems at the level below you, out of habit or leftover doubt</td><td>Spell out decision rights in writing, including exactly when escalation is needed</td></tr>
+                <tr><td>Staying close to every call you make</td><td>The track record is real but not yet long enough, wide enough, or visible enough</td><td>Stack up small, provable wins and make sure they get seen, don't just wait to be noticed</td></tr>
+            </table>
+            </div>
+
+            <div class="warning-box">
+                <h4>The pattern that makes this worse, not better</h4>
+                <p>The default response to being micromanaged is to go quiet and just produce results, hoping the results speak for themselves eventually. They rarely do, at least not fast enough. Silence looks identical whether it's hiding confident competence or a problem being avoided, and a manager who can't tell the difference will default to checking in. The fix is almost always to communicate more, in a more structured way, not less. But it only works inside a format the manager can absorb without extra effort on their part.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="section" id="decision-rights">
+            <h2>3. Decision Rights Are the Real Fix</h2>
+
+            <p>Underneath four of the six gaps above sits the same unanswered question: who actually gets to decide this, and does everyone involved agree on the answer? Most teams never write this down. That means it gets worked out quietly, decision by decision, under time pressure, which is about the worst possible condition for working anything out.</p>
+
+            <p>A simple three-tier split, discussed openly rather than assumed, removes most of the ambiguity:</p>
+
+            <ul class="strategy-list">
+                <li>
+                    <strong>Decide and inform</strong>
+                    <p>You make the call, and the decision plus its rationale becomes visible after the fact, in a commit message, a doc, or a short note, with no expectation of prior approval.</p>
+                    <div class="verify">✅ Verify: your manager should never be surprised by these decisions when they encounter them, only by their content if they'd have chosen differently.</div>
+                </li>
+                <li>
+                    <strong>Decide and check</strong>
+                    <p>You form the recommendation and the reasoning, but you surface it before acting, specifically because the downside is bigger than the upside, expensive to reverse, or touches a system you don't yet have full visibility into.</p>
+                    <div class="verify">✅ Verify: the check should take your manager under two minutes, because you've already done the analysis, not asked them to do it for you.</div>
+                </li>
+                <li>
+                    <strong>Escalate and align</strong>
+                    <p>Cross-team tradeoffs, irreversible commitments, or anything that changes what someone else already committed to. This tier is small, and it should be shrinking over time, not static.</p>
+                    <div class="verify">✅ Verify: if this tier is more than a fifth of your real decisions, the split hasn't been renegotiated in a while.</div>
+                </li>
+            </ul>
+
+            <div class="tip-box">
+                <h4>The one question that surfaces most decisions in the wrong bucket</h4>
+                <p>Ask directly: "Which of my decisions from the last month would you have wanted to see before I made them, and why?" Most managers can answer this specifically when asked, but almost never bring it up on their own, because the reversal already felt like the feedback. Getting it said out loud turns a vague sense of overreach into a list you can act on.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="section" id="reasoning">
+            <h2>4. Externalizing Your Reasoning</h2>
+
+            <p>A decision reversed after the fact is almost never a disagreement about the conclusion. Usually a manager sees a conclusion with no visible path to it, and assumes, correctly or not, that the path must have skipped something they'd have caught. The fix isn't to argue the conclusion harder. It's to make the path visible before anyone has to guess at it.</p>
+
+            <div class="example-box">
+                <h4>What "visible reasoning" looks like in practice</h4>
+                <p>Not a wall of justification. A short, three-part note attached to the decision: the options you actually considered (not just the one you picked), the tradeoff that made you pick this one, and the specific condition under which you'd revisit it. That third part matters most. It tells your manager you already know where your own judgment could fail, which is the strongest sign of good judgment there is.</p>
+            </div>
+
+            <div class="formula-box">// A decision note, not a status update
+Decision: Moved the retry logic to the queue consumer, not the API layer.
+Options considered: (1) retry at API, simpler but duplicates work on timeout;
+                     (2) retry at consumer, chosen; (3) client-side retry, rejected, since it
+                     pushes complexity to callers we don't control.
+Reasoning: consumer retries are idempotent by construction; API retries were not.
+Revisit if: consumer lag crosses 30s under load, haven't tested that yet.</div>
+
+            <p>Written like this, a manager who disagrees with the choice can say so directly, on the merits, and a manager who agrees never needs to ask a follow-up question. Either way, the reversal-after-the-fact pattern stops, because there's nothing left to guess at.</p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="section" id="rhythm">
+            <h2>5. The Update Rhythm That Removes the Need to Ask</h2>
+
+            <p>Unscheduled status requests happen in the gap between a manager's need for visibility and your natural habit of only speaking up when something is finished or broken. Closing that gap isn't about talking more. It's about talking on a schedule your manager can rely on, sized correctly to what's actually at stake.</p>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h4>🟢 Low stakes, high familiarity</h4>
+                    <p>A weekly one-line note is enough: what shipped, what's next, anything blocked. Skip it only once trust is high enough that its absence reads as "nothing to report," not "something's wrong."</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🟡 New territory, moderate stakes</h4>
+                    <p>Twice a week, three lines: what you learned, what surprised you, what you're deciding next. This is the rhythm that prevents "asking for updates" from ever becoming necessary.</p>
+                </div>
+                <div class="impact-card">
+                    <h4>🔴 High stakes or reversible-cost work</h4>
+                    <p>Real-time, at decision points, not on a clock. The moment you'd want a second opinion is exactly the moment your manager wants to be looped in. This is <em>decide and check</em> from the framework above.</p>
+                </div>
+            </div>
+
+            <p>The rhythm itself matters less than its reliability. A manager who has learned that updates arrive on time, unprompted, stops needing to ask. And every time they don't have to ask, that becomes evidence toward the next tier of autonomy.</p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="section" id="escalation">
+            <h2>6. Building an Escalation Contract</h2>
+
+            <p>"They step into my team's work" and "they stay close to every decision" are usually two symptoms of one missing thing: a written, agreed answer to "under what condition do you want to hear from me before I act?" Without it, the manager's threshold defaults to their own comfort level, which is often lower than it needs to be, simply because it was never tested against yours.</p>
+
+            <ul class="strategy-list">
+                <li>
+                    <strong>Name the trigger conditions in plain terms</strong>
+                    <p>Not "let me know if something's wrong," which is too vague to act on, but specific conditions: cost above a threshold, a customer-facing regression, a commitment to another team changing, a timeline slipping by more than a stated margin.</p>
+                </li>
+                <li>
+                    <strong>Put the list somewhere both of you can point to</strong>
+                    <p>A shared doc, not a verbal agreement from three months ago that only one of you remembers well. Revisit it after every escalation, correct or not, especially the ones that turned out to be false alarms.</p>
+                </li>
+                <li>
+                    <strong>Treat every escalation as a data point about the threshold, not just the incident</strong>
+                    <p>If something reached the threshold and turned out fine, ask whether the threshold itself should move, rather than letting the near-miss quietly lower everyone's tolerance for surprises going forward.</p>
+                </li>
+            </ul>
+
+            <div class="verify-box">
+                <h4>How you know the contract is working</h4>
+                <p>Escalations become rarer, but when they do happen, both sides take them more seriously, not less. Everyone knows the bar to reach that tier is real, not automatic.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div class="section" id="velocity">
+            <h2>7. Trust Has a Trend, Not Just a Level</h2>
+
+            <p>It's tempting to think of trust as a single dial: low, medium, high. In practice, a manager is tracking something closer to a rate of change. Is your track record still improving, holding steady, or quietly getting worse? They react far more to the direction than to where things stand right now. That's why someone with a strong track record can still get micromanaged after a single bad surprise. The surprise reads as a possible change in trend, not just a one-off, until proven otherwise.</p>
+
+            <ol class="step-list">
+                <li>
+                    <div>
+                        <strong>Take the smallest available win first</strong>
+                        <p>Not the highest-visibility project. The one where you can close the loop completely, end to end, with the least ambiguity about whether it went well.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Close the loop loudly, not just correctly</strong>
+                        <p>A decision made well but never reported back is invisible to the trust calculation. Report the outcome, including what you'd do differently, even when nobody asked.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Widen the range on purpose</strong>
+                        <p>Once a category of decision has a track record, say so out loud and ask for that category to move up a tier, rather than waiting for it to be noticed and given to you.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <strong>Recover fast and visibly from the inevitable miss</strong>
+                        <p>How a mistake is handled carries more trust signal than the mistake itself costs. Flag it early, own the fix, and state the process change that prevents the repeat. That sequence rebuilds speed faster than a long streak of quiet successes.</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div class="section" id="manager-side">
+            <h2>8. What the Manager Owes This Process</h2>
+
+            <p>This isn't a one-way street, and treating it like one is where it usually breaks down. An engineer can do everything above correctly and still get micromanaged, if the manager never states the decision rights, never responds to visible reasoning with anything other than silence, or moves the threshold after every escalation instead of before it.</p>
+
+            <div class="tip-box">
+                <h4>The manager's half of the contract</h4>
+                <p>State the decision-rights split in writing, and revisit it on a schedule, not only when prompted. Respond to a well-reasoned decision note with something more specific than approval. A real reaction is itself the feedback the engineer is starved of. And when autonomy is given, protect it. Reversing a decision made inside an agreed tier, without new information, is the fastest way to erase the exact track record this whole process was meant to build.</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>Calibration, Not Control</h4>
+                <p>The goal on either side of this relationship isn't more autonomy or more oversight as an end in itself. It's an accurate, shared, continuously updated model of where judgment can be trusted unsupervised and where it still needs a second pair of eyes, one that both people would draw the same way, on the same day, if asked separately. Micromanagement is simply what it looks like when that model is missing, outdated, or held by only one side of the relationship.</p>
+            </div>
+        </div>
+
+        <!-- REFERENCE -->
+        <div class="section" id="reference">
+            <h2>9. Quick Reference</h2>
+
+            <div class="table-wrap">
+            <table class="cmp-table">
+                <tr><th>Symptom</th><th>First Move</th></tr>
+                <tr><td>Decisions reversed after the fact</td><td>Attach a three-part reasoning note before the decision is challenged, not after</td></tr>
+                <tr><td>Unscheduled status requests</td><td>Set a rhythm sized to the stakes; let its reliability replace the need to ask</td></tr>
+                <tr><td>Approval demanded on everything</td><td>Surface the risk yourself; name what you now own outright</td></tr>
+                <tr><td>Constant rewrites</td><td>Convert the second rewrite into a written standard for the next draft</td></tr>
+                <tr><td>Direct involvement in your team's work</td><td>Write the decision-rights split; put escalation triggers in writing too</td></tr>
+                <tr><td>Staying close to every call</td><td>Bank small, closed-loop wins; ask directly for the tier to widen</td></tr>
+            </table>
+            </div>
+
+            <div class="analogy-box">
+                <h4>The Final Perspective</h4>
+                <p>Nobody enjoys being checked on, and almost nobody enjoys checking on people either. It's slower for both sides and it rarely feels good in the moment. But autonomy that is simply demanded, without the evidence trail to support it, doesn't survive the first real surprise. The engineers who get out from under close supervision fastest aren't the ones who push hardest against it. They're the ones who make the case for their own judgment so visible, so consistently, that continued oversight starts to look like the less efficient option to everyone involved, including the manager holding the reins.</p>
+            </div>
+        </div>
+
+    </div><!-- end .content -->
+
+    <div class="footer">
+        <p>"Autonomy is not requested. It is demonstrated, one visible, verifiable decision at a time."</p>
+    </div>
+
+</div><!-- end .container -->
+
+<script>
+    // Intersection Observer for scroll-triggered animations
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.impact-card, .analogy-box, .example-box, .warning-box, .step-list li');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
